@@ -1,0 +1,68 @@
+/* ===== SHARED TAB BAR ===== */
+.mm-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  z-index: 500;
+  padding: 0 12px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+
+.mm-tab-bar-inner {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  display: flex;
+  padding: 8px 4px;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+.mm-tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s;
+  border-radius: 14px;
+  text-decoration: none;
+}
+
+.mm-tab-item:active { transform: scale(0.92); }
+.mm-tab-item.active { background: rgba(184,134,26,0.08); }
+
+.mm-tab-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.mm-tab-icon svg {
+  width: 22px; height: 22px;
+  stroke-width: 1.8;
+  transition: all 0.2s;
+  stroke: #9a96a8;
+  fill: none;
+}
+
+.mm-tab-item.active .mm-tab-icon svg { stroke: #b8861a; }
+
+.mm-tab-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #9a96a8;
+  transition: color 0.2s;
+}
+
+.mm-tab-item.active .mm-tab-label {
+  color: #b8861a;
+  font-weight: 600;
+}

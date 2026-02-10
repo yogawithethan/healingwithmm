@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>3:6:9 Liver Rescue Cleanse</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --card: #ffffff;
+    --card-border: rgba(0,0,0,0.05);
+    --text-primary: #1a1a2e;
+    --text-body: #3a3845;
+    --text-secondary: #5a5668;
+    --text-muted: #9a96a8;
+    --divider: #ece9e2;
+
+    --phase3-primary: #5a8a5a;
+    --phase3-bg: #eef5ee;
+    --phase3-light: #d4e8d4;
+    --phase3-badge: #3a6a3a;
+
+    --phase6-primary: #b8861a;
+    --phase6-bg: #fdf3e4;
+    --phase6-light: #f0debb;
+    --phase6-badge: #8a6414;
+
+    --phase9-primary: #8a3a5a;
+    --phase9-bg: #f8eef2;
+    --phase9-light: #e8d0dc;
+    --phase9-badge: #6a2a44;
+
+    --drink: #4a7a8a;
+    --meal: #6a7a4a;
+    --snack: #8a7a4a;
+    --rest: #7a6a8a;
+
+    --accent: #b8861a;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-body);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px; line-height: 1.6;
+    max-width: 430px; margin: 0 auto;
+    min-height: 100vh; overflow-x: hidden;
+    padding-bottom: 100px;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    padding: 56px 24px 0;
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px; font-weight: 600;
+    color: var(--text-primary); line-height: 1.15;
+  }
+  .header h1 span {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px; font-weight: 500;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 3px;
+  }
+  .settings-btn {
+    width: 38px; height: 38px; border-radius: 12px; border: none;
+    background: var(--card); box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary); transition: all 0.2s; flex-shrink: 0;
+  }
+  .settings-btn:active { transform: scale(0.95); }
+  .settings-btn.open { background: var(--text-primary); color: white; }
+
+  /* ---- SETTINGS PANEL ---- */
+  .settings-panel {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
+    opacity: 0; margin-top: 0;
+  }
+  .settings-panel.open { max-height: 350px; opacity: 1; margin-top: 16px; }
+  .settings-inner {
+    background: var(--card); border-radius: 14px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--card-border);
+  }
+  .setting-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--divider);
+  }
+  .setting-row:last-child { border-bottom: none; }
+  .setting-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500; color: var(--text-primary);
+  }
+  .setting-label small {
+    display: block; font-size: 11px; font-weight: 400;
+    color: var(--text-muted); margin-top: 1px;
+  }
+  .setting-value {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg);
+    border: 1px solid var(--divider); padding: 6px 12px; border-radius: 8px;
+    text-align: center; min-width: 80px;
+  }
+  select.setting-value {
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239a96a8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
+  }
+
+  /* ---- MAIN TABS ---- */
+  .main-tabs {
+    display: flex; gap: 0; margin-top: 16px;
+    border-bottom: 2px solid var(--divider);
+  }
+  .main-tab {
+    flex: 1; padding: 12px 0; border: none; background: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    color: var(--text-muted); text-align: center;
+    position: relative; transition: color 0.2s;
+  }
+  .main-tab.active { color: var(--text-primary); }
+  .main-tab.active::after {
+    content: ''; position: absolute; bottom: -2px; left: 20%; right: 20%;
+    height: 2px; background: var(--accent); border-radius: 1px;
+  }
+
+  /* ---- TAB CONTENT ---- */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ===================== */
+  /* SCHEDULE TAB          */
+  /* ===================== */
+  .timeline-section { padding: 20px 24px 0; }
+  .phase-label-row { display: flex; gap: 4px; margin-bottom: 8px; }
+  .phase-label {
+    font-family: 'DM Sans', sans-serif; font-size: 9.5px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    text-align: center; padding: 5px 0; border-radius: 6px;
+  }
+  .phase-label.p3 { flex: 3; background: var(--phase3-light); color: var(--phase3-badge); }
+  .phase-label.p6 { flex: 3; background: var(--phase6-light); color: var(--phase6-badge); }
+  .phase-label.p9 { flex: 3; background: var(--phase9-light); color: var(--phase9-badge); }
+
+  .timeline { display: flex; gap: 4px; }
+  .day-dot {
+    flex: 1; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; border: 2px solid transparent;
+  }
+  .day-dot.p3 { background: var(--phase3-bg); color: var(--phase3-primary); }
+  .day-dot.p6 { background: var(--phase6-bg); color: var(--phase6-primary); }
+  .day-dot.p9 { background: var(--phase9-bg); color: var(--phase9-primary); }
+  .day-dot.active.p3 { border-color: var(--phase3-primary); background: var(--phase3-primary); color: #fff; box-shadow: 0 3px 12px rgba(58,106,58,0.25); }
+  .day-dot.active.p6 { border-color: var(--phase6-primary); background: var(--phase6-primary); color: #fff; box-shadow: 0 3px 12px rgba(184,134,26,0.25); }
+  .day-dot.active.p9 { border-color: var(--phase9-primary); background: var(--phase9-primary); color: #fff; box-shadow: 0 3px 12px rgba(138,58,90,0.25); }
+  .day-dot:active { transform: scale(0.93); }
+
+  .progress-card {
+    margin: 20px 24px 0; padding: 16px 20px;
+    background: var(--card); border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04); border: 1px solid var(--card-border);
+  }
+  .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .progress-label, .progress-percent {
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+  }
+  .progress-label { font-weight: 500; color: var(--text-secondary); }
+  .progress-percent { font-weight: 600; color: var(--text-primary); }
+  .progress-bar { width: 100%; height: 5px; background: var(--divider); border-radius: 3px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; border-radius: 3px; transition: width 0.5s ease;
+    background: linear-gradient(90deg, var(--phase3-primary) 0%, var(--phase6-primary) 50%, var(--phase9-primary) 100%);
+  }
+
+  .day-detail { padding: 24px 24px 0; animation: fadeIn 0.3s ease; }
+  .day-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .day-number {
+    font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 600;
+    color: var(--text-primary); line-height: 1;
+  }
+  .day-number span {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400;
+    color: var(--text-secondary); display: block; margin-top: 4px;
+  }
+  .phase-badge {
+    font-family: 'DM Sans', sans-serif; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 100px; flex-shrink: 0;
+  }
+  .phase-badge.p3 { background: var(--phase3-bg); color: var(--phase3-badge); }
+  .phase-badge.p6 { background: var(--phase6-bg); color: var(--phase6-badge); }
+  .phase-badge.p9 { background: var(--phase9-bg); color: var(--phase9-badge); }
+
+  .day-intention {
+    font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 14.5px;
+    color: var(--text-secondary); line-height: 1.65;
+    margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--divider);
+  }
+
+  .schedule-item { padding: 18px 0; border-bottom: 1px solid var(--divider); }
+  .schedule-item:last-child { border-bottom: none; }
+  .schedule-item-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .schedule-time-label {
+    font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 1.8px; text-transform: uppercase; color: var(--text-muted); line-height: 1;
+  }
+  .schedule-type {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.8px; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px; line-height: 1;
+  }
+  .schedule-type.drink { background: rgba(74,122,138,0.1); color: var(--drink); }
+  .schedule-type.meal { background: rgba(106,122,74,0.1); color: var(--meal); }
+  .schedule-type.snack { background: rgba(138,122,74,0.1); color: var(--snack); }
+  .schedule-type.rest { background: rgba(122,106,138,0.1); color: var(--rest); }
+
+  .schedule-title {
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
+    color: var(--text-primary); line-height: 1.35; margin-bottom: 4px;
+  }
+  .schedule-desc {
+    font-family: 'Source Serif 4', Georgia, serif; font-size: 14px; line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .schedule-note {
+    margin-top: 10px; padding: 10px 14px; background: rgba(0,0,0,0.025);
+    border-radius: 10px; border-left: 3px solid var(--divider);
+    font-family: 'DM Sans', sans-serif; font-size: 12px; line-height: 1.55; color: var(--text-secondary);
+  }
+
+  .day-nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 24px 0; }
+  .nav-arrow {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    color: var(--text-secondary); background: none; border: none;
+    cursor: pointer; padding: 10px 16px; border-radius: 12px; transition: all 0.2s;
+  }
+  .nav-arrow:hover { background: var(--card); color: var(--text-primary); }
+  .nav-arrow:disabled { opacity: 0.25; cursor: default; }
+  .nav-arrow:disabled:hover { background: none; }
+  .nav-arrow svg { width: 16px; height: 16px; }
+
+  /* ===================== */
+  /* SHOP TAB              */
+  /* ===================== */
+  .shop-section { padding: 20px 24px 0; }
+
+  .shop-intro {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 14.5px; line-height: 1.65; color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .day-range-section { margin-bottom: 24px; }
+  .day-range-label {
+    font-family: 'DM Sans', sans-serif; font-size: 10.5px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
+  }
+  .day-range-grid {
+    display: flex; gap: 4px;
+  }
+  .day-range-dot {
+    flex: 1; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; border: 2px solid transparent;
+    position: relative;
+  }
+  .day-range-dot.p3 { background: var(--phase3-bg); color: var(--phase3-primary); }
+  .day-range-dot.p6 { background: var(--phase6-bg); color: var(--phase6-primary); }
+  .day-range-dot.p9 { background: var(--phase9-bg); color: var(--phase9-primary); }
+  .day-range-dot.selected.p3 { border-color: var(--phase3-primary); background: var(--phase3-primary); color: #fff; }
+  .day-range-dot.selected.p6 { border-color: var(--phase6-primary); background: var(--phase6-primary); color: #fff; }
+  .day-range-dot.selected.p9 { border-color: var(--phase9-primary); background: var(--phase9-primary); color: #fff; }
+  .day-range-dot:active { transform: scale(0.93); }
+
+  .range-hint {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-muted);
+    margin-top: 8px; text-align: center;
+  }
+
+  .generate-list-btn {
+    width: 100%; padding: 14px; border: none; border-radius: 12px;
+    background: var(--accent); color: white; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+    letter-spacing: 0.3px; transition: all 0.2s;
+    margin-bottom: 24px;
+  }
+  .generate-list-btn:active { transform: scale(0.98); opacity: 0.9; }
+  .generate-list-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* Shopping list output */
+  .shop-list { margin-bottom: 24px; }
+
+  .shop-category {
+    margin-bottom: 20px;
+  }
+  .shop-category-header {
+    font-family: 'DM Sans', sans-serif; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--divider);
+  }
+  .shop-category-header span {
+    font-weight: 400; font-size: 10px; letter-spacing: 0; text-transform: none;
+    margin-left: 4px;
+  }
+
+  .shop-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.03);
+  }
+  .shop-item:last-child { border-bottom: none; }
+
+  .shop-item-check {
+    width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--divider);
+    background: var(--card); cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; font-size: 12px; color: transparent;
+  }
+  .shop-item-check.checked {
+    background: var(--phase3-primary); border-color: var(--phase3-primary); color: white;
+  }
+
+  .shop-item-info { flex: 1; }
+  .shop-item-name {
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    color: var(--text-primary); line-height: 1.3;
+  }
+  .shop-item-name.checked { text-decoration: line-through; color: var(--text-muted); }
+  .shop-item-qty {
+    font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .shop-item-adjust {
+    display: flex; align-items: center; gap: 0; flex-shrink: 0;
+  }
+  .adj-btn {
+    width: 28px; height: 28px; border: 1px solid var(--divider); background: var(--card);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
+    color: var(--text-secondary); transition: all 0.1s;
+  }
+  .adj-btn:first-child { border-radius: 6px 0 0 6px; }
+  .adj-btn:last-child { border-radius: 0 6px 6px 0; }
+  .adj-btn:active { background: var(--divider); }
+  .adj-val {
+    width: 32px; height: 28px; border-top: 1px solid var(--divider); border-bottom: 1px solid var(--divider);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--text-primary); background: var(--bg);
+  }
+
+  .shop-empty {
+    text-align: center; padding: 48px 24px;
+  }
+  .shop-empty-icon { font-size: 36px; margin-bottom: 12px; }
+  .shop-empty p {
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text-muted); line-height: 1.6;
+  }
+
+  /* ---- SOURCE ---- */
+  .source-note {
+    margin: 36px 24px 0; padding-top: 20px;
+    border-top: 1px solid var(--divider); text-align: center;
+  }
+  .source-note p {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-muted); line-height: 1.6;
+  }
+  .source-note a {
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid rgba(184,134,26,0.3); padding-bottom: 0.5px;
+  }
+
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  @supports (padding-top: env(safe-area-inset-top)) { .header { padding-top: calc(env(safe-area-inset-top) + 16px); } }
+</style>
+<link rel="stylesheet" href="../css/tabbar.css">
+<script defer src="../js/tabbar.js"></script>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-top">
+      <h1><span>Liver Rescue</span>3:6:9 Cleanse</h1>
+      <button class="settings-btn" id="settingsBtn" onclick="toggleSettings()" aria-label="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel">
+      <div class="settings-inner">
+        <div class="setting-row">
+          <div class="setting-label">Cleanse Version</div>
+          <select class="setting-value" id="cleanseVersion">
+            <option value="original" selected>Original</option>
+            <option value="simplified">Simplified</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">Start Date<small>When did you begin?</small></div>
+          <input type="date" class="setting-value" id="startDate">
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">Household<small>People on the cleanse</small></div>
+          <select class="setting-value" id="householdSize">
+            <option value="1" selected>1 person</option>
+            <option value="2">2 people</option>
+            <option value="3">3 people</option>
+            <option value="4">4 people</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-tabs">
+      <button class="main-tab active" onclick="switchTab('schedule')">Schedule</button>
+      <button class="main-tab" onclick="switchTab('shop')">Shop</button>
+    </div>
+  </div>
+
+  <!-- ==================== -->
+  <!-- SCHEDULE TAB         -->
+  <!-- ==================== -->
+  <div class="tab-content active" id="scheduleTab">
+    <div class="timeline-section">
+      <div class="phase-label-row">
+        <div class="phase-label p3">The 3</div>
+        <div class="phase-label p6">The 6</div>
+        <div class="phase-label p9">The 9</div>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+    <div class="progress-card">
+      <div class="progress-top">
+        <span class="progress-label" id="progressLabel">Day 1 of 9</span>
+        <span class="progress-percent" id="progressPercent">11%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:11%"></div></div>
+    </div>
+    <div class="day-detail" id="dayDetail"></div>
+    <div class="day-nav">
+      <button class="nav-arrow" id="prevBtn" onclick="navigate(-1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Previous
+      </button>
+      <button class="nav-arrow" id="nextBtn" onclick="navigate(1)">
+        Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== -->
+  <!-- SHOP TAB             -->
+  <!-- ==================== -->
+  <div class="tab-content" id="shopTab">
+    <div class="shop-section">
+      <p class="shop-intro">Select which days you're shopping for. Tap individual days or drag across a range.</p>
+
+      <div class="day-range-section">
+        <div class="day-range-label">Shopping for</div>
+        <div class="day-range-grid" id="shopDayGrid"></div>
+        <div class="range-hint" id="rangeHint">Tap days to select them</div>
+      </div>
+
+      <button class="generate-list-btn" id="generateBtn" onclick="generateShopList()" disabled>Generate Shopping List</button>
+
+      <div id="shopListOutput">
+        <div class="shop-empty">
+          <div class="shop-empty-icon">🛒</div>
+          <p>Select days above, then tap<br>Generate to build your list</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="source-note">
+    <p>Protocol from <a href="https://www.amazon.com/Medical-Medium-Cleanse-Heal-Depression/dp/1401958451" target="_blank" rel="noopener"><em>Cleanse to Heal</em></a><br>by Anthony William, Medical Medium</p>
+  </div>
+
+<script>
+/* ============================================ */
+/* SCHEDULE DATA (Original 3:6:9)               */
+/* ============================================ */
+const DAYS = [
+  { day:1, phase:3, title:"Day 1", subtitle:"The 3 · Preparation",
+    intention:"The beginning of the cycle. Your liver needs this gear-up time to benefit from everything that's to follow.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional teaspoon of raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 oz",desc:"Wait 15–30 min after lemon water. Pure celery juice on an empty stomach."},
+      {time:"Breakfast",type:"meal",title:"Breakfast of Your Choice",desc:"Free from radical fats and troublemaker foods. Fruit smoothie, oatmeal, or millet cereal are great options.",note:"Fats (nuts, seeds, oil, avocado, animal proteins) are allowed at dinner only today, reduced by 50%."},
+      {time:"Mid-Morning",type:"snack",title:"Optional Snack",desc:"An apple is the easiest option. Stay free from radical fats."},
+      {time:"Lunch",type:"meal",title:"Lunch of Your Choice",desc:"Fat-free, troublemaker-free meal. Include at least 1 cup steamed zucchini or summer squash."},
+      {time:"Afternoon",type:"snack",title:"Apple(s) with Dates",desc:"1–2 apples with 1–2 dates. Whole, sliced, blended, or as applesauce."},
+      {time:"Dinner",type:"meal",title:"Dinner of Your Choice",desc:"Radical fats allowed at dinner only — reduce your normal amount by at least 50%. One serving of lean, organic meat, fowl, or fish (salmon, trout, sardines) is okay."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water",desc:"16 oz, 1 hour before bed."},
+    ]},
+  { day:2, phase:3, title:"Day 2", subtitle:"The 3 · Preparation",
+    intention:"Continue easing your body in. Make sure to get those apples in the morning — they're key liver warmers.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Breakfast",type:"meal",title:"Breakfast of Your Choice",desc:"Fat-free, troublemaker-free. Fruit smoothie, oatmeal, or millet cereal."},
+      {time:"Mid-Morning",type:"snack",title:"1–2 Apples (required)",desc:"Whole, sliced, blended into smoothie, or as applesauce. Ripe pears as substitute.",note:"Days 2 & 3: morning apples are required, not optional."},
+      {time:"Lunch",type:"meal",title:"Lunch of Your Choice",desc:"Fat-free. Include at least 1 cup steamed zucchini or summer squash."},
+      {time:"Afternoon",type:"snack",title:"Apple(s) with Dates",desc:"1–2 apples with 1–2 dates."},
+      {time:"Dinner",type:"meal",title:"Dinner — Reduced Fats",desc:"Radical fats at dinner only, reduced by at least 50%. One serving of lean, organic meat, fowl, or fish is okay."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water",desc:"16 oz, 1 hour before bed."},
+    ]},
+  { day:3, phase:3, title:"Day 3", subtitle:"The 3 · Preparation",
+    intention:"Last day of The 3. Tomorrow the real cleansing begins. Your liver is warming up and building trust.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Breakfast",type:"meal",title:"Breakfast of Your Choice",desc:"Fat-free, troublemaker-free. Last day for millet and oats."},
+      {time:"Mid-Morning",type:"snack",title:"1–2 Apples (required)",desc:"Whole, sliced, blended, or as applesauce."},
+      {time:"Lunch",type:"meal",title:"Lunch of Your Choice",desc:"Fat-free. Include at least 1 cup steamed zucchini or summer squash."},
+      {time:"Afternoon",type:"snack",title:"Apple(s) with Dates",desc:"1–2 apples with 1–2 dates."},
+      {time:"Dinner",type:"meal",title:"Dinner — Last Night of Fats",desc:"Final dinner with any radical fats. Starting tomorrow, fats are removed entirely.",note:"From Day 4 onward: no radical fats, no animal proteins, no grains, no oats or millet."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water",desc:"16 oz, 1 hour before bed."},
+    ]},
+  { day:4, phase:6, title:"Day 4", subtitle:"The 6 · Cleansing Begins",
+    intention:"Your liver and other organs start to unpack old storage bins of toxins — fats, pharmaceuticals, heavy metals, viral waste.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Breakfast",type:"meal",title:"Liver Rescue Smoothie",desc:"Bananas, dragon fruit, wild blueberries, cilantro, and more. Make one or more servings."},
+      {time:"Mid-Morning",type:"snack",title:"Optional Apple(s)",desc:"If hungry after smoothie."},
+      {time:"Lunch",type:"meal",title:"Steamed Asparagus + Liver Rescue Salad",desc:"Leafy greens with lemon or lime juice, optional toppings. Asparagus steamed or raw."},
+      {time:"Afternoon",type:"snack",title:"Apples, Dates & Celery Sticks",desc:"1–2 apples with 1–3 dates plus celery sticks."},
+      {time:"Dinner",type:"meal",title:"Steamed Asparagus + Liver Rescue Salad",desc:"Same structure as lunch. Focus on leafy greens and steamed vegetables."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water + Tea",desc:"16 oz lemon or lime water plus a mug of hibiscus, lemon balm, or chaga tea. 1 hour before bed."},
+    ]},
+  { day:5, phase:6, title:"Day 5", subtitle:"The 6 · Deep Cleaning",
+    intention:"Your organs are reaching more deeply than they have throughout your whole life, accessing stored toxins.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Breakfast",type:"meal",title:"Liver Rescue Smoothie",desc:"Or eat the fruits cut up in a bowl."},
+      {time:"Lunch",type:"meal",title:"Steamed Asparagus + Liver Rescue Salad",desc:"Continue with the deep liver support."},
+      {time:"Afternoon",type:"snack",title:"Apples, Dates & Celery Sticks",desc:"1–2 apples with 1–3 dates plus celery sticks."},
+      {time:"Dinner",type:"meal",title:"Steamed Brussels Sprouts + Liver Rescue Salad",desc:"Brussels sprouts tonight — their unique sulfur loosens hardened toxins in the liver."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water + Tea",desc:"16 oz lemon or lime water plus hibiscus, lemon balm, or chaga tea."},
+    ]},
+  { day:6, phase:6, title:"Day 6", subtitle:"The 6 · Deepest Reach",
+    intention:"Last day of The 6. Tomorrow your liver enters its great big plunge into purification.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Breakfast",type:"meal",title:"Liver Rescue Smoothie",desc:"Or eat the fruits whole."},
+      {time:"Lunch",type:"meal",title:"Steamed Asparagus & Brussels Sprouts + Liver Rescue Salad",desc:"Both asparagus and brussels sprouts together at lunch today."},
+      {time:"Afternoon",type:"snack",title:"Apples, Dates & Celery Sticks",desc:"1–2 apples with 1–3 dates plus celery sticks."},
+      {time:"Dinner",type:"meal",title:"Steamed Asparagus & Brussels Sprouts + Liver Rescue Salad",desc:"Both vegetables again at dinner. Your liver is preparing for The 9."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water + Tea",desc:"16 oz lemon or lime water plus hibiscus, lemon balm, or chaga tea."},
+    ]},
+  { day:7, phase:9, title:"Day 7", subtitle:"The 9 · The Release",
+    intention:"Your liver begins its great plunge into purification. These liquid-heavy days are completely new territory.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 32 oz",desc:"Increased from 16 oz. Wait 15–30 min after lemon water.",note:"Celery juice increases to 32 oz for The 9. If sensitive, split into 16 oz morning + 16 oz afternoon."},
+      {time:"Breakfast",type:"meal",title:"Fresh Fruit Only",desc:"Fresh fruit with optional leafy greens, celery, cucumber. Frozen fruit fine. No dried fruit."},
+      {time:"Mid-Morning",type:"snack",title:"Optional Apples",desc:"If hungry."},
+      {time:"Lunch",type:"meal",title:"Lunch of Your Choice",desc:"Within The 9 guidelines — all fat-free, focused on fruits, vegetables, and leafy greens."},
+      {time:"Afternoon",type:"drink",title:"Celery Juice — 16 oz (2nd serving)",desc:"Wait at least 60 min after lunch. Then wait 15–30 min before eating again."},
+      {time:"Afternoon",type:"snack",title:"Apples, Celery & Cucumber",desc:"Optional apples or applesauce with celery sticks and cucumber slices."},
+      {time:"Dinner",type:"meal",title:"Steamed Winter Squash or Potatoes + Asparagus/Brussels Sprouts",desc:"Steamed winter squash, sweet potatoes, yams, or potatoes with steamed asparagus and/or brussels sprouts. Optional Liver Rescue Salad."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water + Tea",desc:"16 oz lemon or lime water plus hibiscus, lemon balm, or chaga tea."},
+    ]},
+  { day:8, phase:9, title:"Day 8", subtitle:"The 9 · Going Deeper",
+    intention:"Your body is in a deep cleanse state. Tomorrow is the big day — the signature Day 9 release.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 32 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Breakfast",type:"meal",title:"Fresh Fruit Only",desc:"Fresh fruit with optional leafy greens, celery, cucumber. No dried fruit."},
+      {time:"Lunch",type:"meal",title:"Lunch of Your Choice",desc:"Within The 9 guidelines."},
+      {time:"Afternoon",type:"drink",title:"Celery Juice — 16 oz (2nd serving)",desc:"Wait at least 60 min after lunch."},
+      {time:"Afternoon",type:"snack",title:"Optional Apples, Celery & Cucumber",desc:"Apples or applesauce with celery sticks and cucumber slices."},
+      {time:"Dinner",type:"meal",title:"Steamed Asparagus & Brussels Sprouts",desc:"Preferably both. Optional Liver Rescue Salad."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water + Tea",desc:"16 oz lemon or lime water plus hibiscus, lemon balm, or chaga tea."},
+    ]},
+  { day:9, phase:9, title:"Day 9", subtitle:"The 9 · The Signature Day",
+    intention:"This is the moment your liver has been waiting for. All liquids and blended foods today — your liver finally gets to let go.",
+    items:[
+      {time:"Upon Waking",type:"drink",title:"Lemon or Lime Water",desc:"16 oz (up to 32 oz). Optional raw honey."},
+      {time:"Morning",type:"drink",title:"Celery Juice — 16 to 20 oz",desc:"Wait 15–30 min after lemon water."},
+      {time:"Throughout the Day",type:"drink",title:"Cucumber-Apple Juice (×2)",desc:"Two 16–20 oz servings at any time. Aim for 50-50 blend of cucumber and apple."},
+      {time:"Whenever Hungry",type:"drink",title:"Blended Melon, Watermelon Juice, Blended Papaya, Blended Pear, or Fresh OJ",desc:"As much as you'd like — enjoy each separately, don't blend them together.",note:"Melon digests best on its own. Drink blended melon earlier in the day, before papaya or pear."},
+      {time:"Afternoon",type:"drink",title:"Celery Juice — 16 oz (2nd serving)",desc:"Wait at least 60 min after any blended drinks. Wait 15–30 min before consuming anything else."},
+      {time:"All Day",type:"drink",title:"Water with Lemon or Lime",desc:"Drink water throughout the day, ideally with a squeeze of lemon or lime."},
+      {time:"Evening",type:"drink",title:"Lemon or Lime Water + Tea",desc:"16 oz lemon or lime water plus hibiscus, lemon balm, or chaga tea. 1 hour before bed."},
+      {time:"All Day",type:"rest",title:"Rest & Reflect",desc:"Take it easy today if you can. Your liver is completing its great purification.",note:"Think about scheduling Day 9 as a sacred rest day."},
+    ]},
+];
+
+/* ============================================ */
+/* SHOPPING INGREDIENT DATABASE (Original)      */
+/* ============================================ */
+// Per-day ingredients — what the protocol requires each day
+// Quantities are per 1 person
+const SHOP_DATA = {
+  1: {
+    produce: [
+      { name: "Lemons", qty: 2, unit: "", note: "For morning & evening lemon water" },
+      { name: "Celery", qty: 1, unit: "bunch", note: "16 oz juice" },
+      { name: "Apples", qty: 4, unit: "", note: "Mid-morning + afternoon snack" },
+      { name: "Zucchini or Summer Squash", qty: 2, unit: "", note: "1 cup steamed at lunch" },
+    ],
+    pantry: [
+      { name: "Dates (Medjool)", qty: 2, unit: "" },
+      { name: "Raw Honey", qty: 0, unit: "", note: "Optional" },
+    ]
+  },
+  2: {
+    produce: [
+      { name: "Lemons", qty: 2, unit: "" },
+      { name: "Celery", qty: 1, unit: "bunch" },
+      { name: "Apples", qty: 5, unit: "", note: "Required morning + afternoon" },
+      { name: "Zucchini or Summer Squash", qty: 2, unit: "" },
+    ],
+    pantry: [
+      { name: "Dates (Medjool)", qty: 2, unit: "" },
+    ]
+  },
+  3: {
+    produce: [
+      { name: "Lemons", qty: 2, unit: "" },
+      { name: "Celery", qty: 1, unit: "bunch" },
+      { name: "Apples", qty: 5, unit: "" },
+      { name: "Zucchini or Summer Squash", qty: 2, unit: "" },
+    ],
+    pantry: [
+      { name: "Dates (Medjool)", qty: 2, unit: "" },
+    ]
+  },
+  4: {
+    produce: [
+      { name: "Lemons", qty: 2, unit: "" },
+      { name: "Celery", qty: 2, unit: "bunches", note: "Juice + snack sticks" },
+      { name: "Apples", qty: 4, unit: "" },
+      { name: "Bananas", qty: 2, unit: "", note: "Liver Rescue Smoothie" },
+      { name: "Asparagus", qty: 2, unit: "lbs", note: "Lunch & dinner" },
+      { name: "Leafy Greens (spinach, romaine, etc.)", qty: 2, unit: "bunches", note: "Liver Rescue Salad ×2" },
+    ],
+    frozen: [
+      { name: "Wild Blueberries", qty: 2, unit: "cups", note: "Liver Rescue Smoothie" },
+      { name: "Dragon Fruit (pitaya)", qty: 1, unit: "packet" },
+    ],
+    pantry: [
+      { name: "Dates (Medjool)", qty: 3, unit: "" },
+      { name: "Hibiscus, Lemon Balm, or Chaga Tea", qty: 1, unit: "bag" },
+    ]
+  },
+  5: {
+    produce: [
+      { name: "Lemons", qty: 2, unit: "" },
+      { name: "Celery", qty: 2, unit: "bunches" },
+      { name: "Apples", qty: 4, unit: "" },
+      { name: "Bananas", qty: 2, unit: "" },
+      { name: "Asparagus", qty: 1, unit: "lb", note: "Lunch" },
+      { name: "Brussels Sprouts", qty: 1, unit: "lb", note: "Dinner" },
+      { name: "Leafy Greens (spinach, romaine, etc.)", qty: 2, unit: "bunches" },
+    ],
+    frozen: [
+      { name: "Wild Blueberries", qty: 2, unit: "cups" },
+      { name: "Dragon Fruit (pitaya)", qty: 1, unit: "packet" },
+    ],
+    pantry: [
+      { name: "Dates (Medjool)", qty: 3, unit: "" },
+      { name: "Hibiscus, Lemon Balm, or Chaga Tea", qty: 1, unit: "bag" },
+    ]
+  },
+  6: {
+    produce: [
+      { name: "Lemons", qty: 2, unit: "" },
+      { name: "Celery", qty: 2, unit: "bunches" },
+      { name: "Apples", qty: 4, unit: "" },
+      { name: "Bananas", qty: 2, unit: "" },
+      { name: "Asparagus", qty: 2, unit: "lbs", note: "Lunch & dinner" },
+      { name: "Brussels Sprouts", qty: 2, unit: "lbs", note: "Lunch & dinner" },
+      { name: "Leafy Greens (spinach, romaine, etc.)", qty: 2, unit: "bunches" },
+    ],
+    frozen: [
+      { name: "Wild Blueberries", qty: 2, unit: "cups" },
+      { name: "Dragon Fruit (pitaya)", qty: 1, unit: "packet" },
+    ],
+    pantry: [
+      { name: "Dates (Medjool)", qty: 3, unit: "" },
+      { name: "Hibiscus, Lemon Balm, or Chaga Tea", qty: 1, unit: "bag" },
+    ]
+  },
+  7: {
+    produce: [
+      { name: "Lemons", qty: 3, unit: "", note: "Extra for afternoon water" },
+      { name: "Celery", qty: 3, unit: "bunches", note: "32 oz AM + 16 oz PM + snack sticks" },
+      { name: "Apples", qty: 4, unit: "" },
+      { name: "Cucumbers", qty: 2, unit: "", note: "Snack slices" },
+      { name: "Asparagus", qty: 1, unit: "lb" },
+      { name: "Brussels Sprouts", qty: 1, unit: "lb" },
+      { name: "Winter Squash or Sweet Potatoes", qty: 2, unit: "", note: "Dinner starch" },
+      { name: "Leafy Greens (spinach, romaine, etc.)", qty: 1, unit: "bunch", note: "Optional salad" },
+      { name: "Fresh Fruit (your choice)", qty: 4, unit: "servings", note: "Breakfast" },
+    ],
+    pantry: [
+      { name: "Hibiscus, Lemon Balm, or Chaga Tea", qty: 1, unit: "bag" },
+    ]
+  },
+  8: {
+    produce: [
+      { name: "Lemons", qty: 3, unit: "" },
+      { name: "Celery", qty: 3, unit: "bunches" },
+      { name: "Apples", qty: 3, unit: "" },
+      { name: "Cucumbers", qty: 2, unit: "" },
+      { name: "Asparagus", qty: 1, unit: "lb" },
+      { name: "Brussels Sprouts", qty: 1, unit: "lb" },
+      { name: "Fresh Fruit (your choice)", qty: 4, unit: "servings" },
+    ],
+    pantry: [
+      { name: "Hibiscus, Lemon Balm, or Chaga Tea", qty: 1, unit: "bag" },
+    ]
+  },
+  9: {
+    produce: [
+      { name: "Lemons", qty: 4, unit: "", note: "Water all day + evening" },
+      { name: "Celery", qty: 3, unit: "bunches", note: "Morning + afternoon juice" },
+      { name: "Cucumbers", qty: 4, unit: "", note: "Cucumber-apple juice ×2" },
+      { name: "Apples", qty: 6, unit: "", note: "Cucumber-apple juice ×2" },
+      { name: "Watermelon", qty: 1, unit: "small", note: "Or other melon — blended drinks" },
+      { name: "Papaya", qty: 1, unit: "", note: "Blended option" },
+      { name: "Oranges", qty: 6, unit: "", note: "Fresh OJ option" },
+    ],
+    pantry: [
+      { name: "Hibiscus, Lemon Balm, or Chaga Tea", qty: 1, unit: "bag" },
+    ]
+  }
+};
+
+/* ============================================ */
+/* STATE                                        */
+/* ============================================ */
+let currentDay = 0;
+let selectedShopDays = new Set();
+let shopListItems = []; // generated list with adjustable quantities
+let checkedItems = new Set();
+
+/* ============================================ */
+/* INIT                                         */
+/* ============================================ */
+function init() {
+  document.getElementById('startDate').value = new Date().toISOString().split('T')[0];
+  renderTimeline();
+  renderDay(0);
+  renderShopDayGrid();
+}
+
+/* ============================================ */
+/* TAB SWITCHING                                */
+/* ============================================ */
+function switchTab(tab) {
+  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  if (tab === 'schedule') {
+    document.querySelectorAll('.main-tab')[0].classList.add('active');
+    document.getElementById('scheduleTab').classList.add('active');
+  } else {
+    document.querySelectorAll('.main-tab')[1].classList.add('active');
+    document.getElementById('shopTab').classList.add('active');
+  }
+}
+
+function toggleSettings() {
+  document.getElementById('settingsPanel').classList.toggle('open');
+  document.getElementById('settingsBtn').classList.toggle('open');
+}
+
+/* ============================================ */
+/* SCHEDULE TAB FUNCTIONS                       */
+/* ============================================ */
+function renderTimeline() {
+  const el = document.getElementById('timeline');
+  el.innerHTML = DAYS.map((d,i) => {
+    const p = d.phase===3?'p3':d.phase===6?'p6':'p9';
+    return `<div class="day-dot ${p} ${i===currentDay?'active':''}" onclick="selectDay(${i})">${d.day}</div>`;
+  }).join('');
+}
+
+function renderDay(idx) {
+  currentDay = idx;
+  const d = DAYS[idx];
+  const p = d.phase===3?'p3':d.phase===6?'p6':'p9';
+  const pl = d.phase===3?'The 3':d.phase===6?'The 6':'The 9';
+  const icons = {drink:'💧',meal:'🍽',snack:'🍎',rest:'🧘'};
+  const el = document.getElementById('dayDetail');
+  el.innerHTML = `
+    <div class="day-header">
+      <div class="day-number">${d.title}<span>${d.subtitle}</span></div>
+      <div class="phase-badge ${p}">${pl}</div>
+    </div>
+    <div class="day-intention">${d.intention}</div>
+    ${d.items.map(item => `
+      <div class="schedule-item">
+        <div class="schedule-item-top">
+          <span class="schedule-time-label">${item.time}</span>
+          <span class="schedule-type ${item.type}">${icons[item.type]} ${item.type}</span>
+        </div>
+        <div class="schedule-title">${item.title}</div>
+        <div class="schedule-desc">${item.desc}</div>
+        ${item.note?`<div class="schedule-note">${item.note}</div>`:''}
+      </div>
+    `).join('')}`;
+  renderTimeline();
+  const pct = Math.round(((idx+1)/9)*100);
+  document.getElementById('progressLabel').textContent = `Day ${idx+1} of 9`;
+  document.getElementById('progressPercent').textContent = `${pct}%`;
+  document.getElementById('progressFill').style.width = `${pct}%`;
+  document.getElementById('prevBtn').disabled = idx===0;
+  document.getElementById('nextBtn').disabled = idx===8;
+  el.style.animation='none'; el.offsetHeight; el.style.animation='fadeIn 0.3s ease';
+}
+
+function selectDay(i) { renderDay(i); window.scrollTo({top:0,behavior:'smooth'}); }
+function navigate(dir) { const n=currentDay+dir; if(n>=0&&n<=8) selectDay(n); }
+
+/* ============================================ */
+/* SHOP TAB FUNCTIONS                           */
+/* ============================================ */
+function renderShopDayGrid() {
+  const el = document.getElementById('shopDayGrid');
+  el.innerHTML = [1,2,3,4,5,6,7,8,9].map(d => {
+    const phase = d<=3?'p3':d<=6?'p6':'p9';
+    const sel = selectedShopDays.has(d)?'selected':'';
+    return `<div class="day-range-dot ${phase} ${sel}" onclick="toggleShopDay(${d})">${d}</div>`;
+  }).join('');
+  updateRangeHint();
+  document.getElementById('generateBtn').disabled = selectedShopDays.size === 0;
+}
+
+function toggleShopDay(d) {
+  if (selectedShopDays.has(d)) selectedShopDays.delete(d);
+  else selectedShopDays.add(d);
+  renderShopDayGrid();
+}
+
+function updateRangeHint() {
+  const hint = document.getElementById('rangeHint');
+  if (selectedShopDays.size === 0) {
+    hint.textContent = 'Tap days to select them';
+  } else {
+    const sorted = [...selectedShopDays].sort((a,b)=>a-b);
+    const dayStr = sorted.length === 1 ? `Day ${sorted[0]}` :
+      `Days ${sorted.join(', ')}`;
+    hint.textContent = `Shopping for ${dayStr}`;
+  }
+}
+
+function generateShopList() {
+  const multiplier = parseInt(document.getElementById('householdSize').value) || 1;
+  const days = [...selectedShopDays].sort((a,b)=>a-b);
+
+  // Aggregate ingredients across selected days
+  const aggregated = { produce: {}, frozen: {}, pantry: {} };
+
+  days.forEach(day => {
+    const data = SHOP_DATA[day];
+    if (!data) return;
+    ['produce','frozen','pantry'].forEach(cat => {
+      if (!data[cat]) return;
+      data[cat].forEach(item => {
+        const key = item.name;
+        if (!aggregated[cat][key]) {
+          aggregated[cat][key] = { name: item.name, qty: 0, unit: item.unit || '', notes: new Set(), adjustable: cat === 'produce' };
+        }
+        aggregated[cat][key].qty += (item.qty || 0) * multiplier;
+        if (item.note) aggregated[cat][key].notes.add(item.note);
+      });
+    });
+  });
+
+  // Build items array
+  shopListItems = [];
+  const catLabels = { produce: '🥬 Fresh Produce', frozen: '🧊 Frozen', pantry: '🏺 Pantry & Dry Goods' };
+
+  Object.keys(aggregated).forEach(cat => {
+    const items = Object.values(aggregated[cat]);
+    if (items.length === 0) return;
+    items.forEach(item => {
+      shopListItems.push({
+        ...item,
+        category: cat,
+        categoryLabel: catLabels[cat],
+        originalQty: item.qty,
+        haveQty: 0,
+        notes: [...item.notes].join('; ')
+      });
+    });
+  });
+
+  checkedItems = new Set();
+  renderShopList();
+}
+
+function renderShopList() {
+  const el = document.getElementById('shopListOutput');
+  if (shopListItems.length === 0) {
+    el.innerHTML = `<div class="shop-empty"><div class="shop-empty-icon">🛒</div><p>Select days above, then tap<br>Generate to build your list</p></div>`;
+    return;
+  }
+
+  // Group by category
+  const groups = {};
+  shopListItems.forEach((item,i) => {
+    if (!groups[item.categoryLabel]) groups[item.categoryLabel] = [];
+    groups[item.categoryLabel].push({...item, index: i});
+  });
+
+  let html = '<div class="shop-list">';
+  Object.entries(groups).forEach(([label, items]) => {
+    html += `<div class="shop-category">
+      <div class="shop-category-header">${label} <span>(${items.length} items)</span></div>`;
+    items.forEach(item => {
+      const checked = checkedItems.has(item.index);
+      const needQty = Math.max(0, item.qty - item.haveQty);
+      const qtyStr = item.unit ? `${needQty} ${item.unit}` : `${needQty}`;
+      html += `
+        <div class="shop-item">
+          <div class="shop-item-check ${checked?'checked':''}" onclick="toggleCheck(${item.index})">✓</div>
+          <div class="shop-item-info">
+            <div class="shop-item-name ${checked?'checked':''}">${item.name}</div>
+            <div class="shop-item-qty">${needQty > 0 ? (item.haveQty > 0 ? `Need ${qtyStr} (have ${item.haveQty})` : qtyStr) : 'Already have enough ✓'}</div>
+          </div>
+          ${item.adjustable && item.qty > 0 ? `
+            <div class="shop-item-adjust">
+              <button class="adj-btn" onclick="adjustHave(${item.index},-1)">−</button>
+              <div class="adj-val">${item.haveQty}</div>
+              <button class="adj-btn" onclick="adjustHave(${item.index},1)">+</button>
+            </div>
+          ` : ''}
+        </div>`;
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function toggleCheck(i) {
+  if (checkedItems.has(i)) checkedItems.delete(i);
+  else checkedItems.add(i);
+  renderShopList();
+}
+
+function adjustHave(i, dir) {
+  const item = shopListItems[i];
+  item.haveQty = Math.max(0, Math.min(item.originalQty, item.haveQty + dir));
+  renderShopList();
+}
+
+init();
+</script>
+</body>
+</html>

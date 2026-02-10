@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Heal \u2014 Medical Medium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f7f4;--card:#fff;--card-border:rgba(0,0,0,.05);--text-primary:#1a1a2e;--text-body:#3a3845;--text-secondary:#5a5668;--text-muted:#9a96a8;--divider:#ece9e2;--slate:#4a5568;--symptom:#8a3a3a;--symptom-light:#a85050;--symptom-bg:#f5eded;--condition:#1e2a4a;--condition-light:#3a4a6a;--condition-bg:#ebedf2;--accent:#b8861a;--accent-bg:#fdf3e4}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text-body);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.6;max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden}
+.page-header{padding:60px 24px 20px;text-align:center}
+.page-header h1{font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:600;color:var(--text-primary);line-height:1.1;margin-bottom:8px}
+.page-header p{font-family:'Source Serif 4',Georgia,serif;font-size:14.5px;color:var(--text-secondary);line-height:1.55;max-width:300px;margin:0 auto;font-style:italic}
+.main-tabs{padding:0 24px;margin-bottom:4px}
+.main-track{display:flex;position:relative;background:var(--card);border-radius:14px;padding:4px;box-shadow:0 1px 8px rgba(0,0,0,.05);border:1px solid var(--card-border)}
+.main-slider{position:absolute;top:4px;width:calc(50% - 4px);height:calc(100% - 8px);border-radius:11px;background:var(--slate);transition:left .35s cubic-bezier(.4,0,.15,1);z-index:1;left:4px}
+.main-slider.info{left:calc(50%)}
+.main-tab-btn{flex:1;padding:12px 0;border:none;background:none;cursor:pointer;position:relative;z-index:2;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-align:center;transition:color .3s;color:var(--text-muted);letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:transparent}
+.main-tab-btn.active{color:#fff}
+.main-tab-btn svg{width:16px;height:16px;stroke-width:2}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.sub-toggle{padding:16px 24px 0}
+.sub-track{display:flex;position:relative;background:var(--card);border-radius:12px;padding:3px;border:1px solid var(--card-border)}
+.sub-slider{position:absolute;top:3px;width:calc(50% - 3px);height:calc(100% - 6px);border-radius:10px;transition:all .35s cubic-bezier(.4,0,.15,1);z-index:1;left:3px}
+.sub-slider.symptoms{background:var(--symptom)}.sub-slider.conditions{background:var(--condition);left:calc(50%)}
+.sub-btn{flex:1;padding:10px 0;border:none;background:none;cursor:pointer;position:relative;z-index:2;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-align:center;transition:color .3s;color:var(--text-muted);-webkit-tap-highlight-color:transparent}
+.sub-btn.active{color:#fff}
+.search-section{padding:14px 24px 0}
+.search-input-wrap{position:relative}
+.search-input{width:100%;padding:12px 16px 12px 40px;border-radius:12px;border:1.5px solid var(--divider);background:var(--card);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-primary);transition:border-color .2s;outline:none}
+.search-input::placeholder{color:var(--text-muted)}
+.search-input:focus.sym{border-color:var(--symptom-light)}.search-input:focus.con{border-color:var(--condition-light)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none}
+.browse-section{padding:8px 24px 200px}
+.browse-category{margin-bottom:2px}
+.browse-cat-head{display:flex;align-items:center;justify-content:space-between;padding:13px 0;cursor:pointer;border-bottom:1px solid var(--divider);-webkit-tap-highlight-color:transparent}
+.browse-cat-name{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--text-primary)}
+.browse-cat-right{display:flex;align-items:center;gap:6px}
+.browse-cat-count{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text-muted);background:var(--bg);padding:2px 8px;border-radius:10px}
+.browse-cat-chevron{color:var(--text-muted);transition:transform .25s;flex-shrink:0}
+.browse-category.open .browse-cat-chevron{transform:rotate(90deg)}
+.browse-items{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.browse-category.open .browse-items{max-height:2000px}
+.browse-item{display:flex;align-items:center;justify-content:space-between;padding:11px 0 11px 16px;border-bottom:1px solid rgba(0,0,0,.025);cursor:pointer;transition:background .1s;-webkit-tap-highlight-color:transparent}
+.browse-item:active{background:rgba(0,0,0,.015)}
+.browse-item-name{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-body);line-height:1.3}
+.browse-item-name b{color:var(--accent);font-weight:600}
+.browse-item-add{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:300;flex-shrink:0;transition:all .15s}
+.browse-item-add.sa{background:var(--symptom-bg);color:var(--symptom)}.browse-item-add.ca{background:var(--condition-bg);color:var(--condition)}
+.browse-item.added .browse-item-name{color:var(--text-muted)}.browse-item.added .browse-item-add{background:var(--divider);color:var(--text-muted);font-size:13px}
+.selection-tray{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--card);border-top:1px solid var(--divider);padding:0 24px;padding-bottom:max(84px,calc(env(safe-area-inset-bottom) + 76px));z-index:200;transition:transform .3s cubic-bezier(.4,0,.15,1),opacity .25s ease;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.selection-tray.hidden{transform:translate(-50%,100%);opacity:0;pointer-events:none}
+.tray-pills{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px 0 10px}.tray-pills::-webkit-scrollbar{display:none}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;white-space:nowrap;flex-shrink:0;animation:pillIn .2s ease}
+.pill.symptom{background:var(--symptom);color:#fff}.pill.condition{background:var(--condition);color:#fff}
+.pill .x{width:15px;height:15px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px}.pill .x:hover{background:rgba(255,255,255,.35)}
+.heal-btn{width:100%;padding:14px;border:none;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(184,134,26,.25);margin-bottom:2px}.heal-btn:active{transform:scale(.98)}
+@keyframes pillIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.results-page{display:none;min-height:100vh;padding-bottom:120px}.results-page.show{display:block;animation:fadeIn .35s ease}
+.search-page.hidden{display:none}
+.results-back{padding:60px 24px 12px;position:sticky;top:0;background:var(--bg);z-index:50}
+.results-back-btn{display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-secondary);padding:8px 0}.results-back-btn svg{width:16px;height:16px}
+.results-hero{padding:0 24px 24px}
+.results-hero h2{font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:600;color:var(--text-primary);line-height:1.15;margin-bottom:10px}
+.results-selected{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.rp{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:4px 10px;border-radius:100px}.rp.s{background:var(--symptom-bg);color:var(--symptom)}.rp.c{background:var(--condition-bg);color:var(--condition)}
+.results-summary{font-family:'Source Serif 4',Georgia,serif;font-size:14.5px;color:var(--text-secondary);line-height:1.65;padding-bottom:20px;border-bottom:1px solid var(--divider)}
+.food-category{padding:20px 0}.food-category+.food-category{border-top:1px solid var(--divider);padding-top:16px}
+.food-cat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:0 24px}
+.food-cat-title{font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+.food-cat-count{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text-muted)}
+.food-scroll{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 24px 8px}.food-scroll::-webkit-scrollbar{display:none}
+.food-card{flex-shrink:0;width:160px;background:var(--card);border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid var(--card-border);scroll-snap-align:start;transition:transform .15s}.food-card:active{transform:scale(.97)}
+.food-card-img{width:100%;height:110px;object-fit:cover;display:block;background:var(--divider)}
+.food-card-body{padding:12px 12px 14px}
+.food-card-name{font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;color:var(--text-primary);line-height:1.25;margin-bottom:5px}
+.food-card-match{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--accent);margin-bottom:8px}
+.food-card-pills{display:flex;flex-wrap:wrap;gap:3px}
+.fcp{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;max-width:130px;overflow:hidden;text-overflow:ellipsis}.fcp.s{background:var(--symptom-bg);color:var(--symptom)}.fcp.c{background:var(--condition-bg);color:var(--condition)}.fcp.m{background:var(--bg);color:var(--text-muted)}
+.info-section{padding:0 24px;margin-bottom:14px}
+.info-section-title{font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.info-card{background:var(--card);border-radius:16px;padding:16px;border:1px solid var(--card-border);box-shadow:0 1px 8px rgba(0,0,0,.04);cursor:pointer;transition:transform .15s;margin-bottom:10px;display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}.info-card:active{transform:scale(.98)}
+.info-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.info-card-text{flex:1}
+.info-card-title{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary);line-height:1.3}
+.info-card-desc{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.4}
+.info-card-arrow{color:var(--text-muted);flex-shrink:0;font-size:18px}
+.info-content{padding:16px 0 120px}
+.source-note{margin:24px 24px 32px;padding-top:20px;border-top:1px solid var(--divider);text-align:center}
+.source-note p{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text-muted);line-height:1.6}
+.source-note a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(184,134,26,.3)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@supports(padding-top:env(safe-area-inset-top)){.page-header{padding-top:calc(env(safe-area-inset-top) + 24px)}.results-back{padding-top:calc(env(safe-area-inset-top) + 16px)}}
+</style>
+<link rel="stylesheet" href="./css/tabbar.css">
+<script defer src="./js/tabbar.js"></script>
+</head>
+<body>
+<div class="search-page" id="searchPage">
+  <div class="page-header">
+    <h1>Heal</h1>
+    <p>Discover the foods and protocols that support your body's natural healing</p>
+  </div>
+  <div class="main-tabs">
+    <div class="main-track">
+      <div class="main-slider" id="mainSlider"></div>
+      <button class="main-tab-btn active" id="mainBtnHeal" onclick="setMainTab('healing')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Healing</button>
+      <button class="main-tab-btn" id="mainBtnInfo" onclick="setMainTab('info')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Information</button>
+    </div>
+  </div>
+  <div class="tab-panel active" id="panelHealing">
+    <div class="sub-toggle">
+      <div class="sub-track">
+        <div class="sub-slider symptoms" id="subSlider"></div>
+        <button class="sub-btn active" id="btnS" onclick="setMode('symptoms')">Symptoms</button>
+        <button class="sub-btn" id="btnC" onclick="setMode('conditions')">Conditions</button>
+      </div>
+    </div>
+    <div class="search-section">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input sym" id="searchInput" placeholder="Search symptoms..." oninput="onSearch()">
+      </div>
+    </div>
+    <div class="browse-section" id="browseSection"></div>
+  </div>
+  <div class="tab-panel" id="panelInfo">
+    <div class="info-content">
+      <div class="info-section">
+        <div class="info-section-title">Explore Healing Foods</div>
+        <a class="info-card" href="./foods/wild-blueberries.html"><div class="info-card-icon" style="background:#e8e0f0">&#x1FAD0;</div><div class="info-card-text"><div class="info-card-title">Wild Blueberries</div><div class="info-card-desc">Brain health, heavy metals, EBV, Lyme</div></div><div class="info-card-arrow">&#x203A;</div></a>
+        <a class="info-card" href="./foods/wild-blueberries.html"><div class="info-card-icon" style="background:#e0ece0">&#x1F96C;</div><div class="info-card-text"><div class="info-card-title">Celery Juice</div><div class="info-card-desc">Gut healing, inflammation, autoimmune</div></div><div class="info-card-arrow">&#x203A;</div></a>
+        <a class="info-card" href="./foods/papaya.html"><div class="info-card-icon" style="background:#f5e8d8">&#x1F351;</div><div class="info-card-text"><div class="info-card-title">Papaya</div><div class="info-card-desc">Digestive healing, SIBO, bloating</div></div><div class="info-card-arrow">&#x203A;</div></a>
+        <a class="info-card" href="./foods/asparagus.html"><div class="info-card-icon" style="background:#e0ece0">&#x1F33F;</div><div class="info-card-text"><div class="info-card-title">Asparagus</div><div class="info-card-desc">Fatigue, adrenals, chronic illness</div></div><div class="info-card-arrow">&#x203A;</div></a>
+      </div>
+      <div class="info-section">
+        <div class="info-section-title">Supplements</div>
+        <a class="info-card" href="#"><div class="info-card-icon" style="background:var(--accent-bg)">&#x1F48A;</div><div class="info-card-text"><div class="info-card-title">Recommended Supplements</div><div class="info-card-desc">B12, zinc, spirulina, and more</div></div><div class="info-card-arrow">&#x203A;</div></a>
+      </div>
+      <div class="info-section">
+        <div class="info-section-title">Protocols</div>
+        <a class="info-card" href="./recipes/spinach-soup.html"><div class="info-card-icon" style="background:#e0e8f0">&#x1FAD0;</div><div class="info-card-text"><div class="info-card-title">Heavy Metal Detox Smoothie</div><div class="info-card-desc">The 5-ingredient brain detox protocol</div></div><div class="info-card-arrow">&#x203A;</div></a>
+        <a class="info-card" href="./planner/"><div class="info-card-icon" style="background:#eef5ee">&#x1F9F9;</div><div class="info-card-text"><div class="info-card-title">3:6:9 Liver Rescue Cleanse</div><div class="info-card-desc">9-day protocol with meal planner</div></div><div class="info-card-arrow">&#x203A;</div></a>
+      </div>
+      <div class="info-section">
+        <div class="info-section-title">Books</div>
+        <a class="info-card" href="https://www.amazon.com/Medical-Medium-Cleanse-Heal-Depression/dp/1401958451" target="_blank" rel="noopener"><div class="info-card-icon" style="background:#f5eded">&#x1F4D5;</div><div class="info-card-text"><div class="info-card-title">Cleanse to Heal</div><div class="info-card-desc">Plans, recipes &amp; protocols for healing</div></div><div class="info-card-arrow">&#x203A;</div></a>
+        <a class="info-card" href="https://www.amazon.com/Medical-Medium-Life-Changing-Foods-Vegetables/dp/1401948324" target="_blank" rel="noopener"><div class="info-card-icon" style="background:#ebedf2">&#x1F4D7;</div><div class="info-card-text"><div class="info-card-title">Life-Changing Foods</div><div class="info-card-desc">Healing powers of fruits, vegetables &amp; herbs</div></div><div class="info-card-arrow">&#x203A;</div></a>
+        <a class="info-card" href="https://www.amazon.com/Medical-Medium-Secrets-Behind-Chronic/dp/1401948294" target="_blank" rel="noopener"><div class="info-card-icon" style="background:#e8e0f0">&#x1F4D8;</div><div class="info-card-text"><div class="info-card-title">Medical Medium</div><div class="info-card-desc">Secrets behind chronic &amp; mystery illness</div></div><div class="info-card-arrow">&#x203A;</div></a>
+      </div>
+      <div class="source-note"><p>Based on the work of <a href="https://www.medicalmedium.com" target="_blank" rel="noopener">Anthony William, Medical Medium</a></p></div>
+    </div>
+  </div>
+</div>
+<div class="results-page" id="resultsPage"></div>
+<div class="selection-tray hidden" id="tray">
+  <div class="tray-pills" id="trayPills"></div>
+  <button class="heal-btn" onclick="showResults()">Help Me Heal</button>
+</div>
+<script>
+
+const SYMPTOM_CATS={"Digestive":["Acid Reflux","Bloating","Constipation","Diarrhea","Food Sensitivities","Gas","Gastritis","Nausea","Stomach Aches","Stomach Pain"],"Neurological & Brain":["Brain Fog","Dizziness","Memory Issues","Migraines","Nerve Pain","Ringing in Ears","Tingles & Numbness","Tremors","Vertigo"],"Energy & Fatigue":["Chronic Fatigue","Fatigue","Weakness","Lethargy","Afternoon Energy Crash"],"Emotional & Mental":["Anxiety","Depression","Insomnia","Mood Swings","Panic Attacks","Racing Thoughts","Restlessness"],"Skin, Hair & Nails":["Acne","Brittle Nails","Dark Under-Eye Circles","Dry Skin","Eczema Flares","Hair Loss","Hives","Rashes","Skin Issues"],"Pain & Inflammation":["Back Pain","Headaches","Inflammation","Joint Pain","Muscle Spasms","Muscle Weakness","Neck Pain","Stiffness","Swelling"],"Hormonal & Reproductive":["Hot Flashes","Night Sweats","PMS","Menstrual Irregularities","Weight Gain","Weight Loss Resistance"],"Immune & Lymphatic":["Frequent Colds","Low Immune Function","Swollen Lymph Nodes","Sore Throat","Fevers"],"Eyes & Ears":["Blurry Vision","Eye Floaters","Ringing in Ears","Dry Eyes"],"Heart & Circulation":["Heart Palpitations","Cold Hands & Feet","Poor Circulation"]};
+const CONDITION_CATS={"Autoimmune & Immune":["Autoimmune Disease","Celiac Disease","Hashimoto's Thyroiditis","Lupus","Multiple Sclerosis","Rheumatoid Arthritis","Sarcoidosis"],"Digestive Disorders":["Colitis","Crohn's Disease","Diverticulitis","Gastritis","IBS","Leaky Gut","SIBO"],"Viral & Bacterial":["Epstein-Barr Virus","Lyme Disease","Shingles","Strep Infections","UTIs"],"Thyroid & Endocrine":["Adrenal Fatigue","Hypothyroidism","PCOS","Thyroid Conditions","Type 2 Diabetes","Diabetes"],"Liver & Detox":["Fatty Liver","Gallstones","High Cholesterol","Liver Sluggishness"],"Pain & Neurological":["Arthritis","Chronic Fatigue Syndrome","Fibromyalgia","Neuropathy","Raynaud's Syndrome"],"Skin Conditions":["Eczema & Psoriasis","Rosacea","Vitiligo"],"Cancer & Growths":["Cancer","Cysts","Fibroids","Nodules","Tumors"],"Cardiovascular":["High Blood Pressure","Heart Disease"],"Reproductive":["Endometriosis","Infertility","PCOS","Uterine Fibroids"]};
+
+const FOODS=[
+{n:"Wild Blueberries",c:"Fruits",img:"https://a-z-animals.com/media/2022/07/shutterstock_246215473.jpg",s:["Brain Fog","Memory Issues","Anxiety","Depression","Fatigue","Inflammation","Skin Issues","Tingles & Numbness","Eye Floaters","Mood Swings","Nerve Pain","Chronic Fatigue"],d:["Autoimmune Disease","Epstein-Barr Virus","Lyme Disease","PCOS","Fibromyalgia","Diabetes","Thyroid Conditions","Cancer"]},
+{n:"Papaya",c:"Fruits",img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=300&h=220&fit=crop",s:["Bloating","Constipation","Acid Reflux","Inflammation","Stomach Aches","Skin Issues","Joint Pain","Nausea","Gas"],d:["Colitis","Crohn's Disease","IBS","Diverticulitis","SIBO","Eczema & Psoriasis","Fibromyalgia"]},
+{n:"Bananas",c:"Fruits",img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300&h=220&fit=crop",s:["Anxiety","Depression","Constipation","Fatigue","Muscle Spasms","Mood Swings","Insomnia","Heart Palpitations"],d:["Adrenal Fatigue","Crohn's Disease","Colitis","IBS","Diabetes"]},
+{n:"Apples",c:"Fruits",img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300&h=220&fit=crop",s:["Constipation","Bloating","Acid Reflux","Brain Fog","Fatigue","Weight Gain","Dark Under-Eye Circles"],d:["Fatty Liver","High Cholesterol","IBS","Diabetes","Gallstones"]},
+{n:"Mangoes",c:"Fruits",img:"https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&h=220&fit=crop",s:["Fatigue","Brain Fog","Inflammation","Skin Issues","Constipation","Weight Loss Resistance"],d:["Diabetes","Eczema & Psoriasis","Crohn's Disease","Cancer"]},
+{n:"Oranges & Tangerines",c:"Fruits",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Skin Issues","Anxiety","Dark Under-Eye Circles","Food Sensitivities"],d:["Epstein-Barr Virus","Thyroid Conditions","High Blood Pressure","Autoimmune Disease"]},
+{n:"Lemons & Limes",c:"Fruits",img:"https://images.unsplash.com/photo-1590502593747-42a996133562?w=300&h=220&fit=crop",s:["Bloating","Acid Reflux","Nausea","Weight Gain","Fatigue","Dark Under-Eye Circles","Brittle Nails"],d:["Fatty Liver","Gallstones","High Cholesterol","UTIs"]},
+{n:"Watermelon",c:"Fruits",img:"https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=300&h=220&fit=crop",s:["Inflammation","Bloating","Fatigue","Headaches","Acid Reflux","Dry Skin"],d:["High Blood Pressure","Fatty Liver","Diabetes","UTIs"]},
+{n:"Dates",c:"Fruits",img:"https://flyingdragonnursery.co.nz/cdn/shop/files/FreshRhutabMedjoolDatesinwoodenbowl_2048x_09df237a-3097-4c99-a800-83467d0f4513_grande.webp?v=1757067110",s:["Constipation","Fatigue","Muscle Spasms","Insomnia","Anxiety"],d:["Adrenal Fatigue","Diabetes"]},
+{n:"Grapes",c:"Fruits",img:"https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Skin Issues","Eye Floaters","Memory Issues"],d:["Fatty Liver","Cancer","High Blood Pressure","Diabetes"]},
+{n:"Pitaya (Dragon Fruit)",c:"Fruits",img:"https://images.unsplash.com/photo-1527325678964-54921661f888?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Bloating","Skin Issues","Brain Fog","Acne"],d:["Fatty Liver","Diabetes","Cancer","IBS"]},
+{n:"Cherries",c:"Fruits",img:"https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=300&h=220&fit=crop",s:["Inflammation","Joint Pain","Insomnia","Headaches","Muscle Spasms"],d:["Arthritis","Fibromyalgia","High Blood Pressure"]},
+{n:"Cranberries",c:"Fruits",img:"https://images.unsplash.com/photo-1607305387299-a3d9611cd469?w=300&h=220&fit=crop",s:["Bloating","Inflammation","Fatigue","Skin Issues"],d:["UTIs","Fatty Liver","Cancer"]},
+{n:"Asparagus",c:"Vegetables",img:"https://images.unsplash.com/photo-1515471209610-dae1c92d8777?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Joint Pain","Constipation","Back Pain","Muscle Spasms","Tingles & Numbness","Weight Gain","Chronic Fatigue"],d:["Adrenal Fatigue","Lyme Disease","Epstein-Barr Virus","Fibromyalgia","Chronic Fatigue Syndrome","Diabetes","Cancer","Hashimoto's Thyroiditis"]},
+{n:"Celery",c:"Vegetables",img:"https://images.unsplash.com/photo-1580391564590-aeca65c5e2d3?w=300&h=220&fit=crop",s:["Bloating","Acid Reflux","Brain Fog","Inflammation","Joint Pain","Headaches","Fatigue","Skin Issues","Anxiety","Constipation","Tingles & Numbness"],d:["Autoimmune Disease","IBS","Hashimoto's Thyroiditis","Epstein-Barr Virus","Lyme Disease","Eczema & Psoriasis","Rheumatoid Arthritis","SIBO","High Blood Pressure"]},
+{n:"Sweet Potatoes",c:"Vegetables",img:"https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/sweet%20potato.jpg.webp?itok=t7TcXDex",s:["Fatigue","Constipation","Inflammation","Dry Skin","Weight Gain","Bloating"],d:["Diabetes","Fatty Liver","IBS","Thyroid Conditions","Cancer"]},
+{n:"Brussels Sprouts",c:"Vegetables",img:"https://images.unsplash.com/photo-1438118907704-7718ee9a191a?w=300&h=220&fit=crop",s:["Bloating","Inflammation","Fatigue","Weight Gain","Skin Issues","Constipation"],d:["Cancer","Thyroid Conditions","High Cholesterol","Fatty Liver"]},
+{n:"Cucumbers",c:"Vegetables",img:"https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=300&h=220&fit=crop",s:["Bloating","Inflammation","Dry Skin","Fatigue","Dark Under-Eye Circles","Weight Gain"],d:["Fatty Liver","High Blood Pressure","Diabetes","UTIs"]},
+{n:"Potatoes",c:"Vegetables",img:"https://images.unsplash.com/photo-1508313880080-c8bef1a68e6e?w=300&h=220&fit=crop",s:["Fatigue","Anxiety","Insomnia","Brain Fog","Weight Gain"],d:["Adrenal Fatigue","Thyroid Conditions","Hashimoto's Thyroiditis"]},
+{n:"Spinach",c:"Leafy Greens",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Brain Fog","Muscle Spasms","Anxiety","Eye Floaters","Memory Issues"],d:["Cancer","Thyroid Conditions","Autoimmune Disease"]},
+{n:"Kale & Collards",c:"Leafy Greens",img:"https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?w=300&h=220&fit=crop",s:["Inflammation","Fatigue","Joint Pain","Brain Fog","Skin Issues"],d:["Cancer","Thyroid Conditions","High Cholesterol","Autoimmune Disease"]},
+{n:"Sprouts & Microgreens",c:"Leafy Greens",img:"https://images.unsplash.com/photo-1562114808-b4b33cf60f4f?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Bloating","Brain Fog","Skin Issues"],d:["Cancer","Autoimmune Disease","Thyroid Conditions"]},
+{n:"Cilantro",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300&h=220&fit=crop",s:["Brain Fog","Memory Issues","Anxiety","Tingles & Numbness","Fatigue","Joint Pain","Headaches","Nerve Pain"],d:["Lyme Disease","Epstein-Barr Virus","Autoimmune Disease","Fibromyalgia"]},
+{n:"Turmeric",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=300&h=220&fit=crop",s:["Inflammation","Joint Pain","Brain Fog","Fatigue","Skin Issues","Muscle Spasms"],d:["Arthritis","Rheumatoid Arthritis","Cancer","Autoimmune Disease"]},
+{n:"Ginger",c:"Herbs & Spices",img:"https://www.yates.co.nz/media/plants/herbs/pr-tn-herb-ginger.jpg?rmode=max&ranchor=center&quality=100&width=638&height=626",s:["Nausea","Bloating","Inflammation","Joint Pain","Stomach Aches","Acid Reflux","Dizziness"],d:["IBS","SIBO","Arthritis","Cancer","Autoimmune Disease"]},
+{n:"Raw Honey",c:"Herbs & Spices",img:"https://cdn.shopify.com/s/files/1/0243/4063/t/17/assets/raw-honey-1703080642280.jpg?v=1703080642",s:["Insomnia","Fatigue","Anxiety","Inflammation","Skin Issues","Dry Skin","Brittle Nails"],d:["Epstein-Barr Virus","Lyme Disease","SIBO","UTIs","Eczema & Psoriasis"]},
+{n:"Aloe Vera",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=300&h=220&fit=crop",s:["Acid Reflux","Bloating","Inflammation","Skin Issues","Constipation","Stomach Aches"],d:["Colitis","Crohn's Disease","IBS","Eczema & Psoriasis","SIBO","Diverticulitis"]},
+{n:"Cat's Claw",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1509223197845-458d87318791?w=300&h=220&fit=crop",s:["Inflammation","Joint Pain","Fatigue","Tingles & Numbness","Nerve Pain","Brain Fog"],d:["Lyme Disease","Epstein-Barr Virus","Rheumatoid Arthritis","Fibromyalgia","Shingles","UTIs"]},
+{n:"Lemon Balm",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=300&h=220&fit=crop",s:["Anxiety","Insomnia","Restlessness","Racing Thoughts","Inflammation","Nerve Pain","Tingles & Numbness"],d:["Epstein-Barr Virus","Shingles","Lyme Disease","Thyroid Conditions"]},
+{n:"Atlantic Dulse",c:"Wild Foods",img:"https://theveganatlas.com/wp-content/uploads/2020/09/Dulse-seaweed.jpg",s:["Brain Fog","Memory Issues","Fatigue","Tingles & Numbness","Anxiety","Inflammation","Skin Issues"],d:["Thyroid Conditions","Hashimoto's Thyroiditis","Lyme Disease","Epstein-Barr Virus","Cancer","Autoimmune Disease"]},
+{n:"Burdock Root",c:"Wild Foods",img:"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=220&fit=crop",s:["Skin Issues","Acne","Fatigue","Inflammation","Bloating","Joint Pain"],d:["Eczema & Psoriasis","Lyme Disease","Fatty Liver","Cancer","SIBO"]},
+{n:"Dandelion",c:"Wild Foods",img:"https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=300&h=220&fit=crop",s:["Bloating","Fatigue","Inflammation","Weight Gain","Skin Issues","Constipation","Dark Under-Eye Circles"],d:["Fatty Liver","Gallstones","High Cholesterol","Eczema & Psoriasis","Cancer"]},
+{n:"Rose Hips",c:"Wild Foods",img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKLO2uwSswN58rqEeR8UtxSL6qmq3mVsJ4vA&s",s:["Inflammation","Fatigue","Skin Issues","Joint Pain","Anxiety"],d:["Arthritis","Autoimmune Disease","Epstein-Barr Virus","Adrenal Fatigue"]}
+];
+
+const CAT_ORDER=["Fruits","Vegetables","Leafy Greens","Herbs & Spices","Wild Foods"];
+const CAT_EMOJI={"Fruits":"🍎","Vegetables":"🥕","Leafy Greens":"🥬","Herbs & Spices":"🌿","Wild Foods":"🌾"};
+let mode='symptoms',selected=[],mainTab='healing';
+
+function setMainTab(tab){mainTab=tab;document.getElementById('mainSlider').className='main-slider'+(tab==='info'?' info':'');document.getElementById('mainBtnHeal').classList.toggle('active',tab==='healing');document.getElementById('mainBtnInfo').classList.toggle('active',tab==='info');document.getElementById('panelHealing').classList.toggle('active',tab==='healing');document.getElementById('panelInfo').classList.toggle('active',tab==='info');if(tab==='info')document.getElementById('tray').classList.add('hidden');else if(selected.length)document.getElementById('tray').classList.remove('hidden');}
+function setMode(m){mode=m;document.getElementById('subSlider').className='sub-slider '+m;document.getElementById('btnS').classList.toggle('active',m==='symptoms');document.getElementById('btnC').classList.toggle('active',m==='conditions');const inp=document.getElementById('searchInput');inp.className='search-input '+(m==='symptoms'?'sym':'con');inp.placeholder='Search '+m+'...';inp.value='';renderBrowse();}
+
+function onSearch(){renderBrowse(document.getElementById('searchInput').value.trim().toLowerCase());}
+
+function renderBrowse(q){
+  q=q||'';const cats=mode==='symptoms'?SYMPTOM_CATS:CONDITION_CATS;const type=mode==='symptoms'?'symptom':'condition';const cls=mode==='symptoms'?'sa':'ca';const names=new Set(selected.map(s=>s.name));let html='';
+  Object.entries(cats).forEach(([cat,items])=>{const fi=q?items.filter(i=>i.toLowerCase().includes(q)):items;if(!fi.length)return;
+    html+='<div class="browse-category '+(q?'open':'')+'"><div class="browse-cat-head" onclick="this.parentElement.classList.toggle(\'open\')"><span class="browse-cat-name">'+cat+'</span><span class="browse-cat-right"><span class="browse-cat-count">'+fi.length+'</span><svg class="browse-cat-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span></div><div class="browse-items">';
+    fi.forEach(item=>{const added=names.has(item);const hl=q?item.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<b>$1</b>'):item;
+      html+='<div class="browse-item '+(added?'added':'')+'" onclick="toggleItem(\''+item.replace(/'/g,"\\'")+'\',\''+type+'\')"><span class="browse-item-name">'+hl+'</span><span class="browse-item-add '+cls+'">'+(added?'✓':'+')+'</span></div>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('browseSection').innerHTML=html;
+}
+
+function toggleItem(name,type){const i=selected.findIndex(s=>s.name===name);if(i>=0)selected.splice(i,1);else selected.push({name,type});renderBrowse(document.getElementById('searchInput').value.trim().toLowerCase());renderTray();}
+
+function renderTray(){const tray=document.getElementById('tray');const pills=document.getElementById('trayPills');if(!selected.length||mainTab==='info'){tray.classList.add('hidden');return;}tray.classList.remove('hidden');pills.innerHTML=selected.map(s=>'<span class="pill '+s.type+'">'+s.name+'<span class="x" onclick="event.stopPropagation();removeTray(\''+s.name.replace(/'/g,"\\'")+'\')">&times;</span></span>').join('');setTimeout(()=>{pills.scrollLeft=pills.scrollWidth;},50);}
+
+function removeTray(name){selected=selected.filter(s=>s.name!==name);renderBrowse(document.getElementById('searchInput').value.trim().toLowerCase());renderTray();}
+
+function showResults(){
+  if(!selected.length)return;
+  const ss=new Set(selected.filter(s=>s.type==='symptom').map(s=>s.name));
+  const sc=new Set(selected.filter(s=>s.type==='condition').map(s=>s.name));
+  const tot=selected.length;
+  const scored=FOODS.map(f=>{const ms=f.s.filter(x=>ss.has(x));const mc=f.d.filter(x=>sc.has(x));const matches=[...ms.map(x=>({name:x,type:'s'})),...mc.map(x=>({name:x,type:'c'}))];return{...f,matches,score:matches.length};}).filter(f=>f.score>0).sort((a,b)=>b.score-a.score);
+  const grouped={};CAT_ORDER.forEach(c=>{grouped[c]=[];});scored.forEach(f=>{if(grouped[f.c])grouped[f.c].push(f);});
+
+  let h='<div class="results-back"><button class="results-back-btn" onclick="backToSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Edit selections</button></div>';
+  h+='<div class="results-hero"><h2>Your Healing Foods</h2><div class="results-selected">'+selected.map(s=>'<span class="rp '+(s.type==='symptom'?'s':'c')+'">'+s.name+'</span>').join('')+'</div>';
+  h+='<div class="results-summary">Based on your '+tot+' selected '+(tot===1?'item':'items')+', '+scored.length+' healing foods can support your body\'s healing process.</div></div>';
+
+  CAT_ORDER.forEach(cat=>{const foods=grouped[cat];if(!foods.length)return;
+    h+='<div class="food-category"><div class="food-cat-head"><span class="food-cat-title">'+CAT_EMOJI[cat]+' '+cat+'</span><span class="food-cat-count">'+foods.length+' '+(foods.length===1?'food':'foods')+'</span></div><div class="food-scroll">';
+    foods.forEach(f=>{h+='<div class="food-card" onclick="openFood(\''+f.n.replace(/'/g,"\\'")+'\')">';
+      h+='<img class="food-card-img" src="'+f.img+'" alt="'+f.n+'" loading="lazy" onerror="this.style.background=\'var(--divider)\'">';
+      h+='<div class="food-card-body"><div class="food-card-name">'+f.n+'</div><div class="food-card-match">Helps with '+f.score+' of '+tot+'</div><div class="food-card-pills">';
+      f.matches.slice(0,3).forEach(m=>{h+='<span class="fcp '+m.type+'">'+m.name+'</span>';});
+      if(f.matches.length>3)h+='<span class="fcp m">+'+(f.matches.length-3)+'</span>';
+      h+='</div></div></div>';});
+    h+='</div></div>';});
+
+  h+='<div class="source-note"><p>Healing food data from <a href="https://www.amazon.com/Medical-Medium-Life-Changing-Foods-Vegetables/dp/1401948324" target="_blank" rel="noopener"><em>Life-Changing Foods</em></a><br>by Anthony William, Medical Medium</p></div>';
+
+  document.getElementById('resultsPage').innerHTML=h;
+  document.getElementById('searchPage').classList.add('hidden');
+  document.getElementById('resultsPage').classList.add('show');
+  document.getElementById('tray').classList.add('hidden');
+  window.scrollTo(0,0);
+}
+
+function backToSearch(){document.getElementById('resultsPage').classList.remove('show');document.getElementById('searchPage').classList.remove('hidden');renderTray();window.scrollTo(0,0);}
+function openFood(name){const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-');const known={'wild-blueberries':'./foods/wild-blueberries.html','papaya':'./foods/papaya.html','asparagus':'./foods/asparagus.html'};if(known[slug]){window.location.href=known[slug];return;}alert('→ /'+slug+'\n\nWould navigate to food detail page.');}
+renderBrowse();
+
+</script>
+</body>
+</html>

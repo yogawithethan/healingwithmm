@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Wild Blueberries — Healing Foods</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* === WILD BLUEBERRY COLOR WORLD === */
+    --food-deep: #1a1040;
+    --food-primary: #2d1b69;
+    --food-secondary: #4a3090;
+    --food-mist: #8b7ab8;
+    --food-light: #e8e4f0;
+    --food-tint: #f4f1f9;
+    --food-bg: #faf9fc;
+
+    /* === STANDARDIZED === */
+    --text-primary: #1a1a2e;
+    --text-body: #3a3845;
+    --text-secondary: #5a5668;
+    --text-muted: #9a96a8;
+    --card-bg: #ffffff;
+    --card-border: rgba(0, 0, 0, 0.05);
+
+    /* === TAG COLORS (standardized across app) === */
+    --symptom-text: #8a3a3a;
+    --symptom-border: rgba(138, 58, 58, 0.25);
+    --symptom-bg: rgba(138, 58, 58, 0.06);
+    --condition-text: #1e2a4a;
+    --condition-border: rgba(30, 42, 74, 0.3);
+    --condition-bg: rgba(30, 42, 74, 0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+  body {
+    background: var(--food-bg);
+    color: var(--text-body);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    background: var(--food-deep);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: fadeInHero 1.4s ease-out 0.2s forwards;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(250,249,252,0.05) 20%,
+      rgba(250,249,252,0.3) 45%,
+      rgba(250,249,252,0.7) 65%,
+      rgba(250,249,252,0.92) 80%,
+      var(--food-bg) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 54px 20px 16px;
+    z-index: 10;
+  }
+
+  .nav-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: white;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+  .nav-btn:hover { background: rgba(0,0,0,0.35); }
+
+  .hero-text {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 0 28px 38px;
+    z-index: 5;
+  }
+
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--food-primary); opacity: 0.7;
+    margin-bottom: 10px;
+    opacity: 0; transform: translateY(12px);
+    animation: slideUp 0.8s ease-out 0.7s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px; font-weight: 700;
+    color: var(--food-deep);
+    line-height: 1.02;
+    letter-spacing: -0.5px;
+    opacity: 0; transform: translateY(16px);
+    animation: slideUp 0.9s ease-out 0.85s forwards;
+  }
+
+  .hero-subtitle {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--food-primary); opacity: 0.7;
+    margin-top: 8px;
+    font-weight: 300;
+    opacity: 0; transform: translateY(10px);
+    animation: slideUp 0.8s ease-out 1s forwards;
+  }
+
+  /* ---- CONTENT ---- */
+  .content {
+    position: relative;
+    background: var(--food-bg);
+    padding: 0 24px 160px;
+  }
+
+  .essence {
+    padding: 36px 0 32px;
+    border-bottom: 1px solid var(--food-light);
+    opacity: 0; transform: translateY(20px);
+    animation: slideUp 0.8s ease-out 1.2s forwards;
+  }
+
+  .essence p {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18.5px;
+    line-height: 1.75;
+    color: var(--food-primary);
+  }
+
+  .essence .hl {
+    background: linear-gradient(to bottom, transparent 62%, rgba(74,48,144,0.12) 62%);
+    padding: 0 2px;
+  }
+
+  /* ---- SECTIONS ---- */
+  .section { padding: 36px 0 0; }
+
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px; font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+    line-height: 1.2;
+  }
+
+  .section-body {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--text-body);
+  }
+
+  .section-body + .section-body { margin-top: 14px; }
+
+  .section-body em {
+    font-style: italic;
+    color: var(--food-primary);
+  }
+
+  .divider {
+    width: 36px; height: 2px;
+    background: var(--food-light);
+    margin: 36px 0 0;
+    border-radius: 2px;
+  }
+
+  /* ---- EXPANDABLE DESCRIPTION ---- */
+  .full-description { margin-top: 4px; }
+
+  .full-description .collapsed-text {
+    max-height: 180px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.5s ease;
+  }
+
+  .full-description .collapsed-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(transparent, var(--food-bg));
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .full-description.expanded .collapsed-text { max-height: 3000px; }
+  .full-description.expanded .collapsed-text::after { opacity: 0; }
+
+  .read-more-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--food-secondary);
+    background: none; border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    margin-top: 4px;
+    transition: color 0.2s;
+  }
+  .read-more-btn:hover { color: var(--food-primary); }
+
+  /* ---- TAGS ---- */
+  .tags-group { margin-bottom: 22px; }
+  .tags-group:last-child { margin-bottom: 0; }
+
+  .tags-group-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 400;
+    padding: 7px 15px;
+    border-radius: 100px;
+    border: 1px solid;
+    cursor: default;
+    transition: transform 0.2s;
+  }
+  .tag:hover { transform: scale(1.03); }
+
+  /* All symptoms: warm maroon-red */
+  .tag.symptom {
+    color: var(--symptom-text);
+    border-color: var(--symptom-border);
+    background: var(--symptom-bg);
+  }
+
+  /* All conditions: dark indigo */
+  .tag.condition {
+    color: var(--condition-text);
+    border-color: var(--condition-border);
+    background: var(--condition-bg);
+    font-weight: 450;
+  }
+
+  /* ---- RECIPE CARDS (standardized) ---- */
+  .recipes-scroll {
+    display: flex; gap: 14px;
+    overflow-x: auto;
+    padding: 4px 0 16px;
+    margin: 8px -24px 0;
+    padding-left: 24px;
+    padding-right: 24px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .recipes-scroll::-webkit-scrollbar { display: none; }
+
+  .recipe-card {
+    min-width: 200px; max-width: 200px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+    border: 1px solid var(--card-border);
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .recipe-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .recipe-card-image {
+    width: 100%; height: 130px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px;
+  }
+
+  .recipe-card-body { padding: 14px 16px 16px; }
+
+  .recipe-card-body h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .recipe-card-body p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .recipe-tag-pill {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: #f5f4f7;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
+
+  /* ---- TIPS (clean numbered, no emojis) ---- */
+  .tips-list {
+    margin-top: 8px;
+    display: flex; flex-direction: column;
+    gap: 18px;
+    counter-reset: tips;
+  }
+
+  .tip {
+    display: flex; gap: 16px;
+    align-items: flex-start;
+    counter-increment: tips;
+  }
+
+  .tip::before {
+    content: counter(tips);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--food-mist);
+    min-width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 3px;
+  }
+
+  .tip p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--text-body);
+    margin: 0;
+  }
+
+  /* ---- SOURCE ---- */
+  .source-note {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--food-light);
+    text-align: center;
+  }
+
+  .source-note p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .source-note a { color: var(--food-secondary); text-decoration: none; }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeInHero {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+  html { scroll-behavior: smooth; }
+
+  @supports (padding-top: env(safe-area-inset-top)) {
+    .hero-nav { padding-top: calc(env(safe-area-inset-top) + 12px); }
+  }
+</style>
+<link rel="stylesheet" href="../css/tabbar.css">
+<script defer src="../js/tabbar.js"></script>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img class="hero-image" src="https://images.unsplash.com/photo-1498159332174-be5a4d25b5e0?w=860&h=960&fit=crop&crop=center&q=85" alt="Fresh wild blueberries" onerror="this.style.background='linear-gradient(135deg,#1a1040,#2d1b69,#4a3090)';this.style.opacity='1';">
+    <div class="hero-gradient"></div>
+    <nav class="hero-nav">
+      <button class="nav-btn" aria-label="Back" onclick="window.location.href='../index.html';return false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="nav-btn" aria-label="Share"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
+    </nav>
+    <div class="hero-text">
+      <div class="hero-label">Healing Foods</div>
+      <h1 class="hero-title">Wild<br>Blueberries</h1>
+      <p class="hero-subtitle">Vaccinium angustifolium · The Resurrection Food</p>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="essence">
+      <p>The world's most powerful food is hiding on low, scrubby bushes in plain sight. There is not a cancer that wild blueberries cannot prevent, nor a disease known to humankind that wild blueberries do not <span class="hl">protect you from</span>.</p>
+    </div>
+
+    <!-- About / Information -->
+    <div class="section scroll-reveal">
+      <div class="section-label">About</div>
+      <div class="section-title">Information</div>
+      <div class="full-description" id="fullDesc">
+        <div class="collapsed-text">
+          <p class="section-body">Wild blueberries hold ancient and sacred survival information from the heavens, going back tens of thousands of years. They have adapted to every fluctuation in climate over the millennia. Their innate intelligence has prevented them from accepting a monoculture; instead, they thrive with more than 100 variable strains that look similar yet have different genetic makeups, so that these plants can never be eradicated, no matter what comes in the future.</p>
+          <p class="section-body">While other food plants can only continue after a fire if their seeds survive and are replanted, wild blueberry plants can be burned to the ground, and they will come back stronger than ever. No other food on the planet has the ability to thrive in such trying conditions. It is the number-one adaptogen, period — even though it is not recognized as an adaptogenic food at all.</p>
+          <p class="section-body">These tiny jewels have a plethora of undiscovered qualities. They're armed with dozens of antioxidant varieties that science does not yet know about, along with polyphenols, anthocyanins, anthocyanidins, dimethyl resveratrol, and as yet unknown cofactor adaptogenic amino acids. When you eat these berries, their innate intelligence reads your body, searches out potential disease, monitors your stress and toxicity levels, and figures out the best way to heal you — it is the only food that does that.</p>
+          <p class="section-body">One of the most effective heavy metal detoxing foods, wild blueberries are fantastic at removing all other Unforgiving Four factors, too. Wild blueberries are also the most powerful brain food in existence, the most potent prebiotic there is, and a star at restoring the liver. Essentially, this fruit offers a benefit unobtainable from any other source for every part of the body.</p>
+          <p class="section-body">There is more information in one wild blueberry plant than there is on the entire Internet. One hundred years from now, medical science will use the wild blueberry as the key to unlock the secrets of how to heal disease. This is the food you want in your life when you've been through the unthinkable and need the support to rise up again. Wild blueberries are the sole food on the planet to contain the full power of the divine, the Holy Source, the universe, and they are revered by the angels as the key to keeping the human race alive in the coming times. Wild blueberries are, above all, the resurrection food.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleDescription()">Read more</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Symptoms & Conditions -->
+    <div class="section scroll-reveal">
+      <div class="section-label">Helps With</div>
+      <div class="section-title">Symptoms & Conditions</div>
+
+      <div class="tags-group">
+        <div class="tags-group-label">Symptoms</div>
+        <div class="tags">
+          <span class="tag symptom">Brain Fog</span>
+          <span class="tag symptom">Inflammation</span>
+          <span class="tag symptom">Chronic Fatigue</span>
+          <span class="tag symptom">Heavy Metal Toxicity</span>
+          <span class="tag symptom">Neurological Symptoms</span>
+          <span class="tag symptom">Tingles & Numbness</span>
+          <span class="tag symptom">Memory Issues</span>
+          <span class="tag symptom">Dark Under-Eye Circles</span>
+        </div>
+      </div>
+
+      <div class="tags-group">
+        <div class="tags-group-label">Conditions</div>
+        <div class="tags">
+          <span class="tag condition">Alzheimer's & Dementia</span>
+          <span class="tag condition">Lyme Disease</span>
+          <span class="tag condition">Multiple Sclerosis</span>
+          <span class="tag condition">Epstein-Barr</span>
+          <span class="tag condition">Depression</span>
+          <span class="tag condition">Cancer</span>
+          <span class="tag condition">ME/CFS</span>
+          <span class="tag condition">Fatty Liver</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Emotional Support -->
+    <div class="section scroll-reveal">
+      <div class="section-label">Beyond the Physical</div>
+      <div class="section-title">Emotional Support</div>
+      <p class="section-body">Wild blueberries have more inspiration to offer us than even the best motivational speakers on the planet, because they mend us on an emotional level. They strengthen the very fabric of who we are so that we won't be so susceptible to punishment, rejection, scorn, humiliation, devastation, and degradation.</p>
+      <p class="section-body">If you've struggled with feeling <em>criticized, depreciated, discredited, mistreated, or neglected</em>, this is a holy, healing food for you.</p>
+    </div>
+
+    <!-- Spiritual Lesson -->
+    <div class="section scroll-reveal">
+      <div class="section-label">Deeper Wisdom</div>
+      <div class="section-title">Spiritual Lesson</div>
+      <p class="section-body">Native Americans observed early on that when wildfire occurred, the only thing that would grow in its path afterward were wild blueberry plants — in fact, they would come back stronger and healthier than ever before. And when frozen, their nutrition actually increases. The challenge of withstanding the freezing process pushes the fruit to perform at the top of its game.</p>
+      <p class="section-body">On both ends of the spectrum, in fire and ice, wild blueberries don't just survive — they triumph. They take an adverse circumstance, meet it, and become better for it. When you eat this supernatural fruit, <em>that indestructible essence becomes a part of you</em>.</p>
+      <p class="section-body">This is the food you want in your life when you've been through the unthinkable and need the support to rise up again.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Recipes -->
+    <div class="section scroll-reveal">
+      <div class="section-label">Featured In</div>
+      <div class="section-title">Recipes</div>
+      <div class="recipes-scroll">
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#2a4a3a,#1a3a2a);"><span>🥤</span></div>
+          <div class="recipe-card-body">
+            <h4>Heavy Metal Detox Smoothie</h4>
+            <p>Cilantro, spirulina, barley grass & dulse</p>
+            <span class="recipe-tag-pill">Key Ingredient</span>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#5a4a3a,#3a3428);"><span>🥣</span></div>
+          <div class="recipe-card-body">
+            <h4>Wild Blueberry Porridge</h4>
+            <p>Millet or oats with cinnamon</p>
+            <span class="recipe-tag-pill">Breakfast</span>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#4a2a3a,#3a1a2a);"><span>🍹</span></div>
+          <div class="recipe-card-body">
+            <h4>Liver Rescue Smoothie</h4>
+            <p>Bananas, dragon fruit & wild blueberries</p>
+            <span class="recipe-tag-pill">Cleanse</span>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#4a3a5a,#2a2040);"><span>🍨</span></div>
+          <div class="recipe-card-body">
+            <h4>Wild Blueberry Ice Cream</h4>
+            <p>Frozen wild blueberries & bananas</p>
+            <span class="recipe-tag-pill">Treat</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Tips -->
+    <div class="section scroll-reveal">
+      <div class="section-label">Practical</div>
+      <div class="section-title">Tips</div>
+      <div class="tips-list">
+        <div class="tip"><p>The easiest place to find wild blueberries is in the frozen-food aisle at the local supermarket. Freezing actually makes them even healthier — the challenge of withstanding the freezing process pushes the fruit to perform at the top of its game.</p></div>
+        <div class="tip"><p>In the United States, seek out frozen or fresh wild blueberries from Maine. In Canada, seek out those from eastern Canada. If you live in another country, don't underestimate the wild blueberries growing in your region.</p></div>
+        <div class="tip"><p>Do not confuse wild blueberries with their larger, cultivated cousins. Cultivated blueberries are great for your health, but don't offer even a fraction of wild blueberries' power.</p></div>
+        <div class="tip"><p>When you eat wild blueberries, make a mindful note that they've been graced by God and the universe, that they are a gift from above.</p></div>
+      </div>
+    </div>
+
+    <div class="source-note">
+      <p>Information from Anthony William, Medical Medium<br>
+      <a href="https://www.medicalmedium.com/blog/wild-blueberries">medicalmedium.com</a> · <em>Life-Changing Foods</em></p>
+    </div>
+
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    function toggleDescription() {
+      const desc = document.getElementById('fullDesc');
+      const btn = desc.querySelector('.read-more-btn');
+      desc.classList.toggle('expanded');
+      btn.textContent = desc.classList.contains('expanded') ? 'Read less' : 'Read more';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Asparagus — Healing Foods</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Asparagus brand font: Cormorant Garamond — tall, elegant, classical, upright like a spear -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --food-deep: #1a2e1a;
+    --food-primary: #3a6a3a;
+    --food-secondary: #5a8a5a;
+    --food-mist: #8aaa8a;
+    --food-light: #dce8dc;
+    --food-tint: #f0f5f0;
+    --food-bg: #f7faf7;
+
+    --text-primary: #1a1a2e;
+    --text-body: #3a3845;
+    --text-secondary: #5a5668;
+    --text-muted: #9a96a8;
+    --card-bg: #ffffff;
+    --card-border: rgba(0,0,0,0.05);
+
+    --symptom-text: #8a3a3a;
+    --symptom-border: rgba(138,58,58,0.25);
+    --symptom-bg: rgba(138,58,58,0.06);
+    --condition-text: #1e2a4a;
+    --condition-border: rgba(30,42,74,0.3);
+    --condition-bg: rgba(30,42,74,0.04);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+
+  body {
+    background: var(--food-bg);
+    color: var(--text-body);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px; line-height: 1.7;
+    max-width: 430px; margin: 0 auto;
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  .hero {
+    position: relative; width: 100%; height: 500px;
+    overflow: hidden; background: var(--food-deep);
+  }
+  .hero-image {
+    width: 100%; height: 100%;
+    object-fit: cover; opacity: 0;
+    animation: fadeInHero 1.4s ease-out 0.2s forwards;
+  }
+  .hero-gradient {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(247,250,247,0.05) 20%,
+      rgba(247,250,247,0.3) 45%,
+      rgba(247,250,247,0.7) 65%,
+      rgba(247,250,247,0.92) 80%,
+      var(--food-bg) 100%
+    );
+    pointer-events: none;
+  }
+  .hero-nav {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between;
+    padding: 54px 20px 16px; z-index: 10;
+  }
+  .nav-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: none;
+    background: rgba(0,0,0,0.2); backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px); color: white; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+  .nav-btn:hover { background: rgba(0,0,0,0.35); }
+  .hero-text {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 0 28px 32px; z-index: 5;
+  }
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--food-primary); opacity: 0.7;
+    margin-bottom: 8px; opacity: 0; transform: translateY(12px);
+    animation: slideUp 0.8s ease-out 0.7s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 52px; font-weight: 700;
+    color: var(--food-deep); line-height: 1.0;
+    letter-spacing: 1px; opacity: 0; transform: translateY(16px);
+    animation: slideUp 0.9s ease-out 0.85s forwards;
+  }
+  .hero-subtitle {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-style: italic; font-size: 14px;
+    color: var(--food-primary); opacity: 0.7;
+    margin-top: 6px; font-weight: 400;
+    opacity: 0; transform: translateY(10px);
+    animation: slideUp 0.8s ease-out 1s forwards;
+  }
+
+  .content { position: relative; background: var(--food-bg); padding: 0 24px 160px; }
+
+  .essence {
+    padding: 32px 0 32px;
+    border-bottom: 1px solid var(--food-light);
+    opacity: 0; transform: translateY(20px);
+    animation: slideUp 0.8s ease-out 1.2s forwards;
+  }
+  .essence p {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18.5px; line-height: 1.75;
+    color: var(--food-primary);
+  }
+  .essence .hl {
+    background: linear-gradient(to bottom, transparent 62%, rgba(58,106,58,0.14) 62%);
+    padding: 0 2px;
+  }
+
+  .section { padding: 36px 0 0; }
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px; font-weight: 500;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 26px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 18px; line-height: 1.2;
+  }
+  .section-body { font-size: 15.5px; line-height: 1.85; color: var(--text-body); }
+  .section-body + .section-body { margin-top: 14px; }
+  .section-body em { font-style: italic; color: var(--food-primary); }
+  .divider { width: 36px; height: 2px; background: var(--food-light); margin: 36px 0 0; border-radius: 2px; }
+
+  .full-description { margin-top: 4px; }
+  .full-description .collapsed-text {
+    max-height: 180px; overflow: hidden; position: relative;
+    transition: max-height 0.5s ease;
+  }
+  .full-description .collapsed-text::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 60px; background: linear-gradient(transparent, var(--food-bg));
+    pointer-events: none; transition: opacity 0.3s;
+  }
+  .full-description.expanded .collapsed-text { max-height: 3000px; }
+  .full-description.expanded .collapsed-text::after { opacity: 0; }
+  .read-more-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--food-secondary); background: none; border: none;
+    cursor: pointer; padding: 8px 0; margin-top: 4px;
+  }
+  .read-more-btn:hover { color: var(--food-primary); }
+
+  .tags-group { margin-bottom: 22px; }
+  .tags-group:last-child { margin-bottom: 0; }
+  .tags-group-label {
+    font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400;
+    padding: 7px 15px; border-radius: 100px; border: 1px solid;
+    cursor: default; transition: transform 0.2s;
+  }
+  .tag:hover { transform: scale(1.03); }
+  .tag.symptom { color: var(--symptom-text); border-color: var(--symptom-border); background: var(--symptom-bg); }
+  .tag.condition { color: var(--condition-text); border-color: var(--condition-border); background: var(--condition-bg); font-weight: 450; }
+
+  .recipes-scroll {
+    display: flex; gap: 14px; overflow-x: auto;
+    padding: 4px 0 16px; margin: 8px -24px 0;
+    padding-left: 24px; padding-right: 24px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .recipes-scroll::-webkit-scrollbar { display: none; }
+  .recipe-card {
+    min-width: 200px; max-width: 200px; background: var(--card-bg);
+    border-radius: 16px; overflow: hidden; scroll-snap-align: start;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.04); border: 1px solid var(--card-border);
+    cursor: pointer; transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .recipe-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .recipe-card-image { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; font-size: 42px; }
+  .recipe-card-body { padding: 14px 16px 16px; }
+  .recipe-card-body h4 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 5px; }
+  .recipe-card-body p { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-secondary); line-height: 1.45; margin: 0; }
+  .recipe-tag-pill { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); background: #f5f4f7; padding: 4px 10px; border-radius: 6px; margin-top: 8px; }
+
+  .tips-list { margin-top: 8px; display: flex; flex-direction: column; gap: 18px; counter-reset: tips; }
+  .tip { display: flex; gap: 16px; align-items: flex-start; counter-increment: tips; }
+  .tip::before {
+    content: counter(tips); font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 16px; font-weight: 600; color: var(--food-mist);
+    min-width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; margin-top: 3px;
+  }
+  .tip p { font-size: 14.5px; line-height: 1.75; color: var(--text-body); margin: 0; }
+
+  .source-note { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--food-light); text-align: center; }
+  .source-note p { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+  .source-note a { color: var(--food-secondary); text-decoration: none; }
+
+  @keyframes fadeInHero { from { opacity:0; transform:scale(1.05); } to { opacity:1; transform:scale(1); } }
+  @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .scroll-reveal { opacity:0; transform:translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .scroll-reveal.visible { opacity:1; transform:translateY(0); }
+  html { scroll-behavior: smooth; }
+  @supports (padding-top: env(safe-area-inset-top)) { .hero-nav { padding-top: calc(env(safe-area-inset-top) + 12px); } }
+</style>
+<link rel="stylesheet" href="../css/tabbar.css">
+<script defer src="../js/tabbar.js"></script>
+</head>
+<body>
+
+  <div class="hero">
+    <img class="hero-image" src="https://images.unsplash.com/photo-1515471209610-dae1c92d8777?w=860&h=960&fit=crop&crop=center&q=85" alt="Fresh asparagus spears" onerror="this.style.background='linear-gradient(135deg,#2a4a2a,#3a6a3a,#5a8a5a)';this.style.opacity='1';">
+    <div class="hero-gradient"></div>
+    <nav class="hero-nav">
+      <button class="nav-btn" aria-label="Back" onclick="window.location.href='../index.html';return false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="nav-btn" aria-label="Share"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
+    </nav>
+    <div class="hero-text">
+      <div class="hero-label">Healing Foods</div>
+      <h1 class="hero-title">Asparagus</h1>
+      <p class="hero-subtitle">Asparagus officinalis · The Fountain of Youth</p>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="essence">
+      <p>This source of youth is no myth, and it does come from the earth — it just happens to be readily available at the grocery store. That <span class="hl">anti-aging wonder</span> is asparagus.</p>
+    </div>
+
+    <div class="section scroll-reveal">
+      <div class="section-label">About</div>
+      <div class="section-title">Information</div>
+      <div class="full-description" id="fullDesc">
+        <div class="collapsed-text">
+          <p class="section-body">Throughout history, people have been searching for the fountain of youth. Far and wide they've traveled, seeking that magical spring flowing from the ground that will preserve good health. This source of youth is no myth, and it does come from the earth — it just happens to be readily available at the grocery store too. That anti-aging wonder is asparagus.</p>
+          <p class="section-body">When were you at your strongest? When could you run effortlessly, swim in the ocean without tiring? Connect with your best moment, whenever it was, that time when you felt your full life force coursing through you. That's the same power that a spear of asparagus contains in its first few weeks aboveground. Every piece of asparagus that we eat was once on its way to becoming a small tree.</p>
+          <p class="section-body">Asparagus contains phytochemical compounds such as chlorophyll and lutein that act as critical organ cleansers. They get deep into organs such as the liver, spleen, pancreas, and kidneys, scrubbing out the toxins they find there. Chlorophyll bonded to amino acids such as glutamine, threonine, and serine provides an avenue for heavy metal detox.</p>
+          <p class="section-body">Some of the phytochemicals found in asparagus are toxin inhibitors — a fact as yet unknown to science. This means that once toxins such as DDT, pesticides, and heavy metals have been driven out of the organs, these specialized phytochemicals stay behind and repel new toxins from taking up residence there. This toxin inhibition makes asparagus an amazing tool for battling virtually every variety of cancer.</p>
+          <p class="section-body">Asparagus is high in very easily absorbable B vitamins, helping us reestablish our proper levels of these key nutrients. Also high in silica and trace minerals such as iron, zinc, molybdenum, chromium, phosphorus, magnesium, and selenium, asparagus is one of the most adrenal-supporting foods in existence and excellent for bringing you back to life when your adrenal glands have been pushed to the max.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleDescription()">Read more</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section scroll-reveal">
+      <div class="section-label">Helps With</div>
+      <div class="section-title">Symptoms & Conditions</div>
+      <div class="tags-group">
+        <div class="tags-group-label">Symptoms</div>
+        <div class="tags">
+          <span class="tag symptom">Fatigue</span>
+          <span class="tag symptom">Inflammation</span>
+          <span class="tag symptom">Joint Pain</span>
+          <span class="tag symptom">Constipation</span>
+          <span class="tag symptom">Back Pain</span>
+          <span class="tag symptom">Muscle Spasms</span>
+          <span class="tag symptom">Tingles & Numbness</span>
+          <span class="tag symptom">Weight Gain</span>
+        </div>
+      </div>
+      <div class="tags-group">
+        <div class="tags-group-label">Conditions</div>
+        <div class="tags">
+          <span class="tag condition">Adrenal Fatigue</span>
+          <span class="tag condition">Lyme Disease</span>
+          <span class="tag condition">Epstein-Barr</span>
+          <span class="tag condition">Fibromyalgia</span>
+          <span class="tag condition">Chronic Fatigue Syndrome</span>
+          <span class="tag condition">Diabetes</span>
+          <span class="tag condition">Cancer</span>
+          <span class="tag condition">Hashimoto's</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section scroll-reveal">
+      <div class="section-label">Beyond the Physical</div>
+      <div class="section-title">Emotional Support</div>
+      <p class="section-body">Asparagus is a very helpful food if you struggle with shyness, self-consciousness, concern over what others think of you, fear of breaking out of your shell and exposing yourself, or dread of venturing out in public.</p>
+      <p class="section-body">If you truly need help in these areas (as opposed to if you're just a natural introvert who's comfortable with who you are, despite others' misguided opinions that you should act more like an extrovert), asparagus will come to your aid and give you the <em>confidence to rise up and claim your place in the world</em>.</p>
+    </div>
+
+    <div class="section scroll-reveal">
+      <div class="section-label">Deeper Wisdom</div>
+      <div class="section-title">Spiritual Lesson</div>
+      <p class="section-body">When we harvest asparagus, it's really just a sprout on its way to becoming a much larger plant. If we were to let asparagus fern out and go to seed, it would become woody and inedible. Over time, humans have learned to recognize when a spear of asparagus is at its peak for consumption.</p>
+      <p class="section-body">It's a lesson that transfers to our own lives. Sometimes people push circumstances too far, aiming for more and more growth, trying to see something through to the bitter end. We don't always have to let a full cycle play out. We can learn to recognize when a project, meeting, or conversation has reached its best moment, and to <em>gracefully end it at that point</em>, harnessing the power of that peak time for the best ultimate outcome.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section scroll-reveal">
+      <div class="section-label">Featured In</div>
+      <div class="section-title">Recipes</div>
+      <div class="recipes-scroll">
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#3a6a3a,#2a4a2a);"><span>🥗</span></div>
+          <div class="recipe-card-body"><h4>Shaved Asparagus Salad</h4><p>Brussels sprout, radish & apple</p><span class="recipe-tag-pill">Salad</span></div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#5a4a3a,#3a3020);"><span>🌶️</span></div>
+          <div class="recipe-card-body"><h4>Chili Garlic Asparagus</h4><p>With Brussels sprouts & garlic</p><span class="recipe-tag-pill">Side</span></div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#4a5a3a,#2a3a1a);"><span>🥤</span></div>
+          <div class="recipe-card-body"><h4>Liver Rescue Juice</h4><p>Asparagus, celery & cucumber</p><span class="recipe-tag-pill">Juice</span></div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-card-image" style="background:linear-gradient(135deg,#5a6a4a,#3a4a2a);"><span>🍝</span></div>
+          <div class="recipe-card-body"><h4>Sweet Potato Noodles</h4><p>With garlic, red pepper & asparagus</p><span class="recipe-tag-pill">Dinner</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section scroll-reveal">
+      <div class="section-label">Practical</div>
+      <div class="section-title">Tips</div>
+      <div class="tips-list">
+        <div class="tip"><p>Look for thicker, fatter asparagus spears, as these tend to be the most nutritious. Though if all you can find are bunches of skinny asparagus, don't shy away from them — they still have value.</p></div>
+        <div class="tip"><p>Try juicing a few stalks of raw asparagus along with your favorite other green juice ingredients, such as celery and cucumber. Consuming asparagus in this form makes it especially effective.</p></div>
+        <div class="tip"><p>For an incredible Medical Medium tool that is a spring organ detox, eat one bunch of asparagus per day for an entire month.</p></div>
+      </div>
+    </div>
+
+    <div class="source-note">
+      <p>Information from Anthony William, Medical Medium<br>
+      <a href="https://www.medicalmedium.com/blog/asparagus">medicalmedium.com</a> · <em>Life-Changing Foods</em></p>
+    </div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    function toggleDescription() {
+      const desc = document.getElementById('fullDesc');
+      const btn = desc.querySelector('.read-more-btn');
+      desc.classList.toggle('expanded');
+      btn.textContent = desc.classList.contains('expanded') ? 'Read less' : 'Read more';
+    }
+  </script>
+</body>
+</html>
