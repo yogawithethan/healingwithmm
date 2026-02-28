@@ -70,11 +70,12 @@
 
     /* hero text block — sits at bottom on top of fades */
     '.fp-hero__text{position:absolute;bottom:0;left:0;right:0;padding:0 28px 38px;z-index:5}',
-    /* category pill — food-primary background, white text */
-    '.fp-hero__label{display:inline-block;font-family:"DM Sans",sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--food-primary);color:#fff;padding:5px 13px;border-radius:20px;margin-bottom:14px;animation:fpSlideUp 0.8s ease-out 0.7s both}',
+    /* category pill — food-deep (darkest shade) background, white text */
+    '.fp-hero__label{display:inline-block;font-family:"DM Sans",sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--food-deep);color:#fff;padding:5px 13px;border-radius:20px;margin-bottom:14px;animation:fpSlideUp 0.8s ease-out 0.7s both}',
     /* title — white with shadow for readability over any image */
     '.fp-hero__title{font-size:clamp(2.4rem,10vw,3.8rem);font-weight:700;line-height:1.02;color:#fff;letter-spacing:-0.5px;text-shadow:0 2px 16px rgba(0,0,0,0.35),0 1px 4px rgba(0,0,0,0.2);animation:fpSlideUp 0.9s ease-out 0.85s both}',
-    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:14px;font-weight:300;color:rgba(255,255,255,0.8);margin-top:8px;text-shadow:0 1px 6px rgba(0,0,0,0.25);animation:fpSlideUp 0.8s ease-out 1s both}',
+    /* subtitle — food-mist (light variant of food color), readable on dark shade */
+    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:14px;font-weight:300;color:var(--food-mist);margin-top:8px;animation:fpSlideUp 0.8s ease-out 1s both}',
 
     /* ── CONTENT ── */
     '.fp-content{padding:0 24px}',
