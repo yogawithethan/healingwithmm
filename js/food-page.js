@@ -40,6 +40,8 @@
     '*{box-sizing:border-box;margin:0;padding:0}',
     'html,body{min-height:100%;background:var(--food-bg,#faf9fc);color:#1a1a2e;font-family:"DM Sans","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}',
     'body{padding-bottom:90px}',
+    /* desktop overrides */
+    '@media(min-width:768px){body{padding-bottom:40px}.fp-content{max-width:680px}}',
 
     /* hero */
     '.fp-hero{position:relative;width:100%;min-height:340px;display:flex;align-items:flex-end;overflow:hidden}',
@@ -107,7 +109,13 @@
     styleEl.textContent = ':root{' + vars + '}';
     document.head.appendChild(styleEl);
 
-    /* inject page styles */
+    /* inject shared.css so tab bar and global styles are available */
+    var sharedLink = document.createElement('link');
+    sharedLink.rel = 'stylesheet';
+    sharedLink.href = scriptURL.origin + base + '/css/shared.css';
+    document.head.appendChild(sharedLink);
+
+    /* inject food-specific page styles */
     var cssEl = document.createElement('style');
     cssEl.textContent = CSS;
     document.head.appendChild(cssEl);

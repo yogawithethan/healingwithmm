@@ -210,3 +210,97 @@ a { text-decoration: none; color: inherit; }
 @supports(padding-top: env(safe-area-inset-top)) {
   .hero { padding-top: calc(env(safe-area-inset-top) + 16px); }
 }
+
+/* ===== DESKTOP TOP NAV (hidden on mobile) ===== */
+.mm-top-nav {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,.07);
+  padding: 12px 24px;
+}
+.mm-top-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.mm-top-nav-pills {
+  display: flex;
+  align-items: center;
+  background: #f0f0ef;
+  border-radius: 28px;
+  padding: 4px;
+  gap: 2px;
+}
+.mm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background .18s, color .18s;
+  white-space: nowrap;
+}
+.mm-nav-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+.mm-nav-item.active {
+  background: var(--text-primary);
+  color: #fff;
+}
+.mm-nav-item:not(.active):hover {
+  background: rgba(0,0,0,.07);
+  color: var(--text-primary);
+}
+.mm-top-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mm-nav-login {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1.5px solid var(--divider);
+  background: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background .18s, color .18s, border-color .18s;
+  text-decoration: none;
+  display: inline-block;
+}
+.mm-nav-login:hover {
+  background: var(--text-primary);
+  color: #fff;
+  border-color: var(--text-primary);
+}
+
+/* ===== DESKTOP BREAKPOINT ===== */
+@media (min-width: 768px) {
+  body {
+    max-width: 900px;
+    padding-top: 64px;
+  }
+  /* Hide mobile bottom tab bar */
+  .mm-tab-bar { display: none !important; }
+  /* Show desktop top nav */
+  .mm-top-nav { display: block; }
+}
