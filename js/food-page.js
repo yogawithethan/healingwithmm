@@ -91,8 +91,16 @@
     '.fp-tag--condition{background:var(--food-tint);color:var(--food-deep);border:1px solid var(--food-light)}',
 
     /* scroll reveal */
-    '.fp-section{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}',
-    '.fp-section.visible{opacity:1;transform:none}',
+    '.fp-section,.fp-tips{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}',
+    '.fp-section.visible,.fp-tips.visible{opacity:1;transform:none}',
+
+    /* tips */
+    '.fp-tips{margin:28px 0;background:var(--food-tint);border-radius:14px;padding:18px 20px}',
+    '.fp-tips__label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--food-mist);margin-bottom:4px}',
+    '.fp-tips__title{font-size:20px;font-weight:700;color:var(--food-deep);margin-bottom:14px;letter-spacing:-.01em}',
+    '.fp-tips__list{list-style:none;display:flex;flex-direction:column;gap:10px}',
+    '.fp-tips__item{display:flex;gap:10px;font-size:14px;line-height:1.6;color:#3a3845}',
+    '.fp-tips__bullet{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--food-light);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--food-primary);margin-top:1px}',
 
     /* source note */
     '.fp-source{margin-top:32px;padding:16px 18px;background:var(--food-tint);border-radius:12px;text-align:center;font-size:12px;color:var(--food-mist);line-height:1.6}',
@@ -198,6 +206,21 @@
       ? '<div class="fp-essence">' + esc(food.essence) + '</div>'
       : '';
 
+    /* tips */
+    var tipsHTML = '';
+    if (food.tips && food.tips.length) {
+      tipsHTML = '<div class="fp-tips scroll-reveal">'
+        + '<div class="fp-section__label">How to Use</div>'
+        + '<div class="fp-section__title">Tips</div>'
+        + '<ul class="fp-tips__list">'
+        + food.tips.map(function (tip, i) {
+            return '<li class="fp-tips__item">'
+              + '<div class="fp-tips__bullet">' + (i + 1) + '</div>'
+              + '<span>' + esc(tip) + '</span></li>';
+          }).join('')
+        + '</ul></div><div class="fp-divider"></div>';
+    }
+
     /* full HTML */
     var html = '<div class="fp-hero">'
       + heroBg
@@ -216,6 +239,7 @@
       + symptomsHTML
       + emotionalHTML
       + spiritualHTML
+      + tipsHTML
       + '<div class="fp-source">Content inspired by <strong>Medical Medium</strong> by Anthony William.<br>For educational purposes only — not medical advice.</div>'
       + '</div>';
 
@@ -234,9 +258,9 @@
           if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
         });
       }, { threshold: 0.08 });
-      document.querySelectorAll('.fp-section').forEach(function (el) { io.observe(el); });
+      document.querySelectorAll('.fp-section, .fp-tips').forEach(function (el) { io.observe(el); });
     } else {
-      document.querySelectorAll('.fp-section').forEach(function (el) { el.classList.add('visible'); });
+      document.querySelectorAll('.fp-section, .fp-tips').forEach(function (el) { el.classList.add('visible'); });
     }
 
     /* read-more toggle */
@@ -250,9 +274,13 @@
       if (btn) btn.textContent = open ? 'Show less' : 'Read more';
     };
 
-    /* inject tabbar */
+    /* inject tabbar, then mark as sub-page for back button */
     var tb = document.createElement('script');
     tb.src = base + '/js/tabbar.js';
+    tb.onload = function () {
+      var bar = document.getElementById('topBar');
+      if (bar) bar.classList.add('sub-page');
+    };
     document.body.appendChild(tb);
   }
 

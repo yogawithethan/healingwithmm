@@ -60,21 +60,21 @@
   document.body.appendChild(bottomEl.firstElementChild);
 
   /* ── Desktop top nav ── */
-  var topHtml = '<div class="mm-top-nav"><div class="mm-top-nav-inner">'
-    + '<a class="mm-nav-logo" href="' + base + '/">Healing with MM</a>'
-    + '<div class="mm-top-nav-pills">';
+  var topHtml = '<nav class="top-bar" id="topBar"><div class="top-bar-inner">'
+    + '<a class="nav-logo" href="' + base + '/">Healing <em>with</em> MM</a>'
+    + '<div class="nav-capsule">'
+    + '<button class="nav-back" onclick="history.back()" aria-label="Go back">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">'
+    + '<polyline points="15 18 9 12 15 6" stroke="#1a1a2e" stroke-width="2.2" fill="none"/></svg>'
+    + '</button>';
   tabs.forEach(function (tab) {
     var active = isActive(tab.paths) ? ' active' : '';
-    topHtml += '<a class="mm-nav-item' + active + '" href="' + tab.href + '">';
+    topHtml += '<a class="nav-pill' + active + '" href="' + tab.href + '">';
     topHtml += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
       + tab.icon + '</svg>';
     topHtml += tab.label + '</a>';
   });
-  topHtml += '</div>';
-  topHtml += '<div class="mm-top-nav-actions">'
-    + '<a class="mm-nav-login" href="#">Sign In</a>'
-    + '</div>';
-  topHtml += '</div></div>';
+  topHtml += '</div></div></nav>';
 
   var topEl = document.createElement('div');
   topEl.innerHTML = topHtml;

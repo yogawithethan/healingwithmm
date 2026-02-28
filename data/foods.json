@@ -5,7 +5,7 @@
     "subtitle": "The Ultimate Colon Cleanser",
     "category": "Fruits",
     "titleFont": "Montserrat",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/apples.png",
     "colors": {
       "deep": "#3a1010",
       "primary": "#8b2020",
@@ -20,7 +20,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Apricots",
@@ -43,7 +44,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Avocados",
@@ -66,7 +68,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Bananas",
@@ -74,7 +77,7 @@
     "subtitle": "The Antispasmodic Miracle",
     "category": "Fruits",
     "titleFont": "Quicksand",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/bananas.png",
     "colors": {
       "deep": "#3a3000",
       "primary": "#7a6a00",
@@ -89,7 +92,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Berries",
@@ -112,7 +116,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Cherries",
@@ -135,7 +140,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Cranberries",
@@ -158,7 +164,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Dates",
@@ -166,7 +173,7 @@
     "subtitle": "The Sacred Sweetener",
     "category": "Fruits",
     "titleFont": "Cinzel",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/dates.png",
     "colors": {
       "deep": "#2a1a08",
       "primary": "#5c3a10",
@@ -181,7 +188,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Figs",
@@ -189,7 +197,7 @@
     "subtitle": "The Grounding Fruit",
     "category": "Fruits",
     "titleFont": "Zilla Slab",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/figs.png",
     "colors": {
       "deep": "#2a1020",
       "primary": "#5a2848",
@@ -204,7 +212,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Grapes",
@@ -212,7 +221,7 @@
     "subtitle": "The Kidney Tonic",
     "category": "Fruits",
     "titleFont": "Pacifico",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/grapes.png",
     "colors": {
       "deep": "#1a0a30",
       "primary": "#3a1a60",
@@ -227,7 +236,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Kiwis",
@@ -250,7 +260,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Lemons & Limes",
@@ -273,7 +284,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Mangoes",
@@ -281,7 +293,7 @@
     "subtitle": "The Nourisher",
     "category": "Fruits",
     "titleFont": "Ultra",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/mangoes.png",
     "colors": {
       "deep": "#4a2000",
       "primary": "#a04800",
@@ -296,7 +308,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Melons",
@@ -304,7 +317,7 @@
     "subtitle": "The Deep Cleanser",
     "category": "Fruits",
     "titleFont": "Raleway",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/melons.png",
     "colors": {
       "deep": "#0a3020",
       "primary": "#1a6040",
@@ -319,7 +332,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Oranges & Tangerines",
@@ -327,7 +341,7 @@
     "subtitle": "The Immunity Builders",
     "category": "Fruits",
     "titleFont": "Titan One",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/oranges-tangerines.png",
     "colors": {
       "deep": "#4a1800",
       "primary": "#a04000",
@@ -342,7 +356,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Papayas",
@@ -350,7 +365,7 @@
     "subtitle": "The Stomach Healer",
     "category": "Fruits",
     "titleFont": "Satisfy",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/papaya.png",
     "colors": {
       "deep": "#5c2a0a",
       "primary": "#8b4513",
@@ -365,7 +380,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Pears",
@@ -388,7 +404,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Pomegranates",
@@ -411,7 +428,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Artichokes",
@@ -419,7 +437,7 @@
     "subtitle": "The Spiritual Shield",
     "category": "Vegetables",
     "titleFont": "Marcellus",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/artichoke.png",
     "colors": {
       "deep": "#1a2020",
       "primary": "#3a5050",
@@ -434,7 +452,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Asparagus",
@@ -442,7 +461,7 @@
     "subtitle": "The Fatigue Fighter",
     "category": "Vegetables",
     "titleFont": "Amatic SC",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/asparagus.png",
     "colors": {
       "deep": "#1a3a1a",
       "primary": "#2a5a2a",
@@ -457,7 +476,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Celery",
@@ -465,7 +485,7 @@
     "subtitle": "The Reset Button",
     "category": "Vegetables",
     "titleFont": "Bebas Neue",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/celery.png",
     "colors": {
       "deep": "#1a3020",
       "primary": "#2a5a38",
@@ -480,7 +500,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Cruciferous Vegetables",
@@ -503,7 +524,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Cucumbers",
@@ -526,7 +548,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Leafy Greens",
@@ -549,7 +572,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Onions",
@@ -572,7 +596,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Potatoes",
@@ -595,7 +620,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Radishes",
@@ -618,7 +644,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Sprouts & Microgreens",
@@ -641,7 +668,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Sweet Potatoes",
@@ -664,7 +692,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Aromatic Herbs",
@@ -687,7 +716,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Cat's Claw",
@@ -695,7 +725,7 @@
     "subtitle": "The Pathogen Fighter",
     "category": "Herbs & Spices",
     "titleFont": "Permanent Marker",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/cats-claw.png",
     "colors": {
       "deep": "#2a1810",
       "primary": "#5a3828",
@@ -710,7 +740,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Cilantro",
@@ -718,7 +749,7 @@
     "subtitle": "The Heavy Metal Chelator",
     "category": "Herbs & Spices",
     "titleFont": "Shadows Into Light",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/cilantro.png",
     "colors": {
       "deep": "#0a3010",
       "primary": "#1a5a20",
@@ -733,7 +764,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Garlic",
@@ -756,7 +788,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Ginger",
@@ -764,7 +797,7 @@
     "subtitle": "The Anti-Spasmodic",
     "category": "Herbs & Spices",
     "titleFont": "Rock Salt",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/ginger.png",
     "colors": {
       "deep": "#3a2800",
       "primary": "#7a5800",
@@ -779,7 +812,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Lemon Balm",
@@ -787,7 +821,7 @@
     "subtitle": "The Calming Healer",
     "category": "Herbs & Spices",
     "titleFont": "Dancing Script",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/lemon-balm.png",
     "colors": {
       "deep": "#1a3018",
       "primary": "#2a6030",
@@ -802,7 +836,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Licorice Root",
@@ -825,7 +860,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Parsley",
@@ -833,7 +869,7 @@
     "subtitle": "The Alkalizer",
     "category": "Herbs & Spices",
     "titleFont": "Nunito",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/parsley.png",
     "colors": {
       "deep": "#0a2a10",
       "primary": "#1a5a20",
@@ -848,7 +884,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Raspberry Leaf",
@@ -871,7 +908,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Turmeric",
@@ -879,7 +917,7 @@
     "subtitle": "The Anti-Inflammatory",
     "category": "Herbs & Spices",
     "titleFont": "Abril Fatface",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/turmeric.png",
     "colors": {
       "deep": "#3a2a00",
       "primary": "#7a5a00",
@@ -894,7 +932,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Aloe Vera",
@@ -902,7 +941,7 @@
     "subtitle": "The Gut Soother",
     "category": "Wild Foods",
     "titleFont": "Varela Round",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/aloe-vera.png",
     "colors": {
       "deep": "#0a3020",
       "primary": "#1a5a40",
@@ -917,7 +956,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Atlantic Sea Vegetables",
@@ -940,7 +980,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Burdock Root",
@@ -963,7 +1004,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Chaga Mushroom",
@@ -971,7 +1013,7 @@
     "subtitle": "The Immune Rebuilder",
     "category": "Wild Foods",
     "titleFont": "Special Elite",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/chaga.png",
     "colors": {
       "deep": "#1a1410",
       "primary": "#3a3028",
@@ -986,7 +1028,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Coconut",
@@ -1009,7 +1052,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Dandelion",
@@ -1032,7 +1076,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Nettle Leaf",
@@ -1040,7 +1085,7 @@
     "subtitle": "The Herbal Powerhouse",
     "category": "Wild Foods",
     "titleFont": "Patua One",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/nettle-leaf.png",
     "colors": {
       "deep": "#0a2a10",
       "primary": "#1a5820",
@@ -1055,7 +1100,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Raw Honey",
@@ -1063,7 +1109,7 @@
     "subtitle": "The Divine Sweetener",
     "category": "Wild Foods",
     "titleFont": "Lobster",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/raw-honey.png",
     "colors": {
       "deep": "#3a2800",
       "primary": "#7a5800",
@@ -1078,7 +1124,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Red Clover",
@@ -1086,7 +1133,7 @@
     "subtitle": "The Blood Cleanser",
     "category": "Wild Foods",
     "titleFont": "Parisienne",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/red-clover.png",
     "colors": {
       "deep": "#3a0828",
       "primary": "#7a1850",
@@ -1101,7 +1148,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Rose Hips",
@@ -1109,7 +1157,7 @@
     "subtitle": "The Vitamin C Champion",
     "category": "Wild Foods",
     "titleFont": "Pinyon Script",
-    "heroImage": "",
+    "heroImage": "/img/healing_foods/rose-hips.png",
     "colors": {
       "deep": "#3a1010",
       "primary": "#8a2030",
@@ -1124,7 +1172,8 @@
     "symptoms": [],
     "conditions": [],
     "emotionalSupport": [],
-    "spiritualLesson": []
+    "spiritualLesson": [],
+    "tips": []
   },
   {
     "name": "Wild Blueberries",
@@ -1132,7 +1181,7 @@
     "subtitle": "The Resurrection Food",
     "category": "Wild Foods",
     "titleFont": "Almendra",
-    "heroImage": "https://images.unsplash.com/photo-1498159332174-be5a4d25b5e0?w=860&h=960&fit=crop&crop=center&q=85",
+    "heroImage": "/img/healing_foods/wild-blueberries.png",
     "colors": {
       "deep": "#1a1040",
       "primary": "#2d1b69",
@@ -1178,6 +1227,13 @@
       "Native Americans observed early on that when wildfire occurred, the only thing that would grow in its path afterward were wild blueberry plants — in fact, they would come back stronger and healthier than ever before. And when frozen, their nutrition actually increases. The challenge of withstanding the freezing process pushes the fruit to perform at the top of its game.",
       "On both ends of the spectrum, in fire and ice, wild blueberries don't just survive — they triumph. They take an adverse circumstance, meet it, and become better for it. When you eat this supernatural fruit, that indestructible essence becomes a part of you.",
       "This is the food you want in your life when you've been through the unthinkable and need the support to rise up again."
+    ],
+    "tips": [
+      "Use frozen wild blueberries — they're flash-frozen at peak ripeness and retain all their healing phytochemicals.",
+      "Include them daily in the Heavy Metal Detox Smoothie with spirulina, cilantro, barley grass juice powder, and Atlantic dulse.",
+      "Look for 'wild blueberries' specifically — they're a different species from cultivated blueberries with far greater antioxidant density.",
+      "Eat them with celery juice or on their own first thing in the morning to maximize their detoxifying effect on the liver.",
+      "Keep a bag of frozen wild blueberries in your freezer at all times — they blend beautifully into smoothies straight from frozen."
     ]
   }
 ]
