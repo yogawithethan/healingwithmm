@@ -54,11 +54,11 @@
     /* gradient-only fallback (used when no heroImage) */
     '.fp-hero__gradient{position:absolute;inset:0;z-index:0}',
 
-    /* dark text-shade: gives the bottom of the image depth so title is readable */
-    '.fp-hero__text-shade{position:absolute;bottom:0;left:0;right:0;height:70%;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;z-index:2}',
+    /* dark shade: strong gradient from bottom — white title sits on this */
+    '.fp-hero__text-shade{position:absolute;bottom:0;left:0;right:0;height:75%;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.2) 50%,transparent 100%);pointer-events:none;z-index:2}',
 
-    /* bottom fade: blends hero seamlessly into page background */
-    '.fp-hero__bottom-fade{position:absolute;bottom:0;left:0;right:0;height:45%;background:linear-gradient(to bottom,transparent 0%,transparent 50%,var(--food-bg) 100%);pointer-events:none;z-index:3}',
+    /* bottom fade: thin fade at the very edge only — keeps the dark zone for text */
+    '.fp-hero__bottom-fade{position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent 0%,var(--food-bg) 100%);pointer-events:none;z-index:3}',
 
     /* mobile back button — hidden on desktop (capsule handles it) */
     '.fp-hero__nav{position:absolute;top:0;left:0;right:0;padding:54px 20px 16px;z-index:10}',
@@ -70,9 +70,11 @@
 
     /* hero text block — sits at bottom on top of fades */
     '.fp-hero__text{position:absolute;bottom:0;left:0;right:0;padding:0 28px 38px;z-index:5}',
-    '.fp-hero__label{font-family:"DM Sans",sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--food-primary);opacity:0.7;margin-bottom:10px;animation:fpSlideUp 0.8s ease-out 0.7s both}',
-    '.fp-hero__title{font-size:clamp(2.4rem,10vw,3.8rem);font-weight:700;line-height:1.02;color:var(--food-deep);letter-spacing:-0.5px;animation:fpSlideUp 0.9s ease-out 0.85s both}',
-    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:14px;font-weight:300;color:var(--food-primary);opacity:0.7;margin-top:8px;animation:fpSlideUp 0.8s ease-out 1s both}',
+    /* category pill — food-primary background, white text */
+    '.fp-hero__label{display:inline-block;font-family:"DM Sans",sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--food-primary);color:#fff;padding:5px 13px;border-radius:20px;margin-bottom:14px;animation:fpSlideUp 0.8s ease-out 0.7s both}',
+    /* title — white with shadow for readability over any image */
+    '.fp-hero__title{font-size:clamp(2.4rem,10vw,3.8rem);font-weight:700;line-height:1.02;color:#fff;letter-spacing:-0.5px;text-shadow:0 2px 16px rgba(0,0,0,0.35),0 1px 4px rgba(0,0,0,0.2);animation:fpSlideUp 0.9s ease-out 0.85s both}',
+    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:14px;font-weight:300;color:rgba(255,255,255,0.8);margin-top:8px;text-shadow:0 1px 6px rgba(0,0,0,0.25);animation:fpSlideUp 0.8s ease-out 1s both}',
 
     /* ── CONTENT ── */
     '.fp-content{padding:0 24px}',
