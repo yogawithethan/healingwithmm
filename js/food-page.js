@@ -13,10 +13,7 @@
   if (base.endsWith('/')) base = base.slice(0, -1);
   var dataURL = scriptURL.origin + base + '/data/foods.json';
 
-  /* ── 3. Render helpers ── */
-  function tag(cls, text) {
-    return '<span class="fp-tag fp-tag--' + cls + '">' + esc(text) + '</span>';
-  }
+  /* ── 3. Helpers ── */
   function esc(s) {
     return String(s)
       .replace(/&/g, '&amp;')
@@ -24,92 +21,122 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   }
+  function tag(cls, text) {
+    return '<span class="fp-tag fp-tag--' + cls + '">' + esc(text) + '</span>';
+  }
   function tags(arr, cls) {
     if (!arr || !arr.length) return '';
     return arr.map(function (t) { return tag(cls, t); }).join('');
   }
-  function paragraphs(arr) {
+  function paras(arr) {
     if (!arr || !arr.length) return '';
-    return arr.map(function (p) {
-      return '<p class="fp-body">' + esc(p) + '</p>';
-    }).join('');
+    return arr.map(function (p) { return '<p class="fp-body">' + esc(p) + '</p>'; }).join('');
   }
 
-  /* ── 4. Full page CSS ── */
+  /* ── 4. Page CSS ── */
   var CSS = [
+    /* reset */
     '*{box-sizing:border-box;margin:0;padding:0}',
-    'html,body{min-height:100%;background:var(--food-bg,#faf9fc);color:#1a1a2e;font-family:"DM Sans","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}',
-    'body{padding-bottom:90px}',
-    /* desktop overrides */
-    '@media(min-width:768px){body{padding-bottom:40px}.fp-content{max-width:680px}}',
+    'html{scroll-behavior:smooth}',
+    'html,body{min-height:100%;-webkit-font-smoothing:antialiased}',
 
-    /* hero */
-    '.fp-hero{position:relative;width:100%;min-height:340px;display:flex;align-items:flex-end;overflow:hidden}',
-    '.fp-hero__img{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}',
-    '.fp-hero__fade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.18) 0%,var(--food-bg,#faf9fc) 100%);z-index:1}',
-    '.fp-hero__content{position:relative;z-index:2;padding:28px 22px 32px;width:100%}',
-    '.fp-back{display:inline-flex;align-items:center;gap:6px;color:var(--food-primary);font-size:13px;font-weight:600;text-decoration:none;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);border-radius:20px;padding:5px 12px 5px 8px;margin-bottom:18px;transition:background .2s}',
-    '.fp-back svg{width:16px;height:16px;stroke:var(--food-primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
-    '.fp-hero__label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--food-mist);margin-bottom:6px}',
-    '.fp-hero__title{font-size:clamp(2.4rem,8vw,3.4rem);font-weight:700;line-height:1.05;color:var(--food-deep);letter-spacing:-.02em}',
-    '.fp-hero__subtitle{font-size:14px;color:var(--food-secondary);margin-top:6px;font-style:italic}',
+    /* body — food-bg as page background */
+    'body{background:var(--food-bg);color:#3a3845;font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.7;max-width:430px;margin:0 auto;overflow-x:hidden;padding-bottom:100px}',
+    '@media(min-width:768px){body{max-width:1100px;padding-bottom:60px}}',
 
-    /* no-image gradient fallback */
+    /* ── HERO: full bleed 100vw ── */
+    '.fp-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);height:500px;overflow:hidden;background:var(--food-deep)}',
+    '@media(min-width:768px){.fp-hero{height:600px}}',
+
+    /* actual image — fades in on load */
+    '.fp-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;animation:fpFadeIn 1.4s ease-out 0.2s forwards;z-index:1}',
+
+    /* gradient-only fallback (used when no heroImage) */
     '.fp-hero__gradient{position:absolute;inset:0;z-index:0}',
 
-    /* content */
-    '.fp-content{padding:0 18px;max-width:520px;margin:0 auto}',
+    /* dark text-shade: gives the bottom of the image depth so title is readable */
+    '.fp-hero__text-shade{position:absolute;bottom:0;left:0;right:0;height:70%;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;z-index:2}',
 
-    /* essence */
-    '.fp-essence{background:var(--food-tint);border-left:3px solid var(--food-secondary);border-radius:0 10px 10px 0;padding:16px 18px;margin:22px 0;font-size:15px;line-height:1.65;color:var(--food-deep);font-style:italic}',
+    /* bottom fade: blends hero seamlessly into page background */
+    '.fp-hero__bottom-fade{position:absolute;bottom:0;left:0;right:0;height:45%;background:linear-gradient(to bottom,transparent 0%,transparent 50%,var(--food-bg) 100%);pointer-events:none;z-index:3}',
+
+    /* mobile back button — hidden on desktop (capsule handles it) */
+    '.fp-hero__nav{position:absolute;top:0;left:0;right:0;padding:54px 20px 16px;z-index:10}',
+    '@supports(padding-top:env(safe-area-inset-top)){.fp-hero__nav{padding-top:calc(env(safe-area-inset-top) + 12px)}}',
+    '@media(min-width:768px){.fp-hero__nav{display:none}}',
+    '.fp-nav-btn{width:40px;height:40px;border-radius:50%;border:none;background:rgba(0,0,0,0.2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.3s;-webkit-tap-highlight-color:transparent}',
+    '.fp-nav-btn:hover{background:rgba(0,0,0,0.35)}',
+    '.fp-nav-btn svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
+
+    /* hero text block — sits at bottom on top of fades */
+    '.fp-hero__text{position:absolute;bottom:0;left:0;right:0;padding:0 28px 38px;z-index:5}',
+    '.fp-hero__label{font-family:"DM Sans",sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--food-primary);opacity:0.7;margin-bottom:10px;animation:fpSlideUp 0.8s ease-out 0.7s both}',
+    '.fp-hero__title{font-size:clamp(2.4rem,10vw,3.8rem);font-weight:700;line-height:1.02;color:var(--food-deep);letter-spacing:-0.5px;animation:fpSlideUp 0.9s ease-out 0.85s both}',
+    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:14px;font-weight:300;color:var(--food-primary);opacity:0.7;margin-top:8px;animation:fpSlideUp 0.8s ease-out 1s both}',
+
+    /* ── CONTENT ── */
+    '.fp-content{padding:0 24px}',
+    '@media(min-width:768px){.fp-content{max-width:680px;margin:0 auto;padding:0 0 40px}}',
+
+    /* essence — flows directly from hero, max 20px gap */
+    '.fp-essence{padding:20px 0 28px;border-bottom:1px solid var(--food-light);opacity:0;transform:translateY(20px);animation:fpSlideUp 0.8s ease-out 1.2s both}',
+    '.fp-essence p{font-family:"Source Serif 4",Georgia,serif;font-size:18.5px;line-height:1.75;color:var(--food-primary)}',
 
     /* sections */
-    '.fp-section{margin:28px 0}',
-    '.fp-section__label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--food-mist);margin-bottom:4px}',
-    '.fp-section__title{font-size:20px;font-weight:700;color:var(--food-deep);margin-bottom:14px;letter-spacing:-.01em}',
-    '.fp-body{font-size:15px;line-height:1.7;color:#3a3845;margin-bottom:12px}',
-    '.fp-body:last-child{margin-bottom:0}',
+    '.fp-section{padding:36px 0 0;opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}',
+    '.fp-section.visible{opacity:1;transform:none}',
 
-    /* read-more */
-    '.fp-desc{position:relative}',
-    '.fp-desc__inner{overflow:hidden;max-height:112px;transition:max-height .4s ease}',
-    '.fp-desc__inner.open{max-height:2000px}',
-    '.fp-desc__fade{position:absolute;bottom:28px;left:0;right:0;height:60px;background:linear-gradient(transparent,var(--food-bg));pointer-events:none;transition:opacity .3s}',
-    '.fp-desc__fade.hidden{opacity:0;pointer-events:none}',
-    '.fp-readmore{display:block;margin-top:8px;background:none;border:1.5px solid var(--food-light);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--food-primary);cursor:pointer;transition:background .2s,color .2s}',
-    '.fp-readmore:hover{background:var(--food-light)}',
+    /* section label: food-primary color */
+    '.fp-section__label{font-family:"DM Sans",sans-serif;font-size:10.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--food-primary);margin-bottom:10px}',
+    '.fp-section__title{font-family:"Playfair Display",Georgia,serif;font-size:24px;font-weight:600;color:#1a1a2e;margin-bottom:18px;line-height:1.2}',
+    '.fp-body{font-size:15.5px;line-height:1.85;color:#3a3845}',
+    '.fp-body+.fp-body{margin-top:14px}',
+    '.fp-body em{font-style:italic;color:var(--food-primary)}',
 
-    /* divider */
-    '.fp-divider{height:1px;background:var(--food-light);margin:24px 0}',
+    /* divider — small decorative line */
+    '.fp-divider{width:36px;height:2px;background:var(--food-light);margin:36px 0 0;border-radius:2px}',
 
-    /* tags */
-    '.fp-tags-group{margin-bottom:16px}',
-    '.fp-tags-group__label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--food-mist);margin-bottom:8px}',
-    '.fp-tags{display:flex;flex-wrap:wrap;gap:7px}',
-    '.fp-tag{font-size:13px;font-weight:600;padding:5px 12px;border-radius:20px;display:inline-block}',
-    '.fp-tag--symptom{background:var(--food-light);color:var(--food-primary)}',
-    '.fp-tag--condition{background:var(--food-tint);color:var(--food-deep);border:1px solid var(--food-light)}',
+    /* read-more expandable */
+    '.fp-desc{margin-top:4px}',
+    '.fp-desc__inner{max-height:180px;overflow:hidden;position:relative;transition:max-height 0.5s ease}',
+    '.fp-desc__inner.open{max-height:3000px}',
+    '.fp-desc__inner:not(.open)::after{content:"";position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,var(--food-bg));pointer-events:none}',
+    '.fp-readmore{font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;color:var(--food-secondary);background:none;border:none;cursor:pointer;padding:8px 0;margin-top:4px;transition:color 0.2s;display:block}',
+    '.fp-readmore:hover{color:var(--food-primary)}',
 
-    /* scroll reveal */
-    '.fp-section,.fp-tips{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}',
-    '.fp-section.visible,.fp-tips.visible{opacity:1;transform:none}',
+    /* tags — standardized colors (not food-specific) */
+    '.fp-tags-group{margin-bottom:22px}',
+    '.fp-tags-group:last-child{margin-bottom:0}',
+    '.fp-tags-group__label{font-family:"DM Sans",sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#9a96a8;margin-bottom:10px}',
+    '.fp-tags{display:flex;flex-wrap:wrap;gap:8px}',
+    '.fp-tag{font-family:"DM Sans",sans-serif;font-size:13px;font-weight:400;padding:7px 15px;border-radius:100px;border:1px solid;cursor:default;transition:transform 0.2s}',
+    '.fp-tag:hover{transform:scale(1.03)}',
+    '.fp-tag--symptom{color:#8a3a3a;border-color:rgba(138,58,58,0.25);background:rgba(138,58,58,0.06)}',
+    '.fp-tag--condition{color:#1e2a4a;border-color:rgba(30,42,74,0.3);background:rgba(30,42,74,0.04)}',
 
-    /* tips */
-    '.fp-tips{margin:28px 0;background:var(--food-tint);border-radius:14px;padding:18px 20px}',
-    '.fp-tips__label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--food-mist);margin-bottom:4px}',
-    '.fp-tips__title{font-size:20px;font-weight:700;color:var(--food-deep);margin-bottom:14px;letter-spacing:-.01em}',
-    '.fp-tips__list{list-style:none;display:flex;flex-direction:column;gap:10px}',
-    '.fp-tips__item{display:flex;gap:10px;font-size:14px;line-height:1.6;color:#3a3845}',
-    '.fp-tips__bullet{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--food-light);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--food-primary);margin-top:1px}',
+    /* tips — CSS counter, Playfair numbers */
+    '.fp-tips{padding:36px 0 0;opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}',
+    '.fp-tips.visible{opacity:1;transform:none}',
+    '.fp-tips__label{font-family:"DM Sans",sans-serif;font-size:10.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--food-primary);margin-bottom:10px}',
+    '.fp-tips__title{font-family:"Playfair Display",Georgia,serif;font-size:24px;font-weight:600;color:#1a1a2e;margin-bottom:18px;line-height:1.2}',
+    '.fp-tips__list{margin-top:8px;display:flex;flex-direction:column;gap:18px;counter-reset:tips}',
+    '.fp-tip{display:flex;gap:16px;align-items:flex-start;counter-increment:tips}',
+    '.fp-tip::before{content:counter(tips);font-family:"Playfair Display",Georgia,serif;font-size:16px;font-weight:600;color:var(--food-mist);min-width:24px;height:24px;display:flex;align-items:center;justify-content:center;margin-top:3px;flex-shrink:0}',
+    '.fp-tip p{font-size:14.5px;line-height:1.75;color:#3a3845;margin:0}',
 
     /* source note */
-    '.fp-source{margin-top:32px;padding:16px 18px;background:var(--food-tint);border-radius:12px;text-align:center;font-size:12px;color:var(--food-mist);line-height:1.6}',
-    '.fp-source strong{color:var(--food-secondary)}'
+    '.fp-source{margin-top:48px;padding-top:24px;border-top:1px solid var(--food-light);text-align:center}',
+    '.fp-source p{font-family:"DM Sans",sans-serif;font-size:11px;color:#9a96a8;line-height:1.6}',
+    '.fp-source a{color:var(--food-secondary);text-decoration:none}',
+
+    /* animations */
+    '@keyframes fpFadeIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}',
+    '@keyframes fpSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}',
   ].join('\n');
 
-  /* ── 5. Render food page HTML ── */
+  /* ── 5. Render ── */
   function render(food) {
-    /* inject CSS vars */
+    /* CSS vars for food color palette */
     var vars = Object.keys(food.colors).map(function (k) {
       return '--food-' + k + ':' + food.colors[k];
     }).join(';');
@@ -117,147 +144,154 @@
     styleEl.textContent = ':root{' + vars + '}';
     document.head.appendChild(styleEl);
 
-    /* inject shared.css so tab bar and global styles are available */
+    /* shared.css (tab bar, desktop nav, components) */
     var sharedLink = document.createElement('link');
     sharedLink.rel = 'stylesheet';
     sharedLink.href = scriptURL.origin + base + '/css/shared.css';
     document.head.appendChild(sharedLink);
 
-    /* inject food-specific page styles */
+    /* food-specific styles */
     var cssEl = document.createElement('style');
     cssEl.textContent = CSS;
     document.head.appendChild(cssEl);
 
-    /* set page title */
+    /* page title */
     document.title = food.name + ' — Healing with MM';
 
-    /* inject Google Font for title */
-    var fontUrl = 'https://fonts.googleapis.com/css2?family=' +
-      encodeURIComponent(food.titleFont) + ':wght@400;600;700&display=swap';
+    /* Google Fonts — preconnects + title font
+       Use ital,wght axis tuple format which works for both variable and static fonts */
+    var pc1 = document.createElement('link');
+    pc1.rel = 'preconnect'; pc1.href = 'https://fonts.googleapis.com';
+    document.head.appendChild(pc1);
+
+    var pc2 = document.createElement('link');
+    pc2.rel = 'preconnect'; pc2.href = 'https://fonts.gstatic.com';
+    pc2.crossOrigin = 'anonymous';
+    document.head.appendChild(pc2);
+
+    var fontName = (food.titleFont && food.titleFont.trim()) || 'Playfair Display';
+    /* Request weight 400 and 700; if font lacks 700 Google returns closest available */
+    var fontUrl = 'https://fonts.googleapis.com/css2?family='
+      + fontName.replace(/ /g, '+')
+      + ':ital,wght@0,400;0,700;1,400&display=swap';
     var fontLink = document.createElement('link');
-    fontLink.rel = 'stylesheet';
-    fontLink.href = fontUrl;
+    fontLink.rel = 'stylesheet'; fontLink.href = fontUrl;
     document.head.appendChild(fontLink);
 
-    /* hero background */
-    var heroBg = food.heroImage
-      ? '<div class="fp-hero__img" style="background-image:url(\'' + food.heroImage + '\')"></div>'
-      : '<div class="fp-hero__gradient" style="background:linear-gradient(160deg,var(--food-secondary) 0%,var(--food-primary) 40%,var(--food-deep) 100%)"></div>';
+    /* ── hero ── */
+    var hasImage = food.heroImage && food.heroImage.length > 0;
+    var heroInner = hasImage
+      ? '<img class="fp-hero__img" src="' + esc(food.heroImage) + '" alt="' + esc(food.name) + '" onerror="this.style.opacity=\'0\'">'
+        + '<div class="fp-hero__text-shade"></div>'
+      : '<div class="fp-hero__gradient" style="background:linear-gradient(160deg,var(--food-secondary) 0%,var(--food-primary) 40%,var(--food-deep) 100%)"></div>'
+        + '<div class="fp-hero__text-shade"></div>';
 
-    /* description section */
+    /* ── description ── */
     var descHTML = '';
     if (food.description && food.description.length) {
-      var paras = paragraphs(food.description);
-      descHTML = '<div class="fp-section scroll-reveal">'
+      descHTML = '<div class="fp-section">'
         + '<div class="fp-section__label">About</div>'
         + '<div class="fp-section__title">Information</div>'
         + '<div class="fp-desc">'
-        + '<div class="fp-desc__inner" id="fpDescInner">' + paras + '</div>'
-        + '<div class="fp-desc__fade" id="fpDescFade"></div>'
-        + '</div>'
+        + '<div class="fp-desc__inner" id="fpDescInner">' + paras(food.description) + '</div>'
         + '<button class="fp-readmore" id="fpReadmore" onclick="window.__fpToggleDesc()">Read more</button>'
-        + '</div>'
+        + '</div></div>'
         + '<div class="fp-divider"></div>';
     }
 
-    /* symptoms & conditions */
+    /* ── symptoms & conditions ── */
     var symptomsHTML = '';
     if ((food.symptoms && food.symptoms.length) || (food.conditions && food.conditions.length)) {
-      symptomsHTML = '<div class="fp-section scroll-reveal">'
+      symptomsHTML = '<div class="fp-section">'
         + '<div class="fp-section__label">Helps With</div>'
         + '<div class="fp-section__title">Symptoms &amp; Conditions</div>';
       if (food.symptoms && food.symptoms.length) {
         symptomsHTML += '<div class="fp-tags-group">'
           + '<div class="fp-tags-group__label">Symptoms</div>'
-          + '<div class="fp-tags">' + tags(food.symptoms, 'symptom') + '</div>'
-          + '</div>';
+          + '<div class="fp-tags">' + tags(food.symptoms, 'symptom') + '</div></div>';
       }
       if (food.conditions && food.conditions.length) {
         symptomsHTML += '<div class="fp-tags-group">'
           + '<div class="fp-tags-group__label">Conditions</div>'
-          + '<div class="fp-tags">' + tags(food.conditions, 'condition') + '</div>'
-          + '</div>';
+          + '<div class="fp-tags">' + tags(food.conditions, 'condition') + '</div></div>';
       }
       symptomsHTML += '</div><div class="fp-divider"></div>';
     }
 
-    /* emotional support */
+    /* ── emotional support ── */
     var emotionalHTML = '';
     if (food.emotionalSupport && food.emotionalSupport.length) {
-      emotionalHTML = '<div class="fp-section scroll-reveal">'
+      emotionalHTML = '<div class="fp-section">'
         + '<div class="fp-section__label">Beyond the Physical</div>'
         + '<div class="fp-section__title">Emotional Support</div>'
-        + paragraphs(food.emotionalSupport)
+        + paras(food.emotionalSupport)
         + '</div>';
     }
 
-    /* spiritual lesson */
+    /* ── spiritual lesson ── */
     var spiritualHTML = '';
     if (food.spiritualLesson && food.spiritualLesson.length) {
-      spiritualHTML = '<div class="fp-section scroll-reveal">'
+      spiritualHTML = '<div class="fp-section">'
         + '<div class="fp-section__label">Deeper Wisdom</div>'
         + '<div class="fp-section__title">Spiritual Lesson</div>'
-        + paragraphs(food.spiritualLesson)
+        + paras(food.spiritualLesson)
         + '</div>';
     }
 
-    /* essence */
-    var essenceHTML = food.essence
-      ? '<div class="fp-essence">' + esc(food.essence) + '</div>'
-      : '';
-
-    /* tips */
+    /* ── tips ── */
     var tipsHTML = '';
     if (food.tips && food.tips.length) {
-      tipsHTML = '<div class="fp-tips scroll-reveal">'
-        + '<div class="fp-section__label">How to Use</div>'
-        + '<div class="fp-section__title">Tips</div>'
-        + '<ul class="fp-tips__list">'
-        + food.tips.map(function (tip, i) {
-            return '<li class="fp-tips__item">'
-              + '<div class="fp-tips__bullet">' + (i + 1) + '</div>'
-              + '<span>' + esc(tip) + '</span></li>';
+      var needsDivider = !!(emotionalHTML || spiritualHTML);
+      tipsHTML = (needsDivider ? '<div class="fp-divider"></div>' : '')
+        + '<div class="fp-tips">'
+        + '<div class="fp-tips__label">Practical</div>'
+        + '<div class="fp-tips__title">Tips</div>'
+        + '<div class="fp-tips__list">'
+        + food.tips.map(function (tip) {
+            return '<div class="fp-tip"><p>' + esc(tip) + '</p></div>';
           }).join('')
-        + '</ul></div><div class="fp-divider"></div>';
+        + '</div></div>';
     }
 
-    /* full HTML */
-    var html = '<div class="fp-hero">'
-      + heroBg
-      + '<div class="fp-hero__fade"></div>'
-      + '<div class="fp-hero__content">'
-      + '<a class="fp-back" href="../">'
-      + '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Healing Foods</a>'
+    /* ── assemble full page ── */
+    var html =
+      '<div class="fp-hero">'
+      + heroInner
+      + '<div class="fp-hero__bottom-fade"></div>'
+      + '<nav class="fp-hero__nav">'
+      + '<button class="fp-nav-btn" onclick="history.back()" aria-label="Go back">'
+      + '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>'
+      + '</button>'
+      + '</nav>'
+      + '<div class="fp-hero__text">'
       + '<div class="fp-hero__label">' + esc(food.category) + '</div>'
       + '<h1 class="fp-hero__title food-title">' + esc(food.name) + '</h1>'
-      + '<div class="fp-hero__subtitle">' + esc(food.subtitle) + '</div>'
+      + '<p class="fp-hero__subtitle">' + esc(food.subtitle) + '</p>'
       + '</div>'
       + '</div>'
       + '<div class="fp-content">'
-      + essenceHTML
+      + (food.essence ? '<div class="fp-essence"><p>' + esc(food.essence) + '</p></div>' : '')
       + descHTML
       + symptomsHTML
       + emotionalHTML
       + spiritualHTML
       + tipsHTML
-      + '<div class="fp-source">Content inspired by <strong>Medical Medium</strong> by Anthony William.<br>For educational purposes only — not medical advice.</div>'
+      + '<div class="fp-source"><p>Content inspired by <strong>Medical Medium</strong> by Anthony William.<br>For educational purposes only — not medical advice.</p></div>'
       + '</div>';
 
     document.body.innerHTML = html;
 
-    /* apply title font */
+    /* apply title font once element exists */
     var titleEl = document.querySelector('.food-title');
-    if (titleEl) {
-      titleEl.style.fontFamily = "'" + food.titleFont + "', serif";
-    }
+    if (titleEl) titleEl.style.fontFamily = "'" + fontName + "', serif";
 
-    /* scroll reveal via IntersectionObserver */
+    /* scroll reveal */
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
           if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
         });
-      }, { threshold: 0.08 });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
       document.querySelectorAll('.fp-section, .fp-tips').forEach(function (el) { io.observe(el); });
     } else {
       document.querySelectorAll('.fp-section, .fp-tips').forEach(function (el) { el.classList.add('visible'); });
@@ -266,15 +300,13 @@
     /* read-more toggle */
     window.__fpToggleDesc = function () {
       var inner = document.getElementById('fpDescInner');
-      var fade = document.getElementById('fpDescFade');
       var btn = document.getElementById('fpReadmore');
       if (!inner) return;
       var open = inner.classList.toggle('open');
-      if (fade) fade.classList.toggle('hidden', open);
-      if (btn) btn.textContent = open ? 'Show less' : 'Read more';
+      if (btn) btn.textContent = open ? 'Read less' : 'Read more';
     };
 
-    /* inject tabbar, then mark as sub-page for back button */
+    /* inject tabbar; mark as sub-page so desktop capsule shows back arrow */
     var tb = document.createElement('script');
     tb.src = base + '/js/tabbar.js';
     tb.onload = function () {
@@ -292,7 +324,7 @@
       if (!food) {
         document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif">'
           + '<h2>Food not found</h2><p>Slug: ' + esc(slug) + '</p>'
-          + '<a href="../">← Back to Healing Foods</a></div>';
+          + '<a href="../">&#8592; Back to Healing Foods</a></div>';
         return;
       }
       render(food);
