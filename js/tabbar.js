@@ -61,6 +61,7 @@
 
   /* ── Desktop top nav ── */
   var topHtml = '<div class="mm-top-nav"><div class="mm-top-nav-inner">'
+    + '<a class="mm-nav-logo" href="' + base + '/">Healing with MM</a>'
     + '<div class="mm-top-nav-pills">';
   tabs.forEach(function (tab) {
     var active = isActive(tab.paths) ? ' active' : '';

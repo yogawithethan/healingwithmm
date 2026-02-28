@@ -1,0 +1,482 @@
+/* =========================================================
+   css/components.css — Healing with MM Component Library
+   Reusable, composable UI primitives
+   ========================================================= */
+
+/* ─────────────────────────────────────────────────────────
+   1. CARD  .mm-card
+   ───────────────────────────────────────────────────────── */
+.mm-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+.mm-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+.mm-card:active { transform: scale(0.97); }
+
+/* Food card — vertical stack with hero image gradient */
+.mm-card--food {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+.mm-card--food .mm-card__hero {
+  position: relative;
+  height: 130px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+.mm-card--food .mm-card__hero--gradient {
+  /* Used as fallback when no image — set via inline style */
+}
+.mm-card--food .mm-card__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.12) 100%);
+  z-index: 1;
+}
+.mm-card--food .mm-card__emoji {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+.mm-card--food .mm-card__body {
+  padding: 10px 13px 13px;
+  flex: 1;
+}
+.mm-card--food .mm-card__cat {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.mm-card--food .mm-card__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.mm-card--food .mm-card__sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* Recipe card — image top, body below */
+.mm-card--recipe {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.mm-card--recipe .mm-card__img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+  background: var(--divider, #ece9e2);
+}
+.mm-card--recipe .mm-card__body {
+  padding: 10px 12px 12px;
+}
+.mm-card--recipe .mm-card__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.mm-card--recipe .mm-card__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--text-secondary, #5a5668);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mm-card--recipe .mm-card__meta {
+  display: flex;
+  gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  color: var(--text-muted, #9a96a8);
+}
+
+/* Article / horizontal card */
+.mm-card--article {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.mm-card--article .mm-card__thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--divider, #ece9e2);
+}
+.mm-card--article .mm-card__body { flex: 1; }
+.mm-card--article .mm-card__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.mm-card--article .mm-card__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-secondary, #5a5668);
+  line-height: 1.4;
+}
+.mm-card--article .mm-card__arrow {
+  color: var(--text-muted, #9a96a8);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   2. BADGE  .mm-badge
+   ───────────────────────────────────────────────────────── */
+.mm-badge {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.mm-badge--phase3 {
+  background: var(--phase3-bg, #eef5ee);
+  color: var(--phase3-badge, #3a6a3a);
+}
+.mm-badge--phase6 {
+  background: var(--phase6-bg, #fdf3e4);
+  color: var(--phase6-badge, #8a6414);
+}
+.mm-badge--phase9 {
+  background: var(--phase9-bg, #f8eef2);
+  color: var(--phase9-badge, #6a2a44);
+}
+.mm-badge--detox {
+  background: #ddeaf2;
+  color: #1e4a6a;
+}
+.mm-badge--category {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-secondary, #5a5668);
+}
+.mm-badge--symptom {
+  background: var(--symptom-bg, #f5eded);
+  color: var(--symptom, #8a3a3a);
+}
+.mm-badge--condition {
+  background: var(--condition-bg, #ebedf2);
+  color: var(--condition, #1e2a4a);
+}
+.mm-badge--accent {
+  background: var(--accent-bg, #fdf3e4);
+  color: var(--accent, #b8861a);
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   3. TOGGLE  .mm-toggle
+   ───────────────────────────────────────────────────────── */
+.mm-toggle {
+  display: flex;
+  position: relative;
+  background: var(--card, #fff);
+  border-radius: 14px;
+  padding: 4px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--card-border, rgba(0,0,0,.05));
+  user-select: none;
+}
+.mm-toggle__slider {
+  position: absolute;
+  top: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  border-radius: 11px;
+  background: var(--toggle-color, var(--text-primary, #1a1a2e));
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.15, 1);
+  z-index: 1;
+  left: 4px;
+}
+.mm-toggle__slider--right { left: calc(50%); }
+/* Convenience modifier classes for color variants */
+.mm-toggle--symptom .mm-toggle__slider   { background: var(--symptom, #8a3a3a); }
+.mm-toggle--condition .mm-toggle__slider { background: var(--condition, #1e2a4a); }
+.mm-toggle--accent .mm-toggle__slider    { background: var(--accent, #b8861a); }
+.mm-toggle--slate .mm-toggle__slider     { background: var(--slate, #4a5568); }
+
+.mm-toggle__btn {
+  flex: 1;
+  padding: 11px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  transition: color 0.25s;
+  color: var(--text-muted, #9a96a8);
+  letter-spacing: 0.3px;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.mm-toggle__btn.active { color: #fff; }
+.mm-toggle__btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   4. SECTION HEADER  .mm-section-header
+   ───────────────────────────────────────────────────────── */
+.mm-section-header {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted, #9a96a8);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.mm-section-header--large {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary, #5a5668);
+}
+.mm-section-header--tight { margin-bottom: 8px; }
+.mm-section-header__emoji { font-size: 14px; }
+
+
+/* ─────────────────────────────────────────────────────────
+   5. LIST ITEM  .mm-list-item
+   ───────────────────────────────────────────────────────── */
+.mm-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--divider, #ece9e2);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s;
+}
+.mm-list-item:active { background: rgba(0,0,0,0.015); }
+
+.mm-list-item__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.mm-list-item__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.mm-list-item__label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a2e);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mm-list-item__sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted, #9a96a8);
+  margin-top: 1px;
+}
+
+.mm-list-item__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.mm-list-item__count {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--text-muted, #9a96a8);
+  background: var(--bg, #f8f7f4);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.mm-list-item__chevron {
+  color: var(--text-muted, #9a96a8);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.15, 1);
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+/* Expandable variant */
+.mm-list-item--expandable { flex-wrap: wrap; }
+.mm-list-item--expandable.open .mm-list-item__chevron {
+  transform: rotate(90deg);
+}
+.mm-list-item__body {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.mm-list-item--expandable.open .mm-list-item__body {
+  max-height: 2000px;
+}
+/* The row part (top line) of an expandable item */
+.mm-list-item--expandable .mm-list-item__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   6. HERO IMAGE  .mm-hero
+   ───────────────────────────────────────────────────────── */
+.mm-hero {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.mm-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.06) 0%,
+    transparent 25%,
+    var(--hero-fade, var(--bg, #f8f7f4)) 100%
+  );
+  z-index: 1;
+}
+.mm-hero__content {
+  position: relative;
+  z-index: 2;
+  padding: 28px 22px 32px;
+  width: 100%;
+}
+/* Size variants */
+.mm-hero--tall    { min-height: 400px; }
+.mm-hero--short   { min-height: 200px; }
+/* Gradient fallback (no image) */
+.mm-hero--no-image::after {
+  background: linear-gradient(
+    160deg,
+    var(--hero-secondary, #4a7a30) 0%,
+    var(--hero-primary, #2d4a1a) 40%,
+    var(--hero-deep, #1a2a10) 100%
+  );
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   7. FOOD GRID  .mm-food-grid
+   ───────────────────────────────────────────────────────── */
+.mm-food-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 18px;
+}
+@media (min-width: 600px) {
+  .mm-food-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 900px) {
+  .mm-food-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 0 24px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   8. RECIPE GRID  .mm-recipe-grid
+   ───────────────────────────────────────────────────────── */
+.mm-recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .mm-recipe-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+@media (min-width: 1024px) {
+  .mm-recipe-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   Utility: Page padding adjustments for desktop
+   ───────────────────────────────────────────────────────── */
+@media (min-width: 768px) {
+  .mm-food-grid   { padding: 0 24px; }
+  .mm-recipe-grid { /* grid-template-columns set above */ }
+}
