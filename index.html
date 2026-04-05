@@ -124,21 +124,19 @@
   .heal-item.added .heal-item__name { color: var(--text-muted); }
   .heal-item.added .heal-item__add { background: var(--divider); color: var(--text-muted); font-size: 13px; }
 
-  /* Selection tray */
+  /* Selection tray — inline floating pills */
   .heal-tray {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 100%; max-width: 430px; background: var(--card);
-    border-top: 1px solid var(--divider); padding: 0 24px;
-    padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 72px));
-    z-index: 200; transition: transform 0.35s var(--ease-out), opacity 0.25s;
-    box-shadow: 0 -4px 24px rgba(28, 25, 23, 0.06);
+    padding: 0;
+    transition: all 0.35s var(--ease-out);
   }
-  .heal-tray.hidden { transform: translate(-50%, 100%); opacity: 0; pointer-events: none; }
+  .heal-tray.hidden { display: none; }
   .heal-tray__pills {
-    display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto;
-    -webkit-overflow-scrolling: touch; padding: 14px 0 10px; scrollbar-width: none;
+    display: flex; flex-wrap: wrap; gap: 7px;
+    padding: 0 0 6px;
   }
-  .heal-tray__pills::-webkit-scrollbar { display: none; }
+  .heal-tray__action {
+    padding: 10px 0 0;
+  }
   .heal-pill {
     display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
     border-radius: 100px; font-family: 'Outfit', sans-serif; font-size: 12px;
@@ -277,18 +275,20 @@
       <input type="text" class="heal-search__input sym" id="healSearchInput" placeholder="Search symptoms..." oninput="onHealSearch()">
     </div>
 
+    <!-- Selected pills (inline, floating between search and categories) -->
+    <div class="heal-tray hidden" id="healTray">
+      <div class="heal-tray__pills" id="healTrayPills"></div>
+      <div class="heal-tray__action">
+        <button class="heal-btn" onclick="showResults()">How Do I Heal?</button>
+      </div>
+    </div>
+
     <!-- Browse categories -->
     <div class="heal-browse" id="healBrowse"></div>
   </div>
 
   <!-- Results -->
   <div class="heal-results" id="healResults"></div>
-</div>
-
-<!-- Selection tray -->
-<div class="heal-tray hidden" id="healTray">
-  <div class="heal-tray__pills" id="healTrayPills"></div>
-  <button class="heal-btn" onclick="showResults()">How Do I Heal?</button>
 </div>
 
 <!-- ── Divider ── -->
@@ -404,6 +404,9 @@ function setMode(m) {
 
 function onHealSearch() { renderBrowse(document.getElementById('healSearchInput').value.trim().toLowerCase()); }
 
+/* Track which categories are open so they survive re-renders */
+var openCats = {};
+
 function renderBrowse(q) {
   q = q || '';
   var cats = mode === 'symptoms' ? SYMPTOM_CATS : CONDITION_CATS;
@@ -416,8 +419,10 @@ function renderBrowse(q) {
     var items = cats[cat];
     var fi = q ? items.filter(function(i) { return i.toLowerCase().indexOf(q) >= 0; }) : items;
     if (!fi.length) return;
-    html += '<div class="heal-cat ' + (q ? 'open' : '') + '">'
-      + '<div class="heal-cat__head" onclick="this.parentElement.classList.toggle(\'open\')">'
+    var isOpen = q || openCats[cat];
+    var catId = cat.replace(/[^a-zA-Z0-9]/g, '_');
+    html += '<div class="heal-cat ' + (isOpen ? 'open' : '') + '" data-cat="' + catId + '">'
+      + '<div class="heal-cat__head" onclick="toggleCat(\'' + catId + '\', this.parentElement)">'
       + '<span class="heal-cat__name">' + cat + '</span>'
       + '<span class="heal-cat__right"><span class="heal-cat__count">' + fi.length + '</span>'
       + '<svg class="heal-cat__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'
@@ -432,6 +437,11 @@ function renderBrowse(q) {
     html += '</div></div>';
   });
   document.getElementById('healBrowse').innerHTML = html;
+}
+
+function toggleCat(catId, el) {
+  var isOpen = el.classList.toggle('open');
+  openCats[catId] = isOpen;
 }
 
 function toggleItem(name, type) {
