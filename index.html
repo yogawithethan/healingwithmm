@@ -9,125 +9,236 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Source+Serif+4:ital,wght@0,400;1,300&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/shared.css">
 <style>
-  body {
-    background: var(--bg);
-    padding-bottom: var(--tab-bar-h);
-  }
+  body { background: var(--bg); padding-bottom: var(--tab-bar-h); }
 
-  /* ── Home header ── */
+  /* ── Header ── */
   .home-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 52px 24px 0;
   }
-  @media (min-width: 768px) {
-    .home-header { padding-top: 16px; }
-  }
+  @media (min-width: 768px) { .home-header { padding-top: 16px; } }
   @supports(padding-top: env(safe-area-inset-top)) {
     .home-header { padding-top: calc(env(safe-area-inset-top) + 12px); }
   }
   .home-header__logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.03em;
-    text-decoration: none;
+    font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600;
+    color: var(--text-primary); letter-spacing: -0.03em; text-decoration: none;
   }
-  .home-header__logo em {
-    font-style: italic;
-    font-weight: 400;
-    color: var(--accent);
-  }
+  .home-header__logo em { font-style: italic; font-weight: 400; color: var(--accent); }
 
-  /* ── Hero greeting ── */
-  .home-hero {
-    padding: 28px 24px 8px;
-  }
+  /* ── Hero ── */
+  .home-hero { padding: 24px 24px 4px; }
   .home-hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 600;
+    color: var(--text-primary); letter-spacing: -0.03em; line-height: 1.1;
     animation: fadeUp 0.7s var(--ease-out) both;
   }
   .home-hero p {
-    font-family: 'Source Serif 4', serif;
-    font-style: italic;
-    font-size: 15px;
-    font-weight: 300;
-    color: var(--text-secondary);
-    margin-top: 6px;
-    max-width: 65ch;
+    font-family: 'Source Serif 4', serif; font-style: italic; font-size: 14.5px;
+    font-weight: 300; color: var(--text-secondary); margin-top: 5px; max-width: 65ch;
     animation: fadeUp 0.7s var(--ease-out) 0.06s both;
   }
 
-  /* ── Search bar ── */
-  .home-search {
-    padding: 18px 24px 4px;
-    animation: fadeUp 0.7s var(--ease-out) 0.12s both;
+  /* ── Tracker embed ── */
+  .heal-tracker { padding: 16px 24px 0; animation: fadeUp 0.7s var(--ease-out) 0.1s both; }
+
+  .heal-toggle {
+    display: flex; position: relative; background: var(--card); border-radius: var(--radius-md);
+    padding: 4px; box-shadow: var(--shadow-sm); border: 1px solid var(--card-border);
+    user-select: none; margin-bottom: 14px;
   }
-  .home-search__input {
-    width: 100%;
-    padding: 13px 18px 13px 44px;
-    border: 1.5px solid var(--divider);
-    border-radius: var(--radius-md);
-    font-family: 'Outfit', sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a8a29e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 14px 50%;
-    color: var(--text-primary);
-    outline: none;
+  .heal-toggle__slider {
+    position: absolute; top: 4px; width: calc(50% - 4px); height: calc(100% - 8px);
+    border-radius: 12px; transition: all 0.45s var(--ease-out); z-index: 1;
+    box-shadow: 0 2px 8px rgba(28, 25, 23, 0.12);
+  }
+  .heal-toggle__slider.symptoms { background: var(--symptom); left: 4px; }
+  .heal-toggle__slider.conditions { background: var(--condition); left: calc(50%); }
+  .heal-toggle__btn {
+    flex: 1; padding: 12px 0; border: none; background: none; cursor: pointer;
+    position: relative; z-index: 2; font-family: 'Outfit', sans-serif; font-size: 13.5px;
+    font-weight: 600; text-align: center; transition: color 0.35s var(--ease-out);
+    color: var(--text-muted); letter-spacing: 0.02em; -webkit-tap-highlight-color: transparent;
+  }
+  .heal-toggle__btn.active { color: #fff; }
+
+  .heal-search {
+    position: relative; margin-bottom: 12px;
+  }
+  .heal-search__icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); pointer-events: none;
+  }
+  .heal-search__input {
+    width: 100%; padding: 12px 16px 12px 42px; border-radius: var(--radius-md);
+    border: 1.5px solid var(--divider); background: var(--card);
+    font-family: 'Outfit', sans-serif; font-size: 14.5px; color: var(--text-primary);
     transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
-    -webkit-appearance: none;
-    box-shadow: var(--shadow-xs);
-    letter-spacing: 0.01em;
+    outline: none; -webkit-appearance: none; box-shadow: var(--shadow-xs);
   }
-  .home-search__input::placeholder { color: var(--text-muted); font-weight: 400; }
-  .home-search__input:focus {
-    border-color: var(--accent-soft);
-    box-shadow: 0 0 0 3px rgba(181, 137, 46, 0.08), var(--shadow-sm);
-  }
+  .heal-search__input::placeholder { color: var(--text-muted); }
+  .heal-search__input:focus.sym { border-color: var(--symptom-light); box-shadow: 0 0 0 3px rgba(138,64,64,0.06); }
+  .heal-search__input:focus.con { border-color: var(--condition-light); box-shadow: 0 0 0 3px rgba(42,58,94,0.06); }
 
-  /* ── Quick actions section ── */
-  .home-actions {
-    padding: 0 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 32px;
+  /* Browse categories */
+  .heal-browse { margin-bottom: 8px; }
+  .heal-cat { margin-bottom: 1px; }
+  .heal-cat__head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; cursor: pointer; border-bottom: 1px solid var(--divider);
+    -webkit-tap-highlight-color: transparent;
   }
+  .heal-cat__name {
+    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .heal-cat__right { display: flex; align-items: center; gap: 6px; }
+  .heal-cat__count {
+    font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--text-muted);
+    background: var(--bg); padding: 2px 8px; border-radius: 100px;
+  }
+  .heal-cat__chevron {
+    color: var(--text-muted); transition: transform 0.3s var(--ease-out); flex-shrink: 0;
+  }
+  .heal-cat.open .heal-cat__chevron { transform: rotate(90deg); }
+  .heal-cat__items { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease-out); }
+  .heal-cat.open .heal-cat__items { max-height: 2000px; }
 
-  /* ── See-all link below pills ── */
-  .home-seeall {
-    padding: 8px 24px 0;
+  .heal-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0 10px 16px; border-bottom: 1px solid rgba(0,0,0,0.025);
+    cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent;
   }
-  .home-seeall a {
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--accent);
-    text-decoration: none;
-    transition: opacity 0.3s var(--ease-out);
+  .heal-item:active { background: rgba(0,0,0,0.015); }
+  .heal-item__name {
+    font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--text-body); line-height: 1.3;
   }
-  .home-seeall a:hover { opacity: 0.7; }
+  .heal-item__name b { color: var(--accent); font-weight: 600; }
+  .heal-item__add {
+    width: 28px; height: 28px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 17px; font-weight: 300;
+    flex-shrink: 0; transition: all 0.2s var(--ease-out);
+  }
+  .heal-item__add.sa { background: var(--symptom-bg); color: var(--symptom); }
+  .heal-item__add.ca { background: var(--condition-bg); color: var(--condition); }
+  .heal-item.added .heal-item__name { color: var(--text-muted); }
+  .heal-item.added .heal-item__add { background: var(--divider); color: var(--text-muted); font-size: 13px; }
+
+  /* Selection tray */
+  .heal-tray {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: var(--card);
+    border-top: 1px solid var(--divider); padding: 0 24px;
+    padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 72px));
+    z-index: 200; transition: transform 0.35s var(--ease-out), opacity 0.25s;
+    box-shadow: 0 -4px 24px rgba(28, 25, 23, 0.06);
+  }
+  .heal-tray.hidden { transform: translate(-50%, 100%); opacity: 0; pointer-events: none; }
+  .heal-tray__pills {
+    display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto;
+    -webkit-overflow-scrolling: touch; padding: 14px 0 10px; scrollbar-width: none;
+  }
+  .heal-tray__pills::-webkit-scrollbar { display: none; }
+  .heal-pill {
+    display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
+    border-radius: 100px; font-family: 'Outfit', sans-serif; font-size: 12px;
+    font-weight: 500; white-space: nowrap; flex-shrink: 0;
+    animation: pillIn 0.25s var(--ease-out);
+  }
+  .heal-pill.symptom { background: var(--symptom); color: #fff; }
+  .heal-pill.condition { background: var(--condition); color: #fff; }
+  .heal-pill__x {
+    width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 10px;
+  }
+  .heal-pill__x:hover { background: rgba(255,255,255,0.35); }
+  @keyframes pillIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+
+  /* Results page */
+  .heal-results { display: none; min-height: 60vh; padding-bottom: 40px; }
+  .heal-results.show { display: block; animation: fadeUp 0.35s var(--ease-out); }
+  .heal-main.hidden { display: none; }
+
+  .heal-results__back {
+    padding: 0 0 8px; position: sticky; top: 0; background: var(--bg); z-index: 50; padding-top: 8px;
+  }
+  .heal-results__back-btn {
+    display: flex; align-items: center; gap: 8px; background: none; border: none;
+    cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 14px;
+    font-weight: 500; color: var(--text-secondary); padding: 8px 0;
+  }
+  .heal-results__back-btn svg { width: 16px; height: 16px; }
+  .heal-results__hero { padding: 0 0 20px; }
+  .heal-results__hero h2 {
+    font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600;
+    color: var(--text-primary); line-height: 1.15; margin-bottom: 10px; letter-spacing: -0.02em;
+  }
+  .heal-results__selected { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+  .rp {
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .rp.s { background: var(--symptom-bg); color: var(--symptom); }
+  .rp.c { background: var(--condition-bg); color: var(--condition); }
+  .heal-results__summary {
+    font-family: 'Source Serif 4', serif; font-size: 14.5px; color: var(--text-secondary);
+    line-height: 1.65; padding-bottom: 20px; border-bottom: 1px solid var(--divider);
+  }
+  .food-category { padding: 20px 0; }
+  .food-category + .food-category { border-top: 1px solid var(--divider); padding-top: 16px; }
+  .food-cat-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .food-cat-title {
+    font-family: 'Outfit', sans-serif; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+  }
+  .food-cat-count { font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--text-muted); }
+  .food-scroll {
+    display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .food-scroll::-webkit-scrollbar { display: none; }
+  .food-card-r {
+    flex-shrink: 0; width: 160px; background: var(--card); border-radius: var(--radius-lg);
+    overflow: hidden; cursor: pointer; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--card-border); scroll-snap-align: start;
+    transition: transform 0.4s var(--ease-out); text-decoration: none; color: inherit;
+  }
+  .food-card-r:active { transform: scale(0.97); }
+  .food-card-r__img {
+    width: 100%; height: 110px; object-fit: cover; display: block; background: var(--bg-subtle);
+  }
+  .food-card-r__body { padding: 12px 12px 14px; }
+  .food-card-r__name {
+    font-family: 'Outfit', sans-serif; font-size: 14.5px; font-weight: 600;
+    color: var(--text-primary); line-height: 1.25; margin-bottom: 5px;
+  }
+  .food-card-r__match {
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .food-card-r__pills { display: flex; flex-wrap: wrap; gap: 3px; }
+  .fcp {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+    max-width: 130px; overflow: hidden; text-overflow: ellipsis;
+  }
+  .fcp.s { background: var(--symptom-bg); color: var(--symptom); }
+  .fcp.c { background: var(--condition-bg); color: var(--condition); }
+  .fcp.m { background: var(--bg); color: var(--text-muted); }
+
+  /* ── Divider between tracker and rest ── */
+  .home-divider {
+    height: 1px; background: var(--divider); margin: 24px 24px 0;
+  }
 
   /* ── Source note ── */
   .home-source {
-    margin: 8px 24px 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--divider);
-    text-align: center;
+    margin: 8px 24px 24px; padding-top: 20px;
+    border-top: 1px solid var(--divider); text-align: center;
   }
-  .home-source p {
-    font-family: 'Outfit', sans-serif;
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
+  .home-source p { font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--text-muted); line-height: 1.7; }
 </style>
 </head>
 <body>
@@ -142,76 +253,67 @@
   </a>
 </div>
 
-<!-- ── Hero greeting ── -->
+<!-- ── Hero ── -->
 <div class="home-hero">
-  <h1>Your healing starts here</h1>
-  <p>Discover the foods that heal your body, mind, and spirit</p>
+  <h1>How do I heal?</h1>
+  <p>Select your symptoms or conditions to find the foods that help</p>
 </div>
 
-<!-- ── Search ── -->
-<div class="home-search">
-  <input class="home-search__input" type="search" placeholder="Search foods, symptoms, conditions..." id="homeSearch"
-    onkeydown="if(event.key==='Enter'){event.preventDefault();goSearch()}"
-  >
+<!-- ══════════════════════════════════════════
+     SYMPTOM / CONDITION TRACKER (embedded)
+     ══════════════════════════════════════════ -->
+<div class="heal-tracker">
+  <div class="heal-main" id="healMain">
+    <!-- Toggle -->
+    <div class="heal-toggle">
+      <div class="heal-toggle__slider symptoms" id="toggleSlider"></div>
+      <button class="heal-toggle__btn active" id="btnS" onclick="setMode('symptoms')">Symptoms</button>
+      <button class="heal-toggle__btn" id="btnC" onclick="setMode('conditions')">Conditions</button>
+    </div>
+
+    <!-- Search -->
+    <div class="heal-search">
+      <svg class="heal-search__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="heal-search__input sym" id="healSearchInput" placeholder="Search symptoms..." oninput="onHealSearch()">
+    </div>
+
+    <!-- Browse categories -->
+    <div class="heal-browse" id="healBrowse"></div>
+  </div>
+
+  <!-- Results -->
+  <div class="heal-results" id="healResults"></div>
 </div>
 
-<!-- ── Symptom quick-pick ── -->
-<div class="home-section" style="margin-top:24px">
-  <div class="home-section__header">
-    <span class="home-section__title">What are you experiencing?</span>
-  </div>
-  <div class="symptom-pills">
-    <a class="symptom-pill" href="tracker/?symptom=Fatigue">Fatigue</a>
-    <a class="symptom-pill" href="tracker/?symptom=Brain+Fog">Brain Fog</a>
-    <a class="symptom-pill" href="tracker/?symptom=Bloating">Bloating</a>
-    <a class="symptom-pill" href="tracker/?symptom=Inflammation">Inflammation</a>
-    <a class="symptom-pill" href="tracker/?symptom=Anxiety">Anxiety</a>
-    <a class="symptom-pill" href="tracker/?symptom=Joint+Pain">Joint Pain</a>
-    <a class="symptom-pill" href="tracker/?symptom=Headaches">Headaches</a>
-    <a class="symptom-pill" href="tracker/?symptom=Skin+Issues">Skin Issues</a>
-    <a class="symptom-pill" href="tracker/?symptom=Insomnia">Insomnia</a>
-    <a class="symptom-pill" href="tracker/?symptom=Acid+Reflux">Acid Reflux</a>
-  </div>
-  <div class="home-seeall">
-    <a href="tracker/">See all symptoms & conditions &rarr;</a>
-  </div>
+<!-- Selection tray -->
+<div class="heal-tray hidden" id="healTray">
+  <div class="heal-tray__pills" id="healTrayPills"></div>
+  <button class="heal-btn" onclick="showResults()">How Do I Heal?</button>
 </div>
 
-<!-- ── Featured foods (horizontal scroll) ── -->
-<div class="home-section home-section--scroll">
+<!-- ── Divider ── -->
+<div class="home-divider"></div>
+
+<!-- ── Featured foods ── -->
+<div class="home-section home-section--scroll" style="margin-top:24px">
   <div class="home-section__header">
     <span class="home-section__title">Healing foods</span>
     <a class="home-section__link" href="foods/">See all 50 &rarr;</a>
   </div>
-  <div class="h-scroll" id="featuredFoods">
-    <!-- Populated by JS from foods.json -->
-  </div>
+  <div class="h-scroll" id="featuredFoods"></div>
 </div>
 
-<!-- ─��� Quick actions ── -->
+<!-- ── Quick actions ── -->
 <div class="home-section">
   <div class="home-section__header">
     <span class="home-section__title">Get started</span>
   </div>
-  <div class="home-actions">
-    <a class="action-card" href="tracker/">
-      <div class="action-card__icon" style="background:var(--symptom-bg)">
-        <svg viewBox="0 0 24 24" stroke="var(--symptom)" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
-        </svg>
-      </div>
-      <div class="action-card__text">
-        <div class="action-card__title">How Do I Heal?</div>
-        <div class="action-card__desc">Match symptoms to healing foods</div>
-      </div>
-      <span class="action-card__arrow">&rsaquo;</span>
-    </a>
-
+  <div style="padding:0 24px; display:flex; flex-direction:column; gap:10px; margin-bottom:32px">
     <a class="action-card" href="planner/">
       <div class="action-card__icon" style="background:var(--phase6-bg)">
-        <svg viewBox="0 0 24 24" stroke="var(--phase6-badge)">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        <svg viewBox="0 0 24 24" stroke="var(--phase6-badge)" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/>
+          <path d="M12.56 14.1c1.44 0 2.6-1.19 2.6-2.64 0-.76-.37-1.47-1.11-2.08S12.73 7.8 12.56 6.9c-.18.9-.74 1.82-1.49 2.48S10 10.7 10 11.46c0 1.45 1.15 2.64 2.56 2.64z"/>
         </svg>
       </div>
       <div class="action-card__text">
@@ -220,12 +322,11 @@
       </div>
       <span class="action-card__arrow">&rsaquo;</span>
     </a>
-
     <a class="action-card" href="recipes/">
       <div class="action-card__icon" style="background:var(--phase3-bg)">
-        <svg viewBox="0 0 24 24" stroke="var(--phase3-badge)">
-          <path d="M3 2v7c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2V2"/><path d="M7 2v20"/>
-          <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>
+        <svg viewBox="0 0 24 24" stroke="var(--phase3-badge)" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3V2"/><path d="M9 11v11"/><line x1="6" y1="5" x2="12" y2="5"/>
+          <path d="M18 2v4a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2V2"/><path d="M18 8v14"/>
         </svg>
       </div>
       <div class="action-card__text">
@@ -237,42 +338,204 @@
   </div>
 </div>
 
-<!-- ── Source attribution ── -->
+<!-- ── Source ── -->
 <div class="home-source">
   <p>Content inspired by <strong>Medical Medium</strong> by Anthony William.<br>For educational purposes only -- not medical advice.</p>
 </div>
 
 <script src="js/tabbar.js"></script>
 <script>
-  /* ���─ Search handoff ── */
-  function goSearch() {
-    var q = document.getElementById('homeSearch').value.trim();
-    if (q) window.location.href = 'foods/?q=' + encodeURIComponent(q);
-  }
+/* ══════════════════════════════════════
+   SYMPTOM / CONDITION TRACKER ENGINE
+   ══════════════════════════════════════ */
+var SYMPTOM_CATS={"Digestive":["Acid Reflux","Bloating","Constipation","Diarrhea","Food Sensitivities","Gas","Gastritis","Nausea","Stomach Aches","Stomach Pain"],"Neurological & Brain":["Brain Fog","Dizziness","Memory Issues","Migraines","Nerve Pain","Ringing in Ears","Tingles & Numbness","Tremors","Vertigo"],"Energy & Fatigue":["Chronic Fatigue","Fatigue","Weakness","Lethargy","Afternoon Energy Crash"],"Emotional & Mental":["Anxiety","Depression","Insomnia","Mood Swings","Panic Attacks","Racing Thoughts","Restlessness"],"Skin, Hair & Nails":["Acne","Brittle Nails","Dark Under-Eye Circles","Dry Skin","Eczema Flares","Hair Loss","Hives","Rashes","Skin Issues"],"Pain & Inflammation":["Back Pain","Headaches","Inflammation","Joint Pain","Muscle Spasms","Muscle Weakness","Neck Pain","Stiffness","Swelling"],"Hormonal & Reproductive":["Hot Flashes","Night Sweats","PMS","Menstrual Irregularities","Weight Gain","Weight Loss Resistance"],"Immune & Lymphatic":["Frequent Colds","Low Immune Function","Swollen Lymph Nodes","Sore Throat","Fevers"],"Eyes & Ears":["Blurry Vision","Eye Floaters","Ringing in Ears","Dry Eyes"],"Heart & Circulation":["Heart Palpitations","Cold Hands & Feet","Poor Circulation"]};
+var CONDITION_CATS={"Autoimmune & Immune":["Autoimmune Disease","Celiac Disease","Hashimoto's Thyroiditis","Lupus","Multiple Sclerosis","Rheumatoid Arthritis","Sarcoidosis"],"Digestive Disorders":["Colitis","Crohn's Disease","Diverticulitis","Gastritis","IBS","Leaky Gut","SIBO"],"Viral & Bacterial":["Epstein-Barr Virus","Lyme Disease","Shingles","Strep Infections","UTIs"],"Thyroid & Endocrine":["Adrenal Fatigue","Hypothyroidism","PCOS","Thyroid Conditions","Type 2 Diabetes","Diabetes"],"Liver & Detox":["Fatty Liver","Gallstones","High Cholesterol","Liver Sluggishness"],"Pain & Neurological":["Arthritis","Chronic Fatigue Syndrome","Fibromyalgia","Neuropathy","Raynaud's Syndrome"],"Skin Conditions":["Eczema & Psoriasis","Rosacea","Vitiligo"],"Cancer & Growths":["Cancer","Cysts","Fibroids","Nodules","Tumors"],"Cardiovascular":["High Blood Pressure","Heart Disease"],"Reproductive":["Endometriosis","Infertility","PCOS","Uterine Fibroids"]};
 
-  /* ── Featured foods ── */
-  fetch('data/foods.json')
-    .then(function(r) { return r.json(); })
-    .then(function(foods) {
-      // Pick first 8 foods that have hero images
-      var featured = foods.filter(function(f) { return f.heroImage; }).slice(0, 8);
-      if (!featured.length) featured = foods.slice(0, 8);
+var FOODS=[
+{n:"Wild Blueberries",c:"Fruits",img:"https://a-z-animals.com/media/2022/07/shutterstock_246215473.jpg",s:["Brain Fog","Memory Issues","Anxiety","Depression","Fatigue","Inflammation","Skin Issues","Tingles & Numbness","Eye Floaters","Mood Swings","Nerve Pain","Chronic Fatigue"],d:["Autoimmune Disease","Epstein-Barr Virus","Lyme Disease","PCOS","Fibromyalgia","Diabetes","Thyroid Conditions","Cancer"]},
+{n:"Papaya",c:"Fruits",img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=300&h=220&fit=crop",s:["Bloating","Constipation","Acid Reflux","Inflammation","Stomach Aches","Skin Issues","Joint Pain","Nausea","Gas"],d:["Colitis","Crohn's Disease","IBS","Diverticulitis","SIBO","Eczema & Psoriasis","Fibromyalgia"]},
+{n:"Bananas",c:"Fruits",img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300&h=220&fit=crop",s:["Anxiety","Depression","Constipation","Fatigue","Muscle Spasms","Mood Swings","Insomnia","Heart Palpitations"],d:["Adrenal Fatigue","Crohn's Disease","Colitis","IBS","Diabetes"]},
+{n:"Apples",c:"Fruits",img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300&h=220&fit=crop",s:["Constipation","Bloating","Acid Reflux","Brain Fog","Fatigue","Weight Gain","Dark Under-Eye Circles"],d:["Fatty Liver","High Cholesterol","IBS","Diabetes","Gallstones"]},
+{n:"Mangoes",c:"Fruits",img:"https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&h=220&fit=crop",s:["Fatigue","Brain Fog","Inflammation","Skin Issues","Constipation","Weight Loss Resistance"],d:["Diabetes","Eczema & Psoriasis","Crohn's Disease","Cancer"]},
+{n:"Oranges & Tangerines",c:"Fruits",img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Skin Issues","Anxiety","Dark Under-Eye Circles","Food Sensitivities"],d:["Epstein-Barr Virus","Thyroid Conditions","High Blood Pressure","Autoimmune Disease"]},
+{n:"Lemons & Limes",c:"Fruits",img:"https://images.unsplash.com/photo-1590502593747-42a996133562?w=300&h=220&fit=crop",s:["Bloating","Acid Reflux","Nausea","Weight Gain","Fatigue","Dark Under-Eye Circles","Brittle Nails"],d:["Fatty Liver","Gallstones","High Cholesterol","UTIs"]},
+{n:"Watermelon",c:"Fruits",img:"https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=300&h=220&fit=crop",s:["Inflammation","Bloating","Fatigue","Headaches","Acid Reflux","Dry Skin"],d:["High Blood Pressure","Fatty Liver","Diabetes","UTIs"]},
+{n:"Dates",c:"Fruits",img:"https://flyingdragonnursery.co.nz/cdn/shop/files/FreshRhutabMedjoolDatesinwoodenbowl_2048x_09df237a-3097-4c99-a800-83467d0f4513_grande.webp?v=1757067110",s:["Constipation","Fatigue","Muscle Spasms","Insomnia","Anxiety"],d:["Adrenal Fatigue","Diabetes"]},
+{n:"Grapes",c:"Fruits",img:"https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Skin Issues","Eye Floaters","Memory Issues"],d:["Fatty Liver","Cancer","High Blood Pressure","Diabetes"]},
+{n:"Pitaya (Dragon Fruit)",c:"Fruits",img:"https://images.unsplash.com/photo-1527325678964-54921661f888?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Bloating","Skin Issues","Brain Fog","Acne"],d:["Fatty Liver","Diabetes","Cancer","IBS"]},
+{n:"Cherries",c:"Fruits",img:"https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=300&h=220&fit=crop",s:["Inflammation","Joint Pain","Insomnia","Headaches","Muscle Spasms"],d:["Arthritis","Fibromyalgia","High Blood Pressure"]},
+{n:"Cranberries",c:"Fruits",img:"https://images.unsplash.com/photo-1607305387299-a3d9611cd469?w=300&h=220&fit=crop",s:["Bloating","Inflammation","Fatigue","Skin Issues"],d:["UTIs","Fatty Liver","Cancer"]},
+{n:"Asparagus",c:"Vegetables",img:"https://images.unsplash.com/photo-1515471209610-dae1c92d8777?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Joint Pain","Constipation","Back Pain","Muscle Spasms","Tingles & Numbness","Weight Gain","Chronic Fatigue"],d:["Adrenal Fatigue","Lyme Disease","Epstein-Barr Virus","Fibromyalgia","Chronic Fatigue Syndrome","Diabetes","Cancer","Hashimoto's Thyroiditis"]},
+{n:"Celery",c:"Vegetables",img:"https://images.unsplash.com/photo-1580391564590-aeca65c5e2d3?w=300&h=220&fit=crop",s:["Bloating","Acid Reflux","Brain Fog","Inflammation","Joint Pain","Headaches","Fatigue","Skin Issues","Anxiety","Constipation","Tingles & Numbness"],d:["Autoimmune Disease","IBS","Hashimoto's Thyroiditis","Epstein-Barr Virus","Lyme Disease","Eczema & Psoriasis","Rheumatoid Arthritis","SIBO","High Blood Pressure"]},
+{n:"Sweet Potatoes",c:"Vegetables",img:"https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/sweet%20potato.jpg.webp?itok=t7TcXDex",s:["Fatigue","Constipation","Inflammation","Dry Skin","Weight Gain","Bloating"],d:["Diabetes","Fatty Liver","IBS","Thyroid Conditions","Cancer"]},
+{n:"Brussels Sprouts",c:"Vegetables",img:"https://images.unsplash.com/photo-1438118907704-7718ee9a191a?w=300&h=220&fit=crop",s:["Bloating","Inflammation","Fatigue","Weight Gain","Skin Issues","Constipation"],d:["Cancer","Thyroid Conditions","High Cholesterol","Fatty Liver"]},
+{n:"Cucumbers",c:"Vegetables",img:"https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=300&h=220&fit=crop",s:["Bloating","Inflammation","Dry Skin","Fatigue","Dark Under-Eye Circles","Weight Gain"],d:["Fatty Liver","High Blood Pressure","Diabetes","UTIs"]},
+{n:"Potatoes",c:"Vegetables",img:"https://images.unsplash.com/photo-1508313880080-c8bef1a68e6e?w=300&h=220&fit=crop",s:["Fatigue","Anxiety","Insomnia","Brain Fog","Weight Gain"],d:["Adrenal Fatigue","Thyroid Conditions","Hashimoto's Thyroiditis"]},
+{n:"Spinach",c:"Leafy Greens",img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Brain Fog","Muscle Spasms","Anxiety","Eye Floaters","Memory Issues"],d:["Cancer","Thyroid Conditions","Autoimmune Disease"]},
+{n:"Kale & Collards",c:"Leafy Greens",img:"https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?w=300&h=220&fit=crop",s:["Inflammation","Fatigue","Joint Pain","Brain Fog","Skin Issues"],d:["Cancer","Thyroid Conditions","High Cholesterol","Autoimmune Disease"]},
+{n:"Sprouts & Microgreens",c:"Leafy Greens",img:"https://images.unsplash.com/photo-1562114808-b4b33cf60f4f?w=300&h=220&fit=crop",s:["Fatigue","Inflammation","Bloating","Brain Fog","Skin Issues"],d:["Cancer","Autoimmune Disease","Thyroid Conditions"]},
+{n:"Cilantro",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300&h=220&fit=crop",s:["Brain Fog","Memory Issues","Anxiety","Tingles & Numbness","Fatigue","Joint Pain","Headaches","Nerve Pain"],d:["Lyme Disease","Epstein-Barr Virus","Autoimmune Disease","Fibromyalgia"]},
+{n:"Turmeric",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=300&h=220&fit=crop",s:["Inflammation","Joint Pain","Brain Fog","Fatigue","Skin Issues","Muscle Spasms"],d:["Arthritis","Rheumatoid Arthritis","Cancer","Autoimmune Disease"]},
+{n:"Ginger",c:"Herbs & Spices",img:"https://www.yates.co.nz/media/plants/herbs/pr-tn-herb-ginger.jpg?rmode=max&ranchor=center&quality=100&width=638&height=626",s:["Nausea","Bloating","Inflammation","Joint Pain","Stomach Aches","Acid Reflux","Dizziness"],d:["IBS","SIBO","Arthritis","Cancer","Autoimmune Disease"]},
+{n:"Raw Honey",c:"Herbs & Spices",img:"https://cdn.shopify.com/s/files/1/0243/4063/t/17/assets/raw-honey-1703080642280.jpg?v=1703080642",s:["Insomnia","Fatigue","Anxiety","Inflammation","Skin Issues","Dry Skin","Brittle Nails"],d:["Epstein-Barr Virus","Lyme Disease","SIBO","UTIs","Eczema & Psoriasis"]},
+{n:"Aloe Vera",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=300&h=220&fit=crop",s:["Acid Reflux","Bloating","Inflammation","Skin Issues","Constipation","Stomach Aches"],d:["Colitis","Crohn's Disease","IBS","Eczema & Psoriasis","SIBO","Diverticulitis"]},
+{n:"Cat's Claw",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1509223197845-458d87318791?w=300&h=220&fit=crop",s:["Inflammation","Joint Pain","Fatigue","Tingles & Numbness","Nerve Pain","Brain Fog"],d:["Lyme Disease","Epstein-Barr Virus","Rheumatoid Arthritis","Fibromyalgia","Shingles","UTIs"]},
+{n:"Lemon Balm",c:"Herbs & Spices",img:"https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=300&h=220&fit=crop",s:["Anxiety","Insomnia","Restlessness","Racing Thoughts","Inflammation","Nerve Pain","Tingles & Numbness"],d:["Epstein-Barr Virus","Shingles","Lyme Disease","Thyroid Conditions"]},
+{n:"Atlantic Dulse",c:"Wild Foods",img:"https://theveganatlas.com/wp-content/uploads/2020/09/Dulse-seaweed.jpg",s:["Brain Fog","Memory Issues","Fatigue","Tingles & Numbness","Anxiety","Inflammation","Skin Issues"],d:["Thyroid Conditions","Hashimoto's Thyroiditis","Lyme Disease","Epstein-Barr Virus","Cancer","Autoimmune Disease"]},
+{n:"Burdock Root",c:"Wild Foods",img:"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=220&fit=crop",s:["Skin Issues","Acne","Fatigue","Inflammation","Bloating","Joint Pain"],d:["Eczema & Psoriasis","Lyme Disease","Fatty Liver","Cancer","SIBO"]},
+{n:"Dandelion",c:"Wild Foods",img:"https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=300&h=220&fit=crop",s:["Bloating","Fatigue","Inflammation","Weight Gain","Skin Issues","Constipation","Dark Under-Eye Circles"],d:["Fatty Liver","Gallstones","High Cholesterol","Eczema & Psoriasis","Cancer"]},
+{n:"Rose Hips",c:"Wild Foods",img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKLO2uwSswN58rqEeR8UtxSL6qmq3mVsJ4vA&s",s:["Inflammation","Fatigue","Skin Issues","Joint Pain","Anxiety"],d:["Arthritis","Autoimmune Disease","Epstein-Barr Virus","Adrenal Fatigue"]}
+];
 
-      var html = featured.map(function(f) {
-        var bg = f.heroImage
-          ? 'background-image:url(\'' + f.heroImage + '\')'
-          : 'background:linear-gradient(135deg,' + f.colors.secondary + ',' + f.colors.deep + ')';
-        return '<a class="featured-food" href="foods/' + f.slug + '.html">'
-          + '<div class="featured-food__hero" style="' + bg + '"></div>'
-          + '<div class="featured-food__body">'
-          + '<div class="featured-food__name">' + f.name + '</div>'
-          + '<div class="featured-food__sub">' + f.subtitle + '</div>'
-          + '</div></a>';
-      }).join('');
+var CAT_ORDER=["Fruits","Vegetables","Leafy Greens","Herbs & Spices","Wild Foods"];
+var mode='symptoms', selected=[];
 
-      document.getElementById('featuredFoods').innerHTML = html;
-    })
-    .catch(function() {});
+function setMode(m) {
+  mode = m;
+  document.getElementById('toggleSlider').className = 'heal-toggle__slider ' + m;
+  document.getElementById('btnS').classList.toggle('active', m === 'symptoms');
+  document.getElementById('btnC').classList.toggle('active', m === 'conditions');
+  var inp = document.getElementById('healSearchInput');
+  inp.className = 'heal-search__input ' + (m === 'symptoms' ? 'sym' : 'con');
+  inp.placeholder = 'Search ' + m + '...';
+  inp.value = '';
+  renderBrowse();
+}
+
+function onHealSearch() { renderBrowse(document.getElementById('healSearchInput').value.trim().toLowerCase()); }
+
+function renderBrowse(q) {
+  q = q || '';
+  var cats = mode === 'symptoms' ? SYMPTOM_CATS : CONDITION_CATS;
+  var type = mode === 'symptoms' ? 'symptom' : 'condition';
+  var cls = mode === 'symptoms' ? 'sa' : 'ca';
+  var names = new Set(selected.map(function(s) { return s.name; }));
+  var html = '';
+
+  Object.keys(cats).forEach(function(cat) {
+    var items = cats[cat];
+    var fi = q ? items.filter(function(i) { return i.toLowerCase().indexOf(q) >= 0; }) : items;
+    if (!fi.length) return;
+    html += '<div class="heal-cat ' + (q ? 'open' : '') + '">'
+      + '<div class="heal-cat__head" onclick="this.parentElement.classList.toggle(\'open\')">'
+      + '<span class="heal-cat__name">' + cat + '</span>'
+      + '<span class="heal-cat__right"><span class="heal-cat__count">' + fi.length + '</span>'
+      + '<svg class="heal-cat__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'
+      + '</span></div><div class="heal-cat__items">';
+    fi.forEach(function(item) {
+      var added = names.has(item);
+      var hl = q ? item.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<b>$1</b>') : item;
+      html += '<div class="heal-item ' + (added ? 'added' : '') + '" onclick="toggleItem(\'' + item.replace(/'/g, "\\'") + '\',\'' + type + '\')">'
+        + '<span class="heal-item__name">' + hl + '</span>'
+        + '<span class="heal-item__add ' + cls + '">' + (added ? '\u2713' : '+') + '</span></div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('healBrowse').innerHTML = html;
+}
+
+function toggleItem(name, type) {
+  var i = -1;
+  selected.forEach(function(s, idx) { if (s.name === name) i = idx; });
+  if (i >= 0) selected.splice(i, 1);
+  else selected.push({ name: name, type: type });
+  renderBrowse(document.getElementById('healSearchInput').value.trim().toLowerCase());
+  renderTray();
+}
+
+function renderTray() {
+  var tray = document.getElementById('healTray');
+  var pills = document.getElementById('healTrayPills');
+  if (!selected.length) { tray.classList.add('hidden'); return; }
+  tray.classList.remove('hidden');
+  pills.innerHTML = selected.map(function(s) {
+    return '<span class="heal-pill ' + s.type + '">' + s.name
+      + '<span class="heal-pill__x" onclick="event.stopPropagation();removeTray(\'' + s.name.replace(/'/g, "\\'") + '\')">&times;</span></span>';
+  }).join('');
+  setTimeout(function() { pills.scrollLeft = pills.scrollWidth; }, 50);
+}
+
+function removeTray(name) {
+  selected = selected.filter(function(s) { return s.name !== name; });
+  renderBrowse(document.getElementById('healSearchInput').value.trim().toLowerCase());
+  renderTray();
+}
+
+function showResults() {
+  if (!selected.length) return;
+  var ss = new Set(selected.filter(function(s) { return s.type === 'symptom'; }).map(function(s) { return s.name; }));
+  var sc = new Set(selected.filter(function(s) { return s.type === 'condition'; }).map(function(s) { return s.name; }));
+  var tot = selected.length;
+  var scored = FOODS.map(function(f) {
+    var ms = f.s.filter(function(x) { return ss.has(x); });
+    var mc = f.d.filter(function(x) { return sc.has(x); });
+    var matches = ms.map(function(x) { return { name: x, type: 's' }; }).concat(mc.map(function(x) { return { name: x, type: 'c' }; }));
+    return { n: f.n, c: f.c, img: f.img, matches: matches, score: matches.length };
+  }).filter(function(f) { return f.score > 0; }).sort(function(a, b) { return b.score - a.score; });
+
+  var grouped = {};
+  CAT_ORDER.forEach(function(c) { grouped[c] = []; });
+  scored.forEach(function(f) { if (grouped[f.c]) grouped[f.c].push(f); });
+
+  var h = '<div class="heal-results__back"><button class="heal-results__back-btn" onclick="backToSearch()">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Edit selections</button></div>';
+  h += '<div class="heal-results__hero"><h2>Your healing foods</h2>'
+    + '<div class="heal-results__selected">' + selected.map(function(s) { return '<span class="rp ' + (s.type === 'symptom' ? 's' : 'c') + '">' + s.name + '</span>'; }).join('') + '</div>'
+    + '<div class="heal-results__summary">Based on your ' + tot + ' selected ' + (tot === 1 ? 'item' : 'items') + ', ' + scored.length + ' healing foods can support your body\'s healing.</div></div>';
+
+  CAT_ORDER.forEach(function(cat) {
+    var foods = grouped[cat];
+    if (!foods.length) return;
+    h += '<div class="food-category"><div class="food-cat-head"><span class="food-cat-title">' + cat + '</span><span class="food-cat-count">' + foods.length + ' ' + (foods.length === 1 ? 'food' : 'foods') + '</span></div><div class="food-scroll">';
+    foods.forEach(function(f) {
+      var slug = f.n.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      h += '<a class="food-card-r" href="foods/' + slug + '.html">';
+      h += '<img class="food-card-r__img" src="' + f.img + '" alt="' + f.n + '" loading="lazy" onerror="this.style.background=\'var(--bg-subtle)\'">';
+      h += '<div class="food-card-r__body"><div class="food-card-r__name">' + f.n + '</div><div class="food-card-r__match">Helps with ' + f.score + ' of ' + tot + '</div><div class="food-card-r__pills">';
+      f.matches.slice(0, 3).forEach(function(m) { h += '<span class="fcp ' + m.type + '">' + m.name + '</span>'; });
+      if (f.matches.length > 3) h += '<span class="fcp m">+' + (f.matches.length - 3) + '</span>';
+      h += '</div></div></a>';
+    });
+    h += '</div></div>';
+  });
+
+  h += '<div class="home-source" style="margin:24px 0"><p>Healing food data from <em>Life-Changing Foods</em> by Anthony William</p></div>';
+
+  document.getElementById('healResults').innerHTML = h;
+  document.getElementById('healMain').classList.add('hidden');
+  document.getElementById('healResults').classList.add('show');
+  document.getElementById('healTray').classList.add('hidden');
+  window.scrollTo(0, 0);
+}
+
+function backToSearch() {
+  document.getElementById('healResults').classList.remove('show');
+  document.getElementById('healMain').classList.remove('hidden');
+  renderTray();
+  window.scrollTo(0, 0);
+}
+
+renderBrowse();
+
+/* ── Featured foods ── */
+fetch('data/foods.json')
+  .then(function(r) { return r.json(); })
+  .then(function(foods) {
+    var featured = foods.filter(function(f) { return f.heroImage; }).slice(0, 8);
+    if (!featured.length) featured = foods.slice(0, 8);
+    var html = featured.map(function(f) {
+      var bg = f.heroImage
+        ? 'background-image:url(\'' + f.heroImage + '\')'
+        : 'background:linear-gradient(135deg,' + f.colors.secondary + ',' + f.colors.deep + ')';
+      return '<a class="featured-food" href="foods/' + f.slug + '.html">'
+        + '<div class="featured-food__hero" style="' + bg + '"></div>'
+        + '<div class="featured-food__body">'
+        + '<div class="featured-food__name">' + f.name + '</div>'
+        + '<div class="featured-food__sub">' + f.subtitle + '</div>'
+        + '</div></a>';
+    }).join('');
+    document.getElementById('featuredFoods').innerHTML = html;
+  }).catch(function() {});
 </script>
 </body>
 </html>
