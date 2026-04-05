@@ -100,8 +100,9 @@ body {
   line-height: 1.65;
   max-width: 430px;
   margin: 0 auto;
-  min-height: 100dvh;
+  min-height: auto;
   overflow-x: hidden;
+  overflow-y: auto !important;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -120,7 +121,7 @@ body::after {
 }
 
 /* ===== LAYOUT ===== */
-.page { padding-bottom: 100px; }
+.page { padding-bottom: 40px; }
 
 /* ===== HERO ===== */
 .hero { padding: 60px 28px 12px; }
@@ -402,7 +403,7 @@ body::after {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 14px;
+  border-radius: 22px;
   border: none;
   background: none;
   cursor: pointer;
@@ -540,6 +541,29 @@ body::after {
 }
 .h-scroll::-webkit-scrollbar { display: none; }
 
+/* Fade-gradient masks on horizontal scroll sections */
+.home-section--scroll {
+  position: relative;
+}
+.home-section--scroll::before,
+.home-section--scroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 2;
+  pointer-events: none;
+}
+.home-section--scroll::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+.home-section--scroll::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
 /* Symptom quick-pick pills */
 .symptom-pills {
   display: flex;
@@ -664,7 +688,16 @@ body::after {
   height: 100px;
   background-size: cover;
   background-position: center;
+  background-color: rgba(181, 137, 46, 0.08);
   position: relative;
+}
+/* Subtle warm gradient fallback so cards aren't blank while loading */
+.featured-food__hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(181, 137, 46, 0.12), rgba(181, 137, 46, 0.04));
+  z-index: 0;
 }
 .featured-food__body {
   padding: 10px 12px 12px;
@@ -724,4 +757,6 @@ body::after {
   }
   .mm-tab-bar { display: none !important; }
   .top-bar { display: block; }
+  /* Hide home page logo on desktop since nav already shows it */
+  .home-header__logo { display: none; }
 }

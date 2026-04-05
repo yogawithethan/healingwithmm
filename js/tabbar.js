@@ -21,24 +21,29 @@
 
   var tabs = [
     {
+      /* Heal — Heroicons: heart */
       id: 'heal', label: 'Heal', href: base + '/', paths: ['/', '/tracker'],
-      icon: '<path d="M12 22c-4-4-8-7.5-8-12 0-3.5 3-6 6-4 1.5.8 2 2 2 2s.5-1.2 2-2c3-2 6 .5 6 4 0 4.5-4 8-8 12z"/><path d="M12 22v-8"/><path d="M9 17c0-2 1.5-3 3-4"/>'
+      icon: '<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>'
     },
     {
+      /* Foods — Heroicons/Phosphor: leaf */
       id: 'foods', label: 'Foods', href: base + '/foods/', paths: ['/foods'],
-      icon: '<path d="M7 21a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2z"/><path d="M17 21a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z"/><path d="M12 7v4"/><path d="M4.5 16h15"/>'
+      icon: '<path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66"/><path d="M7 14c3.37-2.73 5.28-4.7 8.24-7.46"/><path d="M20.7 5.63a1 1 0 0 0-1.1-.39C16.78 6.1 13.3 7.84 10.4 10.6c-3.1 2.96-4.6 6.3-5.3 8.28a1 1 0 0 0 .39 1.1 1 1 0 0 0 1.1.05c1.8-1 4.78-2.95 7.48-5.63 2.8-2.79 4.54-6.27 5.43-9.05a1 1 0 0 0-.8-1.32z" fill="none"/>'
     },
     {
+      /* Community — Heroicons: user-group */
       id: 'community', label: 'Community', href: base + '/community/', paths: ['/community'],
-      icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'
+      icon: '<path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0z"/>'
     },
     {
+      /* Cleanse — water droplet (Phosphor: drop) */
       id: 'cleanse', label: 'Cleanse', href: base + '/planner/', paths: ['/planner'],
-      icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke-linecap="round"/>'
+      icon: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>'
     },
     {
+      /* Recipes — Heroicons: fork + knife (utensils) */
       id: 'recipes', label: 'Recipes', href: base + '/recipes/', paths: ['/recipes'],
-      icon: '<path d="M3 2v7c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>'
+      icon: '<path d="M15.75 2.25v6a3.75 3.75 0 1 1-7.5 0v-6"/><path d="M12 8.25v13.5"/><path d="M9 2.25H6.75a.75.75 0 0 0-.75.75v3.75c0 2.07 1.68 3.75 3.75 3.75"/><path d="M15 2.25h2.25a.75.75 0 0 1 .75.75v3.75c0 2.07-1.68 3.75-3.75 3.75"/>'
     }
   ];
 

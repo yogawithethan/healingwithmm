@@ -38,10 +38,10 @@
     /* reset */
     '*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}',
     'html{scroll-behavior:smooth}',
-    'html,body{min-height:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}',
+    'html,body{min-height:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}',
 
     /* body */
-    'body{background:var(--food-bg);color:#44403c;font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.7;max-width:430px;margin:0 auto;overflow-x:hidden;padding-bottom:100px}',
+    'body{background:var(--food-bg);color:#44403c;font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.7;max-width:430px;margin:0 auto;overflow-x:hidden;overflow-y:auto !important;padding-bottom:40px}',
     '@media(min-width:768px){body{max-width:1100px;padding-bottom:60px}}',
 
     /* grain overlay */
@@ -198,7 +198,7 @@
     /* ── hero ── */
     var hasImage = food.heroImage && food.heroImage.length > 0;
     var heroInner = hasImage
-      ? '<img class="fp-hero__img" src="' + esc(food.heroImage) + '" alt="' + esc(food.name) + '" onerror="this.style.opacity=\'0\'">'
+      ? '<img class="fp-hero__img" src="' + esc(food.heroImage) + '" alt="' + esc(food.name) + '" onerror="this.style.opacity=\'0\';this.style.position=\'absolute\';this.style.pointerEvents=\'none\'">'
         + '<div class="fp-hero__text-shade"></div>'
       : '<div class="fp-hero__gradient" style="background:linear-gradient(160deg,var(--food-secondary) 0%,var(--food-primary) 40%,var(--food-deep) 100%)"></div>'
         + '<div class="fp-hero__text-shade"></div>';
