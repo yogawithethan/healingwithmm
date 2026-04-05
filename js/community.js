@@ -46,6 +46,36 @@
   }
 
   /* ── Auth ── */
+  var isSignUp = false;
+
+  window.toggleAuthMode = function () {
+    isSignUp = !isSignUp;
+    var nameField = document.getElementById('authDisplayName');
+    var submitBtn = document.getElementById('authSubmitBtn');
+    var toggleText = document.getElementById('authToggleText');
+    var toggleBtn = document.getElementById('authToggleBtn');
+    var errEl = document.getElementById('authError');
+    errEl.style.display = 'none';
+
+    if (isSignUp) {
+      nameField.style.display = 'block';
+      submitBtn.textContent = 'Create account';
+      toggleText.textContent = 'Already have an account?';
+      toggleBtn.textContent = 'Sign in';
+    } else {
+      nameField.style.display = 'none';
+      submitBtn.textContent = 'Sign in';
+      toggleText.textContent = "Don't have an account?";
+      toggleBtn.textContent = 'Sign up';
+    }
+  };
+
+  function showAuthError(msg) {
+    var el = document.getElementById('authError');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
   auth.onAuthStateChanged(function (user) {
     currentUser = user;
     var loginEl = document.getElementById('authLogin');
@@ -55,17 +85,22 @@
     if (user) {
       loginEl.style.display = 'none';
       userEl.style.display = 'flex';
-      document.getElementById('authAvatar').src = user.photoURL || '';
-      document.getElementById('authName').textContent = user.displayName || 'User';
+      var name = user.displayName || user.email || 'User';
+      document.getElementById('authName').textContent = name;
+      var avatarEl = document.getElementById('authAvatarEl');
+      if (user.photoURL) {
+        avatarEl.innerHTML = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
+      } else {
+        avatarEl.textContent = name.charAt(0).toUpperCase();
+      }
       fab.classList.remove('hidden');
       loadUserVotes();
     } else {
-      loginEl.style.display = 'flex';
+      loginEl.style.display = 'block';
       userEl.style.display = 'none';
       fab.classList.add('hidden');
       userVotes = {};
     }
-    // Re-render vote buttons
     document.querySelectorAll('.community-vote__btn').forEach(function (btn) {
       var pid = btn.dataset.postId;
       btn.classList.toggle('voted', !!userVotes[pid]);
@@ -73,19 +108,46 @@
   });
 
   window.communitySignIn = function () {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(function (result) {
-      var u = result.user;
-      db.collection('users').doc(u.uid).set({
-        displayName: u.displayName,
-        photoURL: u.photoURL,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
-    }).catch(function (err) {
-      if (err.code !== 'auth/popup-closed-by-user') {
-        showToast('Sign-in failed. Try again.');
+    var email = document.getElementById('authEmail').value.trim();
+    var password = document.getElementById('authPassword').value;
+    var errEl = document.getElementById('authError');
+    errEl.style.display = 'none';
+
+    if (!email || !password) {
+      showAuthError('Email and password are required');
+      return;
+    }
+
+    if (isSignUp) {
+      var displayName = document.getElementById('authDisplayName').value.trim();
+      if (!displayName) {
+        showAuthError('Display name is required');
+        return;
       }
-    });
+      auth.createUserWithEmailAndPassword(email, password).then(function (result) {
+        return result.user.updateProfile({ displayName: displayName }).then(function () {
+          db.collection('users').doc(result.user.uid).set({
+            displayName: displayName,
+            email: email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        });
+      }).catch(function (err) {
+        var msg = err.code === 'auth/email-already-in-use' ? 'An account with this email already exists'
+          : err.code === 'auth/weak-password' ? 'Password must be at least 6 characters'
+          : err.code === 'auth/invalid-email' ? 'Invalid email address'
+          : err.message;
+        showAuthError(msg);
+      });
+    } else {
+      auth.signInWithEmailAndPassword(email, password).catch(function (err) {
+        var msg = err.code === 'auth/user-not-found' ? 'No account found with this email'
+          : err.code === 'auth/wrong-password' ? 'Incorrect password'
+          : err.code === 'auth/invalid-credential' ? 'Incorrect email or password'
+          : err.message;
+        showAuthError(msg);
+      });
+    }
   };
 
   window.communitySignOut = function () {
