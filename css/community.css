@@ -137,7 +137,7 @@
 
 /* ── Bottom sheet (new post / auth modal) ── */
 .community-sheet-overlay {
-  position: fixed; inset: 0; background: rgba(28,25,23,0.3); z-index: 600;
+  position: fixed; inset: 0; background: rgba(28,25,23,0.4); z-index: 10000;
   opacity: 0; transition: opacity 0.3s var(--ease-out); pointer-events: none;
 }
 .community-sheet-overlay.show { opacity: 1; pointer-events: auto; }
@@ -146,7 +146,7 @@
   position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%);
   width: 100%; max-width: 430px; background: var(--card);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  padding: 24px 24px 32px; z-index: 601;
+  padding: 24px 24px 32px; z-index: 10001;
   transition: transform 0.45s var(--ease-out);
   box-shadow: 0 -8px 40px rgba(28,25,23,0.12); max-height: 85vh; overflow-y: auto;
 }

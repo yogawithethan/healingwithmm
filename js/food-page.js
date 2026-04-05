@@ -82,7 +82,7 @@
     '.fp-hero__title{font-size:clamp(2.6rem,10vw,4rem);font-weight:700;line-height:1.0;color:#fff;letter-spacing:-0.03em;text-shadow:0 2px 20px rgba(0,0,0,0.3),0 1px 4px rgba(0,0,0,0.15);animation:fpSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.85s both}',
 
     /* subtitle */
-    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:15px;font-weight:300;color:var(--food-mist);margin-top:10px;opacity:0.9;animation:fpSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 1s both}',
+    '.fp-hero__subtitle{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:16px;font-weight:400;color:#fff;margin-top:10px;opacity:0.9;text-shadow:0 1px 8px rgba(0,0,0,0.3),0 1px 3px rgba(0,0,0,0.15);animation:fpSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 1s both}',
 
     /* ── CONTENT ── */
     '.fp-content{padding:0 28px}',
@@ -136,6 +136,22 @@
     '.fp-tip::before{content:counter(tips);font-family:"Playfair Display",Georgia,serif;font-size:16px;font-weight:600;color:var(--food-mist);min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;margin-top:2px;flex-shrink:0;background:var(--food-light);border-radius:50%;opacity:0.7}',
     '.fp-tip p{font-size:14.5px;line-height:1.8;color:#44403c;margin:0}',
 
+    /* related foods */
+    '.fp-related{padding:40px 0 0;opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}',
+    '.fp-related.visible{opacity:1;transform:none}',
+    '.fp-related__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}',
+    '.fp-related__label{font-family:"Outfit","DM Sans",sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--food-primary);opacity:0.7}',
+    '.fp-related__link{font-family:"Outfit","DM Sans",sans-serif;font-size:12px;font-weight:500;color:var(--food-secondary);text-decoration:none}',
+    '.fp-related__scroll{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none}',
+    '.fp-related__scroll::-webkit-scrollbar{display:none}',
+    '.fp-related__card{flex-shrink:0;width:140px;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;box-shadow:0 2px 8px rgba(28,25,23,0.04);border:1px solid rgba(28,25,23,0.05);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s cubic-bezier(0.16,1,0.3,1)}',
+    '.fp-related__card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(28,25,23,0.06)}',
+    '.fp-related__card:active{transform:scale(0.97)}',
+    '.fp-related__card-hero{height:90px;background-size:cover;background-position:center;background-color:rgba(181,137,46,0.08)}',
+    '.fp-related__card-body{padding:10px 12px 12px}',
+    '.fp-related__card-name{font-family:"Outfit","DM Sans",sans-serif;font-size:13px;font-weight:600;color:#1c1917;line-height:1.2}',
+    '.fp-related__card-sub{font-family:"Source Serif 4",serif;font-size:10.5px;color:#a8a29e;font-style:italic;margin-top:2px;line-height:1.3}',
+
     /* source note */
     '.fp-source{margin-top:56px;padding-top:28px;border-top:1px solid var(--food-light);text-align:center}',
     '.fp-source p{font-family:"Outfit","DM Sans",sans-serif;font-size:11px;color:#a8a29e;line-height:1.7}',
@@ -148,7 +164,40 @@
   ].join('\n');
 
   /* ── 5. Render ── */
-  function render(food) {
+  /* ── Related foods — same category + random others ── */
+  function buildRelatedFoods(food, allFoods) {
+    if (!allFoods || allFoods.length < 2) return '';
+    /* Same category first, then others, exclude current food */
+    var sameCat = allFoods.filter(function (f) { return f.category === food.category && f.slug !== food.slug; });
+    var otherCat = allFoods.filter(function (f) { return f.category !== food.category && f.slug !== food.slug; });
+    /* Shuffle others */
+    otherCat.sort(function () { return 0.5 - Math.random(); });
+    var related = sameCat.concat(otherCat).slice(0, 8);
+    if (!related.length) return '';
+
+    var cards = related.map(function (f) {
+      var imgPath = f.heroImage ? (f.heroImage.charAt(0) === '/' ? base + f.heroImage : f.heroImage) : '';
+      var heroBg = imgPath
+        ? 'background-image:url(\'' + esc(imgPath) + '\')'
+        : 'background:linear-gradient(135deg,' + f.colors.secondary + ',' + f.colors.deep + ')';
+      return '<a class="fp-related__card" href="' + f.slug + '.html">'
+        + '<div class="fp-related__card-hero" style="' + heroBg + '"></div>'
+        + '<div class="fp-related__card-body">'
+        + '<div class="fp-related__card-name">' + esc(f.name) + '</div>'
+        + '<div class="fp-related__card-sub">' + esc(f.subtitle) + '</div>'
+        + '</div></a>';
+    }).join('');
+
+    return '<div class="fp-related">'
+      + '<div class="fp-related__header">'
+      + '<span class="fp-related__label">Related foods</span>'
+      + '<a class="fp-related__link" href="./">See all &rarr;</a>'
+      + '</div>'
+      + '<div class="fp-related__scroll">' + cards + '</div>'
+      + '</div>';
+  }
+
+  function render(food, allFoods) {
     /* CSS vars for food color palette */
     var vars = Object.keys(food.colors).map(function (k) {
       return '--food-' + k + ':' + food.colors[k];
@@ -297,6 +346,7 @@
       + emotionalHTML
       + spiritualHTML
       + tipsHTML
+      + buildRelatedFoods(food, allFoods)
       + '<div class="fp-source"><p>Content inspired by <strong>Medical Medium</strong> by Anthony William.<br>For educational purposes only — not medical advice.</p></div>'
       + '</div>';
 
@@ -313,9 +363,9 @@
           if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
         });
       }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.fp-section, .fp-tips').forEach(function (el) { io.observe(el); });
+      document.querySelectorAll('.fp-section, .fp-tips, .fp-related').forEach(function (el) { io.observe(el); });
     } else {
-      document.querySelectorAll('.fp-section, .fp-tips').forEach(function (el) { el.classList.add('visible'); });
+      document.querySelectorAll('.fp-section, .fp-tips, .fp-related').forEach(function (el) { el.classList.add('visible'); });
     }
 
     /* read-more toggle */
@@ -353,7 +403,7 @@
           + '<a href="../" style="color:#b5892e;border-bottom:1px solid rgba(181,137,46,0.3)">Back to Healing Foods</a></div>';
         return;
       }
-      render(food);
+      render(food, foods);
     })
     .catch(function (err) {
       document.body.innerHTML = '<div style="padding:60px 40px;text-align:center;font-family:Outfit,sans-serif;color:#44403c">'
