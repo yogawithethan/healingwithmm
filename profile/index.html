@@ -3,20 +3,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Profile — Medical Medium</title>
+<title>Profile — Healing with MM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Serif+4:ital,wght@0,400;1,300&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Source+Serif+4:ital,wght@0,400;1,300&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/shared.css">
-<script defer src="../js/tabbar.js"></script>
+<link rel="stylesheet" href="../css/community.css">
+<style>
+  body { background: var(--bg); padding-bottom: var(--tab-bar-h); }
+
+  .profile-header { padding: 56px 24px 0; }
+  @media (min-width: 768px) { .profile-header { padding-top: 24px; } }
+  @supports(padding-top: env(safe-area-inset-top)) {
+    .profile-header { padding-top: calc(env(safe-area-inset-top) + 20px); }
+  }
+
+  /* ── Logged-out state ── */
+  .profile-login {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 60vh; padding: 40px 24px; text-align: center;
+  }
+  .profile-login__icon {
+    width: 80px; height: 80px; border-radius: 50%; background: var(--bg-subtle);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+  }
+  .profile-login__icon svg { width: 36px; height: 36px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; }
+  .profile-login__title {
+    font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.02em;
+  }
+  .profile-login__desc {
+    font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--text-secondary);
+    line-height: 1.6; max-width: 280px; margin-bottom: 24px;
+  }
+  .profile-login__btn {
+    padding: 12px 32px; border: none; border-radius: var(--radius-md);
+    font-family: 'Outfit', sans-serif; font-size: 14.5px; font-weight: 600;
+    background: var(--text-primary); color: #fff; cursor: pointer;
+    transition: all 0.4s var(--ease-out);
+  }
+  .profile-login__btn:hover { opacity: 0.85; }
+  .profile-login__btn:active { transform: scale(0.98); }
+
+  /* ── Profile card ── */
+  .profile-card {
+    background: var(--card); border-radius: var(--radius-xl); padding: 32px 24px;
+    margin: 0 24px 24px; border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-sm); text-align: center; position: relative;
+  }
+  .profile-card::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); pointer-events: none;
+  }
+
+  /* Avatar with upload */
+  .profile-avatar {
+    width: 88px; height: 88px; border-radius: 50%; margin: 0 auto 16px;
+    position: relative; cursor: pointer;
+  }
+  .profile-avatar__img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    background: var(--accent-bg); display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 600; color: var(--accent);
+    overflow: hidden;
+  }
+  .profile-avatar__img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .profile-avatar__edit {
+    position: absolute; bottom: 0; right: 0; width: 28px; height: 28px;
+    border-radius: 50%; background: var(--text-primary); border: 2px solid var(--card);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+  }
+  .profile-avatar__edit:hover { transform: scale(1.1); }
+  .profile-avatar__edit svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2; }
+  .profile-avatar__input { display: none; }
+
+  .profile-name {
+    font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.02em;
+  }
+  .profile-email {
+    font-family: 'Outfit', sans-serif; font-size: 13px; color: var(--text-muted); margin-bottom: 4px;
+  }
+  .profile-joined {
+    font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--text-muted);
+  }
+
+  /* Edit name */
+  .profile-edit-name {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+    padding: 6px 14px; border-radius: 100px; background: var(--bg-subtle);
+    font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); border: none; cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+  }
+  .profile-edit-name:hover { background: var(--divider); color: var(--text-primary); }
+  .profile-edit-name svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Stats row */
+  .profile-stats {
+    display: flex; justify-content: center; gap: 32px; margin-top: 20px;
+    padding-top: 16px; border-top: 1px solid var(--divider);
+  }
+  .profile-stat { text-align: center; }
+  .profile-stat__num {
+    font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700;
+    color: var(--text-primary);
+  }
+  .profile-stat__label {
+    font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px;
+  }
+
+  /* ── Section headers ── */
+  .profile-section {
+    padding: 0 24px; margin-bottom: 24px;
+  }
+  .profile-section__header {
+    font-family: 'Outfit', sans-serif; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  /* ── My posts list ── */
+  .profile-post {
+    display: flex; align-items: center; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid var(--divider); cursor: pointer;
+    transition: background 0.2s; text-decoration: none; color: inherit;
+  }
+  .profile-post:hover { background: rgba(28,25,23,0.01); }
+  .profile-post__body { flex: 1; min-width: 0; }
+  .profile-post__title {
+    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--text-primary); line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .profile-post__meta {
+    font-family: 'Outfit', sans-serif; font-size: 11.5px; color: var(--text-muted); margin-top: 2px;
+  }
+  .profile-post__votes {
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--accent); flex-shrink: 0;
+  }
+
+  /* ── Sign out ── */
+  .profile-signout {
+    display: block; width: 100%; padding: 14px; border: 1.5px solid var(--divider);
+    border-radius: var(--radius-md); font-family: 'Outfit', sans-serif; font-size: 14px;
+    font-weight: 500; color: var(--symptom); background: none; cursor: pointer;
+    transition: all 0.4s var(--ease-out); margin: 0 24px; width: calc(100% - 48px);
+  }
+  .profile-signout:hover { background: var(--symptom-bg); border-color: rgba(138,64,64,0.2); }
+  .profile-signout:active { transform: scale(0.98); }
+
+  /* ── Edit name modal input ── */
+  .profile-name-input {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--divider);
+    border-radius: var(--radius-sm); font-family: 'Outfit', sans-serif; font-size: 16px;
+    font-weight: 600; color: var(--text-primary); background: var(--bg); outline: none;
+    text-align: center; transition: border-color 0.3s;
+  }
+  .profile-name-input:focus { border-color: var(--accent-soft); }
+
+  .profile-empty {
+    font-family: 'Outfit', sans-serif; font-size: 13px; color: var(--text-muted);
+    text-align: center; padding: 24px 0;
+  }
+</style>
 </head>
 <body>
-<div class="page">
-  <div class="placeholder-page">
-    <div class="placeholder-icon">👤</div>
-    <div class="placeholder-title">Profile</div>
-    <div class="placeholder-desc">Track your symptoms over time, view your healing journey, see leaderboard progress, and manage your account settings.</div>
+
+<!-- Logged out -->
+<div id="profileLoggedOut" style="display:none">
+  <div class="profile-login">
+    <div class="profile-login__icon">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div class="profile-login__title">Your profile</div>
+    <div class="profile-login__desc">Sign in to track your healing journey, post in the community, and save your progress.</div>
+    <button class="profile-login__btn" onclick="openProfileAuth()">Sign in</button>
   </div>
 </div>
+
+<!-- Logged in -->
+<div id="profileLoggedIn" style="display:none">
+  <div class="profile-header"></div>
+
+  <!-- Profile card -->
+  <div class="profile-card">
+    <div class="profile-avatar" onclick="document.getElementById('avatarInput').click()">
+      <div class="profile-avatar__img" id="profileAvatarImg"></div>
+      <div class="profile-avatar__edit">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <input type="file" accept="image/*" class="profile-avatar__input" id="avatarInput" onchange="uploadAvatar(this)">
+    </div>
+    <div class="profile-name" id="profileName"></div>
+    <div class="profile-email" id="profileEmail"></div>
+    <div class="profile-joined" id="profileJoined"></div>
+    <button class="profile-edit-name" onclick="editDisplayName()">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Edit name
+    </button>
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <div class="profile-stat__num" id="profilePostCount">0</div>
+        <div class="profile-stat__label">Posts</div>
+      </div>
+      <div class="profile-stat">
+        <div class="profile-stat__num" id="profileVoteCount">0</div>
+        <div class="profile-stat__label">Upvotes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- My posts -->
+  <div class="profile-section">
+    <div class="profile-section__header">My posts</div>
+    <div id="profilePosts"></div>
+  </div>
+
+  <!-- Sign out -->
+  <button class="profile-signout" onclick="profileSignOut()">Sign out</button>
+  <div style="height:24px"></div>
+</div>
+
+<!-- Auth modal (reuse community sheet style) -->
+<div class="community-sheet-overlay" id="profileAuthOverlay" onclick="closeProfileAuth()"></div>
+<div class="community-sheet" id="profileAuthModal">
+  <div class="community-sheet__header">
+    <span class="community-sheet__title" id="profileAuthTitle">Sign in</span>
+    <button class="community-sheet__close" onclick="closeProfileAuth()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="community-sheet__field" id="profileAuthNameField" style="display:none">
+    <label class="community-sheet__label">Display name</label>
+    <input class="community-sheet__input" id="profileAuthDisplayName" placeholder="Your name">
+  </div>
+  <div class="community-sheet__field">
+    <label class="community-sheet__label">Email</label>
+    <input class="community-sheet__input" type="email" id="profileAuthEmail" placeholder="you@example.com">
+  </div>
+  <div class="community-sheet__field">
+    <label class="community-sheet__label">Password</label>
+    <input class="community-sheet__input" type="password" id="profileAuthPassword" placeholder="Password"
+      onkeydown="if(event.key==='Enter')profileDoAuth()">
+  </div>
+  <div id="profileAuthError" style="font-family:Outfit,sans-serif;font-size:12px;color:var(--symptom);padding:4px 0;display:none"></div>
+  <button class="community-sheet__submit" onclick="profileDoAuth()" id="profileAuthSubmit">Sign in</button>
+  <div class="community-auth__toggle">
+    <span id="profileAuthToggleText">Don't have an account?</span>
+    <button class="community-auth__toggle-btn" onclick="profileToggleAuth()" id="profileAuthToggleBtn">Sign up</button>
+  </div>
+</div>
+
+<!-- Edit name modal -->
+<div class="community-sheet-overlay" id="nameOverlay" onclick="closeNameEdit()"></div>
+<div class="community-sheet" id="nameModal">
+  <div class="community-sheet__header">
+    <span class="community-sheet__title">Edit display name</span>
+    <button class="community-sheet__close" onclick="closeNameEdit()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="community-sheet__field">
+    <input class="profile-name-input" id="nameInput" placeholder="Display name" maxlength="50">
+  </div>
+  <button class="community-sheet__submit" onclick="saveDisplayName()">Save</button>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script>
+var profileIsSignUp = false;
+
+/* ── Auth modal ── */
+function openProfileAuth() {
+  document.getElementById('profileAuthOverlay').classList.add('show');
+  document.getElementById('profileAuthModal').classList.add('show');
+}
+function closeProfileAuth() {
+  document.getElementById('profileAuthOverlay').classList.remove('show');
+  document.getElementById('profileAuthModal').classList.remove('show');
+  document.getElementById('profileAuthError').style.display = 'none';
+}
+function profileToggleAuth() {
+  profileIsSignUp = !profileIsSignUp;
+  document.getElementById('profileAuthNameField').style.display = profileIsSignUp ? 'block' : 'none';
+  document.getElementById('profileAuthSubmit').textContent = profileIsSignUp ? 'Create account' : 'Sign in';
+  document.getElementById('profileAuthTitle').textContent = profileIsSignUp ? 'Create account' : 'Sign in';
+  document.getElementById('profileAuthToggleText').textContent = profileIsSignUp ? 'Already have an account?' : "Don't have an account?";
+  document.getElementById('profileAuthToggleBtn').textContent = profileIsSignUp ? 'Sign in' : 'Sign up';
+  document.getElementById('profileAuthError').style.display = 'none';
+}
+function profileDoAuth() {
+  var email = document.getElementById('profileAuthEmail').value.trim();
+  var password = document.getElementById('profileAuthPassword').value;
+  var errEl = document.getElementById('profileAuthError');
+  errEl.style.display = 'none';
+  if (!email || !password) { errEl.textContent = 'Email and password are required'; errEl.style.display = 'block'; return; }
+
+  if (profileIsSignUp) {
+    var name = document.getElementById('profileAuthDisplayName').value.trim();
+    if (!name) { errEl.textContent = 'Display name is required'; errEl.style.display = 'block'; return; }
+    auth.createUserWithEmailAndPassword(email, password).then(function(r) {
+      return r.user.updateProfile({ displayName: name }).then(function() {
+        db.collection('users').doc(r.user.uid).set({
+          displayName: name, email: email,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+      });
+    }).catch(function(err) {
+      var msg = err.code === 'auth/email-already-in-use' ? 'An account with this email already exists'
+        : err.code === 'auth/weak-password' ? 'Password must be at least 6 characters'
+        : err.message;
+      errEl.textContent = msg; errEl.style.display = 'block';
+    });
+  } else {
+    auth.signInWithEmailAndPassword(email, password).catch(function(err) {
+      var msg = err.code === 'auth/user-not-found' ? 'No account found with this email'
+        : err.code === 'auth/invalid-credential' ? 'Incorrect email or password'
+        : err.message;
+      errEl.textContent = msg; errEl.style.display = 'block';
+    });
+  }
+}
+function profileSignOut() { auth.signOut(); }
+
+/* ── Auth state ── */
+auth.onAuthStateChanged(function(user) {
+  if (user) {
+    document.getElementById('profileLoggedOut').style.display = 'none';
+    document.getElementById('profileLoggedIn').style.display = 'block';
+    closeProfileAuth();
+    renderProfile(user);
+  } else {
+    document.getElementById('profileLoggedOut').style.display = 'block';
+    document.getElementById('profileLoggedIn').style.display = 'none';
+  }
+});
+
+function renderProfile(user) {
+  var name = user.displayName || user.email || 'User';
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profileEmail').textContent = user.email || '';
+
+  /* Avatar */
+  var avatarEl = document.getElementById('profileAvatarImg');
+  db.collection('users').doc(user.uid).get().then(function(doc) {
+    var data = doc.exists ? doc.data() : {};
+    /* Photo from Firestore (base64) */
+    if (data.photoURL) {
+      avatarEl.innerHTML = '<img src="' + data.photoURL + '" alt="">';
+    } else {
+      avatarEl.textContent = name.charAt(0).toUpperCase();
+    }
+    /* Joined date */
+    if (data.createdAt && data.createdAt.toDate) {
+      document.getElementById('profileJoined').textContent = 'Joined ' + data.createdAt.toDate().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    }
+  });
+
+  /* Load user's posts */
+  db.collection('posts').where('authorId', '==', user.uid).orderBy('createdAt', 'desc').get().then(function(snap) {
+    var postsEl = document.getElementById('profilePosts');
+    document.getElementById('profilePostCount').textContent = snap.size;
+
+    var totalVotes = 0;
+    if (snap.empty) {
+      postsEl.innerHTML = '<div class="profile-empty">No posts yet. Share something in the community!</div>';
+    } else {
+      postsEl.innerHTML = '';
+      snap.forEach(function(doc) {
+        var p = doc.data();
+        totalVotes += (p.voteCount || 0);
+        var el = document.createElement('a');
+        el.className = 'profile-post';
+        el.href = '../community/';
+        el.innerHTML = '<div class="profile-post__body">'
+          + '<div class="profile-post__title">' + esc(p.title) + '</div>'
+          + '<div class="profile-post__meta">' + (p.topicName || '') + ' &middot; ' + (p.commentCount || 0) + ' comments</div>'
+          + '</div>'
+          + '<div class="profile-post__votes">' + (p.voteCount || 0) + ' &#9650;</div>';
+        postsEl.appendChild(el);
+      });
+    }
+    document.getElementById('profileVoteCount').textContent = totalVotes;
+  }).catch(function() {
+    document.getElementById('profilePosts').innerHTML = '<div class="profile-empty">Could not load posts.</div>';
+  });
+}
+
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/* ── Avatar upload — resize and store as base64 in Firestore ── */
+function uploadAvatar(input) {
+  var file = input.files && input.files[0];
+  if (!file || !auth.currentUser) return;
+
+  /* Resize to 200x200 max */
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var size = 200;
+      canvas.width = size;
+      canvas.height = size;
+      var ctx = canvas.getContext('2d');
+
+      /* Center-crop */
+      var sx, sy, sw, sh;
+      if (img.width > img.height) {
+        sh = img.height; sw = sh; sx = (img.width - sw) / 2; sy = 0;
+      } else {
+        sw = img.width; sh = sw; sx = 0; sy = (img.height - sh) / 2;
+      }
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, size, size);
+
+      var dataURL = canvas.toDataURL('image/jpeg', 0.8);
+
+      /* Save to Firestore */
+      db.collection('users').doc(auth.currentUser.uid).set({
+        photoURL: dataURL
+      }, { merge: true }).then(function() {
+        document.getElementById('profileAvatarImg').innerHTML = '<img src="' + dataURL + '" alt="">';
+      });
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── Edit display name ── */
+function editDisplayName() {
+  document.getElementById('nameInput').value = auth.currentUser.displayName || '';
+  document.getElementById('nameOverlay').classList.add('show');
+  document.getElementById('nameModal').classList.add('show');
+  setTimeout(function() { document.getElementById('nameInput').focus(); }, 100);
+}
+function closeNameEdit() {
+  document.getElementById('nameOverlay').classList.remove('show');
+  document.getElementById('nameModal').classList.remove('show');
+}
+function saveDisplayName() {
+  var name = document.getElementById('nameInput').value.trim();
+  if (!name || !auth.currentUser) return;
+
+  auth.currentUser.updateProfile({ displayName: name }).then(function() {
+    db.collection('users').doc(auth.currentUser.uid).set({
+      displayName: name
+    }, { merge: true });
+    document.getElementById('profileName').textContent = name;
+    closeNameEdit();
+  });
+}
+</script>
+<script defer src="../js/tabbar.js"></script>
 </body>
 </html>
