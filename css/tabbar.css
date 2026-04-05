@@ -1,4 +1,7 @@
-/* ===== SHARED TAB BAR ===== */
+/* ===== SHARED TAB BAR — Premium glass treatment ===== */
+/* Note: Primary tab bar styles are in shared.css.
+   This file is kept for pages that import tabbar.css directly. */
+
 .mm-tab-bar {
   position: fixed;
   bottom: 0;
@@ -7,19 +10,22 @@
   width: 100%;
   max-width: 430px;
   z-index: 500;
-  padding: 0 12px;
-  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  padding: 0 14px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
 }
 
 .mm-tab-bar-inner {
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border-radius: 28px;
   display: flex;
-  padding: 8px 4px;
-  box-shadow: 0 2px 24px rgba(0,0,0,0.1);
-  border: 1px solid rgba(255,255,255,0.6);
+  padding: 8px 6px;
+  box-shadow:
+    0 4px 32px rgba(28, 25, 23, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(28, 25, 23, 0.04);
 }
 
 .mm-tab-item {
@@ -27,17 +33,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 6px 0;
+  gap: 4px;
+  padding: 7px 0;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: all 0.2s;
-  border-radius: 14px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 16px;
   text-decoration: none;
 }
 
-.mm-tab-item:active { transform: scale(0.92); }
-.mm-tab-item.active { background: rgba(184,134,26,0.08); }
+.mm-tab-item:active { transform: scale(0.90); }
+.mm-tab-item.active { background: rgba(181, 137, 46, 0.08); }
 
 .mm-tab-icon {
   width: 24px; height: 24px;
@@ -46,23 +52,24 @@
 
 .mm-tab-icon svg {
   width: 22px; height: 22px;
-  stroke-width: 1.8;
-  transition: all 0.2s;
-  stroke: #9a96a8;
+  stroke-width: 1.6;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  stroke: #a8a29e;
   fill: none;
 }
 
-.mm-tab-item.active .mm-tab-icon svg { stroke: #b8861a; }
+.mm-tab-item.active .mm-tab-icon svg { stroke: #b5892e; }
 
 .mm-tab-label {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
   font-size: 10px;
   font-weight: 500;
-  color: #9a96a8;
-  transition: color 0.2s;
+  color: #a8a29e;
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.02em;
 }
 
 .mm-tab-item.active .mm-tab-label {
-  color: #b8861a;
+  color: #b5892e;
   font-weight: 600;
 }

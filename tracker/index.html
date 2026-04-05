@@ -6,7 +6,7 @@
 <title>How Do I Heal? — Medical Medium</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f8f7f4;--card:#fff;--card-border:rgba(0,0,0,.05);--text-primary:#1a1a2e;--text-body:#3a3845;--text-secondary:#5a5668;--text-muted:#9a96a8;--divider:#ece9e2;--symptom:#8a3a3a;--symptom-light:#a85050;--symptom-bg:#f5eded;--condition:#1e2a4a;--condition-light:#3a4a6a;--condition-bg:#ebedf2;--accent:#b8861a;--accent-bg:#fdf3e4}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
@@ -225,6 +225,24 @@ function showResults(){
 function backToSearch(){document.getElementById('resultsPage').classList.remove('show');document.getElementById('searchPage').classList.remove('hidden');renderTray();window.scrollTo(0,0);}
 function openFood(name){const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-');alert('→ /'+slug+'\n\nWould navigate to food detail page.');}
 renderBrowse();
+
+/* ── Deep-link: read ?symptom= from URL (home page symptom pills) ── */
+(function() {
+  var urlSymptom = new URLSearchParams(window.location.search).get('symptom');
+  if (!urlSymptom) return;
+  /* Ensure we're in symptoms mode */
+  if (mode !== 'symptoms') setMode('symptoms');
+  /* Find the symptom in SYMPTOM_CATS */
+  var found = false;
+  Object.values(SYMPTOM_CATS).forEach(function(items) {
+    items.forEach(function(item) {
+      if (item === urlSymptom && !found) {
+        toggleItem(item, 'symptom');
+        found = true;
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
