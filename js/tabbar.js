@@ -21,29 +21,24 @@
 
   var tabs = [
     {
-      /* Heal — heart (Feather/Lucide style) */
       id: 'heal', label: 'Heal', href: base + '/', paths: ['/', '/tracker'],
       icon: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
     },
     {
-      /* Foods — leaf (Lucide: sprout/seedling) */
       id: 'foods', label: 'Foods', href: base + '/foods/', paths: ['/foods'],
-      icon: '<path d="M6 21c2-4 4.5-7 10-9"/><path d="M16 3c-1.5 3-3 5.5-3 9"/><path d="M20 3c-5 0-9.5 2.5-9.5 9 0 0-3.5-1-6.5 0"/>'
+      icon: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>'
     },
     {
-      /* Community — people (Lucide: users) */
       id: 'community', label: 'Community', href: base + '/community/', paths: ['/community'],
       icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'
     },
     {
-      /* Cleanse — droplet (Lucide: droplets) */
       id: 'cleanse', label: 'Cleanse', href: base + '/planner/', paths: ['/planner'],
-      icon: '<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 14.1c1.44 0 2.6-1.19 2.6-2.64 0-.76-.37-1.47-1.11-2.08S12.73 7.8 12.56 6.9c-.18.9-.74 1.82-1.49 2.48S10 10.7 10 11.46c0 1.45 1.15 2.64 2.56 2.64z"/>'
+      icon: '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>'
     },
     {
-      /* Recipes — utensils (Lucide: cooking pot / simple fork-knife) */
       id: 'recipes', label: 'Recipes', href: base + '/recipes/', paths: ['/recipes'],
-      icon: '<path d="M6 2v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3V2"/><path d="M9 11v11"/><line x1="6" y1="5" x2="12" y2="5"/><path d="M18 2v4a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2V2"/><path d="M18 8v14"/>'
+      icon: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>'
     }
   ];
 

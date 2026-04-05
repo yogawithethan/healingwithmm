@@ -1,13 +1,12 @@
-/* js/community.js — Reddit-style community forum logic
-   Depends on: firebase-config.js (db, auth globals) */
+/* js/community.js — Reddit-style community forum logic */
 
 (function () {
   var TOPICS = [
-    { id: '369-cleanse', name: '3:6:9 Cleanse Journey', emoji: '\uD83E\uDDC3' },
-    { id: 'symptoms', name: 'Symptom Discussions', emoji: '\uD83E\uDE7A' },
+    { id: '369-cleanse', name: '3:6:9 Cleanse Journey', emoji: '\u{1F9C3}' },
+    { id: 'symptoms', name: 'Symptom Discussions', emoji: '\u{1FA7A}' },
     { id: 'success', name: 'Success Stories', emoji: '\u2B50' },
-    { id: 'recipes', name: 'Recipes & Tips', emoji: '\uD83E\uDD57' },
-    { id: 'general', name: 'General Questions', emoji: '\uD83D\uDCAC' }
+    { id: 'recipes', name: 'Recipes & Tips', emoji: '\u{1F957}' },
+    { id: 'general', name: 'General Questions', emoji: '\u{1F4AC}' }
   ];
 
   var currentTopic = null;
@@ -17,13 +16,12 @@
   var lastDoc = null;
   var loading = false;
   var currentPostId = null;
+  var isSignUp = false;
 
-  /* ── Time ago helper ── */
   function timeAgo(ts) {
     if (!ts) return '';
-    var now = Date.now();
     var date = ts.toDate ? ts.toDate() : new Date(ts);
-    var diff = Math.floor((now - date.getTime()) / 1000);
+    var diff = Math.floor((Date.now() - date.getTime()) / 1000);
     if (diff < 60) return 'just now';
     if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
     if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
@@ -37,7 +35,6 @@
     return d.innerHTML;
   }
 
-  /* ── Toast ── */
   function showToast(msg) {
     var el = document.getElementById('communityToast');
     el.textContent = msg;
@@ -45,26 +42,37 @@
     setTimeout(function () { el.classList.remove('show'); }, 2500);
   }
 
-  /* ── Auth ── */
-  var isSignUp = false;
+  /* ── Auth Modal ── */
+  window.openAuthModal = function () {
+    document.getElementById('authOverlay').classList.add('show');
+    document.getElementById('authModal').classList.add('show');
+  };
+
+  window.closeAuthModal = function () {
+    document.getElementById('authOverlay').classList.remove('show');
+    document.getElementById('authModal').classList.remove('show');
+    document.getElementById('authError').style.display = 'none';
+  };
 
   window.toggleAuthMode = function () {
     isSignUp = !isSignUp;
-    var nameField = document.getElementById('authDisplayName');
+    var nameField = document.getElementById('authNameField');
     var submitBtn = document.getElementById('authSubmitBtn');
     var toggleText = document.getElementById('authToggleText');
     var toggleBtn = document.getElementById('authToggleBtn');
-    var errEl = document.getElementById('authError');
-    errEl.style.display = 'none';
+    var title = document.getElementById('authModalTitle');
+    document.getElementById('authError').style.display = 'none';
 
     if (isSignUp) {
       nameField.style.display = 'block';
       submitBtn.textContent = 'Create account';
+      title.textContent = 'Create account';
       toggleText.textContent = 'Already have an account?';
       toggleBtn.textContent = 'Sign in';
     } else {
       nameField.style.display = 'none';
       submitBtn.textContent = 'Sign in';
+      title.textContent = 'Sign in';
       toggleText.textContent = "Don't have an account?";
       toggleBtn.textContent = 'Sign up';
     }
@@ -78,26 +86,22 @@
 
   auth.onAuthStateChanged(function (user) {
     currentUser = user;
-    var loginEl = document.getElementById('authLogin');
-    var userEl = document.getElementById('authUser');
+    var loginBtn = document.getElementById('authLoginBtn');
+    var userBar = document.getElementById('authUserBar');
     var fab = document.getElementById('communityFab');
 
     if (user) {
-      loginEl.style.display = 'none';
-      userEl.style.display = 'flex';
+      loginBtn.style.display = 'none';
+      userBar.style.display = 'flex';
       var name = user.displayName || user.email || 'User';
       document.getElementById('authName').textContent = name;
       var avatarEl = document.getElementById('authAvatarEl');
-      if (user.photoURL) {
-        avatarEl.innerHTML = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
-      } else {
-        avatarEl.textContent = name.charAt(0).toUpperCase();
-      }
+      avatarEl.textContent = name.charAt(0).toUpperCase();
       fab.classList.remove('hidden');
-      loadUserVotes();
+      closeAuthModal();
     } else {
-      loginEl.style.display = 'block';
-      userEl.style.display = 'none';
+      loginBtn.style.display = 'block';
+      userBar.style.display = 'none';
       fab.classList.add('hidden');
       userVotes = {};
     }
@@ -110,67 +114,45 @@
   window.communitySignIn = function () {
     var email = document.getElementById('authEmail').value.trim();
     var password = document.getElementById('authPassword').value;
-    var errEl = document.getElementById('authError');
-    errEl.style.display = 'none';
+    document.getElementById('authError').style.display = 'none';
 
-    if (!email || !password) {
-      showAuthError('Email and password are required');
-      return;
-    }
+    if (!email || !password) { showAuthError('Email and password are required'); return; }
 
     if (isSignUp) {
       var displayName = document.getElementById('authDisplayName').value.trim();
-      if (!displayName) {
-        showAuthError('Display name is required');
-        return;
-      }
+      if (!displayName) { showAuthError('Display name is required'); return; }
       auth.createUserWithEmailAndPassword(email, password).then(function (result) {
         return result.user.updateProfile({ displayName: displayName }).then(function () {
           db.collection('users').doc(result.user.uid).set({
-            displayName: displayName,
-            email: email,
+            displayName: displayName, email: email,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           }, { merge: true });
         });
       }).catch(function (err) {
         var msg = err.code === 'auth/email-already-in-use' ? 'An account with this email already exists'
           : err.code === 'auth/weak-password' ? 'Password must be at least 6 characters'
-          : err.code === 'auth/invalid-email' ? 'Invalid email address'
-          : err.message;
+          : err.code === 'auth/invalid-email' ? 'Invalid email address' : err.message;
         showAuthError(msg);
       });
     } else {
       auth.signInWithEmailAndPassword(email, password).catch(function (err) {
         var msg = err.code === 'auth/user-not-found' ? 'No account found with this email'
           : err.code === 'auth/wrong-password' ? 'Incorrect password'
-          : err.code === 'auth/invalid-credential' ? 'Incorrect email or password'
-          : err.message;
+          : err.code === 'auth/invalid-credential' ? 'Incorrect email or password' : err.message;
         showAuthError(msg);
       });
     }
   };
 
-  window.communitySignOut = function () {
-    auth.signOut();
-  };
+  window.communitySignOut = function () { auth.signOut(); };
 
-  function loadUserVotes() {
-    if (!currentUser) return;
-    // We'll check votes per-post as needed, not bulk load
-  }
-
-  /* ── Seed topics if they don't exist ── */
-  function seedTopics() {
-    TOPICS.forEach(function (t) {
-      db.collection('topics').doc(t.id).set({
-        name: t.name,
-        emoji: t.emoji,
-        postCount: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
-    });
-  }
-  seedTopics();
+  /* ── Seed topics ── */
+  TOPICS.forEach(function (t) {
+    db.collection('topics').doc(t.id).set({
+      name: t.name, emoji: t.emoji, postCount: 0,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+  });
 
   /* ── Topic filter ── */
   window.setTopic = function (topicId, btn) {
@@ -190,7 +172,7 @@
     loadPosts(true);
   };
 
-  /* ── Load posts ── */
+  /* ── Load posts — simple query, no composite index needed ── */
   function loadPosts(reset) {
     if (loading) return;
     loading = true;
@@ -201,55 +183,47 @@
       lastDoc = null;
     }
 
-    var query = db.collection('posts');
+    /* Use simple orderBy queries to avoid composite index requirements */
+    var orderField = currentSort === 'top' ? 'voteCount' : 'createdAt';
+    var query = db.collection('posts').orderBy(orderField, 'desc').limit(20);
 
-    if (currentTopic) {
-      query = query.where('topicId', '==', currentTopic);
-    }
-
-    if (currentSort === 'top') {
-      query = query.orderBy('voteCount', 'desc');
-    } else {
-      query = query.orderBy('createdAt', 'desc');
-    }
-
-    query = query.limit(15);
-
-    if (lastDoc) {
-      query = query.startAfter(lastDoc);
-    }
+    if (lastDoc) query = query.startAfter(lastDoc);
 
     query.get().then(function (snap) {
       if (reset) feed.innerHTML = '';
 
-      if (snap.empty && reset) {
+      /* Client-side topic filter to avoid composite index */
+      var docs = [];
+      snap.forEach(function (doc) { docs.push(doc); });
+
+      var filtered = currentTopic
+        ? docs.filter(function (doc) { return doc.data().topicId === currentTopic; })
+        : docs;
+
+      if (!filtered.length && reset) {
         feed.innerHTML = '<div class="community-empty">'
-          + '<div class="community-empty__icon">\uD83C\uDF31</div>'
+          + '<div class="community-empty__icon">&#x1F331;</div>'
           + '<div class="community-empty__title">No posts yet</div>'
           + '<div class="community-empty__desc">Be the first to share your healing journey</div></div>';
         loading = false;
         return;
       }
 
-      snap.forEach(function (doc) {
+      filtered.forEach(function (doc) {
         var p = doc.data();
         p.id = doc.id;
         feed.appendChild(renderPostCard(p));
-        lastDoc = doc;
       });
 
-      // Check votes for visible posts
+      if (docs.length > 0) lastDoc = docs[docs.length - 1];
+
       if (currentUser) {
-        snap.forEach(function (doc) {
-          checkVote(doc.id);
-        });
+        filtered.forEach(function (doc) { checkVote(doc.id); });
       }
 
       loading = false;
-
-      // Hide load-more if fewer than 15 results
       var loadMore = document.getElementById('loadMore');
-      if (loadMore) loadMore.style.display = snap.size < 15 ? 'none' : 'block';
+      if (loadMore) loadMore.style.display = snap.size < 20 ? 'none' : 'block';
     }).catch(function (err) {
       console.error('Error loading posts:', err);
       if (reset) feed.innerHTML = '<div class="community-empty"><div class="community-empty__title">Error loading posts</div><div class="community-empty__desc">' + esc(err.message) + '</div></div>';
@@ -266,7 +240,6 @@
       if (e.target.closest('.community-vote__btn')) return;
       openPost(p.id);
     };
-
     var topicObj = TOPICS.find(function (t) { return t.id === p.topicId; });
     var topicLabel = topicObj ? topicObj.emoji + ' ' + topicObj.name : p.topicName || '';
 
@@ -284,11 +257,10 @@
       + '<span class="community-post__meta-item">' + timeAgo(p.createdAt) + '</span>'
       + '<span class="community-post__meta-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' + (p.commentCount || 0) + '</span>'
       + '</div></div>';
-
     return el;
   }
 
-  /* ── Vote ── */
+  /* ── Voting ── */
   function checkVote(postId) {
     if (!currentUser) return;
     db.collection('posts').doc(postId).collection('votes').doc(currentUser.uid).get().then(function (doc) {
@@ -301,45 +273,33 @@
   }
 
   window.toggleVote = function (postId, btn) {
-    if (!currentUser) {
-      showToast('Sign in to upvote');
-      communitySignIn();
-      return;
-    }
-
+    if (!currentUser) { showToast('Sign in to upvote'); openAuthModal(); return; }
     var voteRef = db.collection('posts').doc(postId).collection('votes').doc(currentUser.uid);
     var postRef = db.collection('posts').doc(postId);
 
     if (userVotes[postId]) {
-      // Remove vote
       voteRef.delete();
       postRef.update({ voteCount: firebase.firestore.FieldValue.increment(-1) });
       userVotes[postId] = false;
       btn.classList.remove('voted');
-      var countEl = document.getElementById('vc-' + postId);
-      if (countEl) countEl.textContent = Math.max(0, parseInt(countEl.textContent) - 1);
+      var c = document.getElementById('vc-' + postId);
+      if (c) c.textContent = Math.max(0, parseInt(c.textContent) - 1);
     } else {
-      // Add vote
       voteRef.set({ userId: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
       postRef.update({ voteCount: firebase.firestore.FieldValue.increment(1) });
       userVotes[postId] = true;
       btn.classList.add('voted');
-      var countEl2 = document.getElementById('vc-' + postId);
-      if (countEl2) countEl2.textContent = parseInt(countEl2.textContent) + 1;
+      var c2 = document.getElementById('vc-' + postId);
+      if (c2) c2.textContent = parseInt(c2.textContent) + 1;
     }
   };
 
   /* ── New post ── */
   window.openNewPost = function () {
-    if (!currentUser) {
-      showToast('Sign in to post');
-      communitySignIn();
-      return;
-    }
+    if (!currentUser) { showToast('Sign in to post'); openAuthModal(); return; }
     document.getElementById('sheetOverlay').classList.add('show');
     document.getElementById('newPostSheet').classList.add('show');
   };
-
   window.closeNewPost = function () {
     document.getElementById('sheetOverlay').classList.remove('show');
     document.getElementById('newPostSheet').classList.remove('show');
@@ -349,64 +309,46 @@
     var title = document.getElementById('postTitle').value.trim();
     var topicId = document.getElementById('postTopic').value;
     var body = document.getElementById('postBody').value.trim();
+    if (!title || !topicId) { showToast('Title and topic are required'); return; }
 
-    if (!title || !topicId) {
-      showToast('Title and topic are required');
-      return;
-    }
-
-    var submitBtn = document.getElementById('postSubmit');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Posting...';
-
+    var btn = document.getElementById('postSubmit');
+    btn.disabled = true; btn.textContent = 'Posting...';
     var topicObj = TOPICS.find(function (t) { return t.id === topicId; });
 
     db.collection('posts').add({
-      title: title,
-      body: body,
-      topicId: topicId,
+      title: title, body: body, topicId: topicId,
       topicName: topicObj ? topicObj.name : '',
       authorId: currentUser.uid,
       authorName: currentUser.displayName || 'Anonymous',
-      authorPhoto: currentUser.photoURL || '',
-      voteCount: 0,
-      commentCount: 0,
+      voteCount: 0, commentCount: 0,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function () {
-      // Increment topic post count
       db.collection('topics').doc(topicId).update({
         postCount: firebase.firestore.FieldValue.increment(1)
       }).catch(function () {});
-
       document.getElementById('postTitle').value = '';
       document.getElementById('postBody').value = '';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Share with community';
+      btn.disabled = false; btn.textContent = 'Share with community';
       closeNewPost();
       showToast('Post shared');
       loadPosts(true);
     }).catch(function (err) {
       showToast('Error: ' + err.message);
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Share with community';
+      btn.disabled = false; btn.textContent = 'Share with community';
     });
   };
 
   /* ── Post detail ── */
   function openPost(postId) {
     currentPostId = postId;
-    var feed = document.getElementById('communityFeedWrap');
+    document.getElementById('communityFeedWrap').classList.add('hidden');
     var detail = document.getElementById('communityDetail');
-    feed.classList.add('hidden');
     detail.classList.add('show');
     detail.innerHTML = '<div class="community-skeleton"><div class="community-skeleton__row"></div><div class="community-skeleton__row"></div><div class="community-skeleton__row"></div></div>';
     window.scrollTo(0, 0);
 
     db.collection('posts').doc(postId).get().then(function (doc) {
-      if (!doc.exists) {
-        detail.innerHTML = '<p>Post not found.</p>';
-        return;
-      }
+      if (!doc.exists) { detail.innerHTML = '<p>Post not found.</p>'; return; }
       var p = doc.data();
       var topicObj = TOPICS.find(function (t) { return t.id === p.topicId; });
       var topicLabel = topicObj ? topicObj.emoji + ' ' + topicObj.name : '';
@@ -420,8 +362,7 @@
         + '<button class="community-vote__btn' + (userVotes[postId] ? ' voted' : '') + '" data-post-id="' + postId + '" onclick="toggleVote(\'' + postId + '\',this)">'
         + '<svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg></button>'
         + '<span class="community-vote__count" id="vc-' + postId + '">' + (p.voteCount || 0) + '</span>'
-        + '<span style="color:var(--text-muted);font-size:12px">upvotes</span>'
-        + '</div>'
+        + '<span style="color:var(--text-muted);font-size:12px">upvotes</span></div>'
         + '<div class="community-detail__body">' + esc(p.body || '') + '</div>'
         + '<div class="community-comments__header" id="commentHeader">Comments</div>'
         + '<div id="commentsList"></div>';
@@ -433,10 +374,8 @@
           + '<button class="community-comment-input__send" onclick="submitComment()">'
           + '<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>';
       }
-
       detail.innerHTML = h;
       loadComments(postId);
-
       if (currentUser) checkVote(postId);
     });
   }
@@ -451,20 +390,16 @@
   /* ── Comments ── */
   function loadComments(postId) {
     db.collection('posts').doc(postId).collection('comments')
-      .orderBy('createdAt', 'asc')
-      .onSnapshot(function (snap) {
+      .orderBy('createdAt', 'asc').onSnapshot(function (snap) {
         var list = document.getElementById('commentsList');
         if (!list) return;
         var header = document.getElementById('commentHeader');
-
         if (snap.empty) {
           list.innerHTML = '<div style="padding:16px 0;color:var(--text-muted);font-family:Outfit,sans-serif;font-size:13px">No comments yet. Be the first to respond.</div>';
           if (header) header.textContent = 'Comments';
           return;
         }
-
         if (header) header.textContent = snap.size + ' comment' + (snap.size !== 1 ? 's' : '');
-
         list.innerHTML = '';
         snap.forEach(function (doc) {
           var c = doc.data();
@@ -483,13 +418,9 @@
     var input = document.getElementById('commentInput');
     var body = input.value.trim();
     if (!body) return;
-
-    input.value = '';
-    input.style.height = 'auto';
-
+    input.value = ''; input.style.height = 'auto';
     db.collection('posts').doc(currentPostId).collection('comments').add({
-      body: body,
-      authorId: currentUser.uid,
+      body: body, authorId: currentUser.uid,
       authorName: currentUser.displayName || 'Anonymous',
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function () {

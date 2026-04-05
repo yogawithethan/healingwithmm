@@ -14,19 +14,51 @@
 
   .community-header {
     padding: 56px 24px 20px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
   }
   @media (min-width: 768px) { .community-header { padding-top: 24px; } }
   @supports(padding-top: env(safe-area-inset-top)) {
     .community-header { padding-top: calc(env(safe-area-inset-top) + 20px); }
+  }
+  .community-header__top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 4px;
   }
   .community-header__eyebrow {
     display: inline-flex; align-items: center; gap: 6px;
     font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
     background: var(--accent-bg); padding: 5px 13px; border-radius: 100px;
-    margin-bottom: 14px; animation: fadeUp 0.6s var(--ease-out) both;
+    animation: fadeUp 0.6s var(--ease-out) both;
   }
+  .community-header__login-btn {
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--text-primary); background: var(--card); border: 1.5px solid var(--divider);
+    padding: 8px 18px; border-radius: 100px; cursor: pointer;
+    transition: all 0.4s var(--ease-out); box-shadow: var(--shadow-xs);
+    animation: fadeUp 0.6s var(--ease-out) both;
+  }
+  .community-header__login-btn:hover { border-color: var(--accent-soft); box-shadow: var(--shadow-sm); }
+  .community-header__login-btn:active { transform: scale(0.97); }
+
+  .community-header__user {
+    display: flex; align-items: center; gap: 10px;
+    animation: fadeUp 0.6s var(--ease-out) both;
+  }
+  .community-header__user-avatar {
+    width: 30px; height: 30px; border-radius: 50%; background: var(--accent-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; color: var(--accent);
+  }
+  .community-header__user-name {
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  }
+  .community-header__signout {
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    color: var(--text-muted); background: none; border: none; cursor: pointer;
+    padding: 4px 8px; border-radius: 100px; transition: all 0.3s;
+  }
+  .community-header__signout:hover { color: var(--text-secondary); background: var(--bg-subtle); }
+
   .community-header h1 {
     font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600;
     color: var(--text-primary); letter-spacing: -0.03em; line-height: 1.1;
@@ -41,53 +73,31 @@
 </head>
 <body>
 
-<!-- ── Header ── -->
+<!-- ── Header with inline login button ── -->
 <div class="community-header">
-  <div class="community-header__eyebrow">Community</div>
-  <h1>Healing together</h1>
-  <p>Share your journey, ask questions, and support each other</p>
-</div>
-
-<!-- ── Auth bar ── -->
-<div class="community-auth">
-  <!-- Logged out: show sign-in / sign-up form -->
-  <div id="authLogin" style="display:none">
-    <div class="community-auth__form" id="authForm">
-      <div class="community-auth__form-row">
-        <input class="community-auth__input" type="text" id="authDisplayName" placeholder="Display name" style="display:none">
-      </div>
-      <div class="community-auth__form-row">
-        <input class="community-auth__input" type="email" id="authEmail" placeholder="Email">
-      </div>
-      <div class="community-auth__form-row">
-        <input class="community-auth__input" type="password" id="authPassword" placeholder="Password"
-          onkeydown="if(event.key==='Enter')communitySignIn()">
-      </div>
-      <div id="authError" style="font-family:Outfit,sans-serif;font-size:12px;color:var(--symptom);padding:4px 0;display:none"></div>
-      <button class="community-auth__submit" onclick="communitySignIn()" id="authSubmitBtn">Sign in</button>
-      <div class="community-auth__toggle">
-        <span id="authToggleText">Don't have an account?</span>
-        <button class="community-auth__toggle-btn" onclick="toggleAuthMode()" id="authToggleBtn">Sign up</button>
-      </div>
+  <div class="community-header__top">
+    <div class="community-header__eyebrow">Community</div>
+    <!-- Logged out -->
+    <button class="community-header__login-btn" id="authLoginBtn" onclick="openAuthModal()" style="display:none">Sign in</button>
+    <!-- Logged in -->
+    <div class="community-header__user" id="authUserBar" style="display:none">
+      <div class="community-header__user-avatar" id="authAvatarEl"></div>
+      <span class="community-header__user-name" id="authName"></span>
+      <button class="community-header__signout" onclick="communitySignOut()">Sign out</button>
     </div>
   </div>
-
-  <!-- Logged in: show user info -->
-  <div class="community-auth__user" id="authUser" style="display:none">
-    <div class="community-auth__avatar-placeholder" id="authAvatarEl"></div>
-    <span class="community-auth__name" id="authName"></span>
-    <button class="community-auth__signout" onclick="communitySignOut()">Sign out</button>
-  </div>
+  <h1>Healing together</h1>
+  <p>Share your journey, ask questions, and support each other</p>
 </div>
 
 <!-- ── Topics ── -->
 <div class="community-topics">
   <button class="community-topic active" onclick="setTopic('all',this)">All</button>
-  <button class="community-topic" onclick="setTopic('369-cleanse',this)">\uD83E\uDDC3 3:6:9 Cleanse</button>
-  <button class="community-topic" onclick="setTopic('symptoms',this)">\uD83E\uDE7A Symptoms</button>
-  <button class="community-topic" onclick="setTopic('success',this)">\u2B50 Success Stories</button>
-  <button class="community-topic" onclick="setTopic('recipes',this)">\uD83E\uDD57 Recipes & Tips</button>
-  <button class="community-topic" onclick="setTopic('general',this)">\uD83D\uDCAC General</button>
+  <button class="community-topic" onclick="setTopic('369-cleanse',this)">&#x1F9C3; 3:6:9 Cleanse</button>
+  <button class="community-topic" onclick="setTopic('symptoms',this)">&#x1FA7A; Symptoms</button>
+  <button class="community-topic" onclick="setTopic('success',this)">&#x2B50; Success Stories</button>
+  <button class="community-topic" onclick="setTopic('recipes',this)">&#x1F957; Recipes &amp; Tips</button>
+  <button class="community-topic" onclick="setTopic('general',this)">&#x1F4AC; General</button>
 </div>
 
 <!-- ── Sort ── -->
@@ -96,7 +106,7 @@
   <button class="community-sort__btn" onclick="setSort('top',this)">Top</button>
 </div>
 
-<!-- ── Feed ── -->
+<!-- ── Feed (always visible) ── -->
 <div id="communityFeedWrap" class="community-feed">
   <div id="communityFeed"></div>
   <div style="text-align:center;padding:16px">
@@ -111,6 +121,36 @@
 <button class="community-fab hidden" id="communityFab" onclick="openNewPost()">
   <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
 </button>
+
+<!-- ── Auth Modal (popup) ── -->
+<div class="community-sheet-overlay" id="authOverlay" onclick="closeAuthModal()"></div>
+<div class="community-sheet" id="authModal">
+  <div class="community-sheet__header">
+    <span class="community-sheet__title" id="authModalTitle">Sign in</span>
+    <button class="community-sheet__close" onclick="closeAuthModal()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="community-sheet__field" id="authNameField" style="display:none">
+    <label class="community-sheet__label">Display name</label>
+    <input class="community-sheet__input" id="authDisplayName" placeholder="Your name">
+  </div>
+  <div class="community-sheet__field">
+    <label class="community-sheet__label">Email</label>
+    <input class="community-sheet__input" type="email" id="authEmail" placeholder="you@example.com">
+  </div>
+  <div class="community-sheet__field">
+    <label class="community-sheet__label">Password</label>
+    <input class="community-sheet__input" type="password" id="authPassword" placeholder="Password"
+      onkeydown="if(event.key==='Enter')communitySignIn()">
+  </div>
+  <div id="authError" style="font-family:Outfit,sans-serif;font-size:12px;color:var(--symptom);padding:4px 0;display:none"></div>
+  <button class="community-sheet__submit" onclick="communitySignIn()" id="authSubmitBtn">Sign in</button>
+  <div class="community-auth__toggle">
+    <span id="authToggleText">Don't have an account?</span>
+    <button class="community-auth__toggle-btn" onclick="toggleAuthMode()" id="authToggleBtn">Sign up</button>
+  </div>
+</div>
 
 <!-- ── New Post Sheet ── -->
 <div class="community-sheet-overlay" id="sheetOverlay" onclick="closeNewPost()"></div>
@@ -132,7 +172,7 @@
       <option value="369-cleanse">3:6:9 Cleanse Journey</option>
       <option value="symptoms">Symptom Discussions</option>
       <option value="success">Success Stories</option>
-      <option value="recipes">Recipes & Tips</option>
+      <option value="recipes">Recipes &amp; Tips</option>
       <option value="general">General Questions</option>
     </select>
   </div>
@@ -146,7 +186,7 @@
 <!-- ── Toast ── -->
 <div class="community-toast" id="communityToast"></div>
 
-<!-- ── Firebase SDK (compat, via CDN) ── -->
+<!-- ── Firebase SDK ── -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
