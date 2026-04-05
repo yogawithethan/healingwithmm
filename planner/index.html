@@ -124,22 +124,28 @@
     background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
   }
 
-  /* ---- MAIN TABS ---- */
+  /* ---- MAIN TABS — sliding pill toggle ---- */
   .main-tabs {
-    display: flex; gap: 0; margin-top: 16px;
-    border-bottom: 2px solid var(--divider);
+    display: flex; position: relative; margin-top: 16px;
+    background: var(--card); border-radius: 16px; padding: 4px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05);
+    user-select: none;
   }
+  .main-tabs__slider {
+    position: absolute; top: 4px; width: calc(50% - 4px); height: calc(100% - 8px);
+    border-radius: 12px; background: var(--accent); z-index: 1; left: 4px;
+    transition: left 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(181, 137, 46, 0.2);
+  }
+  .main-tabs__slider.right { left: calc(50%); }
   .main-tab {
     flex: 1; padding: 12px 0; border: none; background: none; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    font-family: 'Outfit', 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
     color: var(--text-muted); text-align: center;
-    position: relative; transition: color 0.2s;
+    position: relative; z-index: 2; transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    letter-spacing: 0.02em; -webkit-tap-highlight-color: transparent;
   }
-  .main-tab.active { color: var(--text-primary); }
-  .main-tab.active::after {
-    content: ''; position: absolute; bottom: -2px; left: 20%; right: 20%;
-    height: 2px; background: var(--accent); border-radius: 1px;
-  }
+  .main-tab.active { color: #fff; }
 
   /* ---- TAB CONTENT ---- */
   .tab-content { display: none; }
@@ -437,6 +443,7 @@
     </div>
 
     <div class="main-tabs">
+      <div class="main-tabs__slider" id="tabSlider"></div>
       <button class="main-tab active" onclick="switchTab('schedule')">Schedule</button>
       <button class="main-tab" onclick="switchTab('shop')">Shop</button>
     </div>
@@ -780,12 +787,15 @@ function init() {
 function switchTab(tab) {
   document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  var slider = document.getElementById('tabSlider');
   if (tab === 'schedule') {
-    document.querySelectorAll('.main-tab')[0].classList.add('active');
-    document.getElementById('scheduleTab').classList.add('active');
-  } else {
     document.querySelectorAll('.main-tab')[1].classList.add('active');
+    document.getElementById('scheduleTab').classList.add('active');
+    slider.classList.remove('right');
+  } else {
+    document.querySelectorAll('.main-tab')[2].classList.add('active');
     document.getElementById('shopTab').classList.add('active');
+    slider.classList.add('right');
   }
 }
 
