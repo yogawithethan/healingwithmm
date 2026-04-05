@@ -75,11 +75,11 @@
     topHtml += tab.label + '</a>';
   });
   topHtml += '</div>'
-    /* Profile icon — right side of top bar */
-    + '<a class="nav-profile" href="' + base + '/profile/" aria-label="Profile">'
-    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">'
-    + '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'
-    + '</svg></a>'
+    /* Sign in button / profile icon — right side of top bar */
+    + '<a class="nav-signin" id="navSignIn" href="' + base + '/profile/">'
+    + 'Sign in</a>'
+    + '<a class="nav-profile nav-profile--hidden" id="navProfileIcon" href="' + base + '/profile/" aria-label="Profile">'
+    + '</a>'
     + '</div></nav>';
 
   var topEl = document.createElement('div');

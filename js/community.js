@@ -88,18 +88,21 @@
     currentUser = user;
     var fab = document.getElementById('communityFab');
 
-    /* Update the nav profile icon to reflect auth state */
-    var navProfile = document.querySelector('.nav-profile');
-    if (navProfile && user) {
-      var name = user.displayName || user.email || 'User';
-      var initial = name.charAt(0).toUpperCase();
-      navProfile.innerHTML = '<span style="font-family:Outfit,sans-serif;font-size:13px;font-weight:600;color:var(--accent)">' + initial + '</span>';
-      navProfile.onclick = function (e) { e.preventDefault(); communitySignOut(); };
-      navProfile.title = 'Signed in as ' + name + ' (click to sign out)';
-    } else if (navProfile) {
-      navProfile.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-      navProfile.onclick = function (e) { e.preventDefault(); openAuthModal(); };
-      navProfile.title = 'Sign in';
+    /* Swap nav sign-in button / profile icon */
+    var navSignIn = document.getElementById('navSignIn');
+    var navProfileIcon = document.getElementById('navProfileIcon');
+    if (navSignIn && navProfileIcon) {
+      if (user) {
+        var name = user.displayName || user.email || 'User';
+        navSignIn.classList.add('nav-signin--hidden');
+        navProfileIcon.classList.remove('nav-profile--hidden');
+        navProfileIcon.textContent = name.charAt(0).toUpperCase();
+        navProfileIcon.title = 'Signed in as ' + name;
+      } else {
+        navSignIn.classList.remove('nav-signin--hidden');
+        navProfileIcon.classList.add('nav-profile--hidden');
+        navSignIn.onclick = function (e) { e.preventDefault(); openAuthModal(); };
+      }
     }
 
     if (user) {

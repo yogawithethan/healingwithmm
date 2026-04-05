@@ -448,7 +448,31 @@ body::after {
   flex-shrink: 0;
 }
 
-/* ===== PROFILE ICON (desktop top-right) ===== */
+/* ===== SIGN IN BUTTON (desktop top-right) ===== */
+.nav-signin {
+  justify-self: end;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--card);
+  border: 1.5px solid var(--divider);
+  padding: 8px 20px;
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out);
+  box-shadow: var(--shadow-xs);
+  white-space: nowrap;
+}
+.nav-signin:hover {
+  border-color: var(--accent-soft);
+  box-shadow: var(--shadow-sm);
+}
+.nav-signin:active { transform: scale(0.97); }
+.nav-signin--hidden { display: none !important; }
+
+/* ===== PROFILE ICON (desktop top-right, shown when logged in) ===== */
 .nav-profile {
   justify-self: end;
   display: flex;
@@ -457,21 +481,20 @@ body::after {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(28, 25, 23, 0.04);
-  color: var(--text-secondary);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
   transition: all 0.4s var(--ease-out);
   text-decoration: none;
   cursor: pointer;
 }
 .nav-profile:hover {
-  background: rgba(28, 25, 23, 0.08);
-  color: var(--text-primary);
+  background: rgba(181, 137, 46, 0.15);
 }
 .nav-profile:active { transform: scale(0.92); }
-.nav-profile svg {
-  stroke: currentColor;
-  fill: none;
-}
+.nav-profile--hidden { display: none !important; }
 
 /* ===== SCROLL REVEAL UTILITY ===== */
 .reveal {
