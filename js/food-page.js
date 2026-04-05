@@ -197,8 +197,10 @@
 
     /* ── hero ── */
     var hasImage = food.heroImage && food.heroImage.length > 0;
+    /* Resolve heroImage path: if absolute (/img/...), prepend base path for GitHub Pages */
+    var imgSrc = hasImage ? (food.heroImage.charAt(0) === '/' ? base + food.heroImage : food.heroImage) : '';
     var heroInner = hasImage
-      ? '<img class="fp-hero__img" src="' + esc(food.heroImage) + '" alt="' + esc(food.name) + '" onerror="this.style.opacity=\'0\';this.style.position=\'absolute\';this.style.pointerEvents=\'none\'">'
+      ? '<img class="fp-hero__img" src="' + esc(imgSrc) + '" alt="' + esc(food.name) + '" onerror="this.style.opacity=\'0\';this.style.position=\'absolute\';this.style.pointerEvents=\'none\'">'
         + '<div class="fp-hero__text-shade"></div>'
       : '<div class="fp-hero__gradient" style="background:linear-gradient(160deg,var(--food-secondary) 0%,var(--food-primary) 40%,var(--food-deep) 100%)"></div>'
         + '<div class="fp-hero__text-shade"></div>';

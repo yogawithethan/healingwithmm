@@ -5,7 +5,7 @@
     "subtitle": "The Ultimate Colon Cleanser",
     "category": "Fruits",
     "titleFont": "Montserrat",
-    "heroImage": "/img/healing_foods/apples.png",
+    "heroImage": "/foods/images/apples.png",
     "colors": {
       "deep": "#3a1010",
       "primary": "#8b2020",
@@ -77,7 +77,7 @@
     "subtitle": "The Antispasmodic Miracle",
     "category": "Fruits",
     "titleFont": "Quicksand",
-    "heroImage": "/img/healing_foods/bananas.png",
+    "heroImage": "/foods/images/bananas.png",
     "colors": {
       "deep": "#3a3000",
       "primary": "#7a6a00",
@@ -173,7 +173,7 @@
     "subtitle": "The Sacred Sweetener",
     "category": "Fruits",
     "titleFont": "Cinzel",
-    "heroImage": "/img/healing_foods/dates.png",
+    "heroImage": "/foods/images/dates.png",
     "colors": {
       "deep": "#2a1a08",
       "primary": "#5c3a10",
@@ -197,7 +197,7 @@
     "subtitle": "The Grounding Fruit",
     "category": "Fruits",
     "titleFont": "Zilla Slab",
-    "heroImage": "/img/healing_foods/figs.png",
+    "heroImage": "/foods/images/figs.png",
     "colors": {
       "deep": "#2a1020",
       "primary": "#5a2848",
@@ -221,7 +221,7 @@
     "subtitle": "The Kidney Tonic",
     "category": "Fruits",
     "titleFont": "Pacifico",
-    "heroImage": "/img/healing_foods/grapes.png",
+    "heroImage": "/foods/images/grapes.png",
     "colors": {
       "deep": "#1a0a30",
       "primary": "#3a1a60",
@@ -293,7 +293,7 @@
     "subtitle": "The Nourisher",
     "category": "Fruits",
     "titleFont": "Ultra",
-    "heroImage": "/img/healing_foods/mangoes.png",
+    "heroImage": "/foods/images/mangoes.png",
     "colors": {
       "deep": "#4a2000",
       "primary": "#a04800",
@@ -317,7 +317,7 @@
     "subtitle": "The Deep Cleanser",
     "category": "Fruits",
     "titleFont": "Raleway",
-    "heroImage": "/img/healing_foods/melons.png",
+    "heroImage": "/foods/images/melons.png",
     "colors": {
       "deep": "#0a3020",
       "primary": "#1a6040",
@@ -341,7 +341,7 @@
     "subtitle": "The Immunity Builders",
     "category": "Fruits",
     "titleFont": "Titan One",
-    "heroImage": "/img/healing_foods/oranges-tangerines.png",
+    "heroImage": "/foods/images/oranges-tangerines.png",
     "colors": {
       "deep": "#4a1800",
       "primary": "#a04000",
@@ -365,7 +365,7 @@
     "subtitle": "The Stomach Healer",
     "category": "Fruits",
     "titleFont": "Satisfy",
-    "heroImage": "/img/healing_foods/papaya.png",
+    "heroImage": "/foods/images/papaya.png",
     "colors": {
       "deep": "#5c2a0a",
       "primary": "#8b4513",
@@ -437,7 +437,7 @@
     "subtitle": "The Spiritual Shield",
     "category": "Vegetables",
     "titleFont": "Marcellus",
-    "heroImage": "/img/healing_foods/artichoke.png",
+    "heroImage": "/foods/images/artichoke.png",
     "colors": {
       "deep": "#1a2020",
       "primary": "#3a5050",
@@ -461,7 +461,7 @@
     "subtitle": "The Fatigue Fighter",
     "category": "Vegetables",
     "titleFont": "Amatic SC",
-    "heroImage": "/img/healing_foods/asparagus.png",
+    "heroImage": "/foods/images/asparagus.png",
     "colors": {
       "deep": "#1a3a1a",
       "primary": "#2a5a2a",
@@ -485,7 +485,7 @@
     "subtitle": "The Reset Button",
     "category": "Vegetables",
     "titleFont": "Bebas Neue",
-    "heroImage": "/img/healing_foods/celery.png",
+    "heroImage": "/foods/images/celery.png",
     "colors": {
       "deep": "#1a3020",
       "primary": "#2a5a38",
@@ -725,7 +725,7 @@
     "subtitle": "The Pathogen Fighter",
     "category": "Herbs & Spices",
     "titleFont": "Permanent Marker",
-    "heroImage": "/img/healing_foods/cats-claw.png",
+    "heroImage": "/foods/images/cats_claw.png",
     "colors": {
       "deep": "#2a1810",
       "primary": "#5a3828",
@@ -749,7 +749,7 @@
     "subtitle": "The Heavy Metal Chelator",
     "category": "Herbs & Spices",
     "titleFont": "Shadows Into Light",
-    "heroImage": "/img/healing_foods/cilantro.png",
+    "heroImage": "/foods/images/cilantro.png",
     "colors": {
       "deep": "#0a3010",
       "primary": "#1a5a20",
@@ -797,7 +797,7 @@
     "subtitle": "The Anti-Spasmodic",
     "category": "Herbs & Spices",
     "titleFont": "Rock Salt",
-    "heroImage": "/img/healing_foods/ginger.png",
+    "heroImage": "/foods/images/ginger.png",
     "colors": {
       "deep": "#3a2800",
       "primary": "#7a5800",
@@ -821,7 +821,7 @@
     "subtitle": "The Calming Healer",
     "category": "Herbs & Spices",
     "titleFont": "Dancing Script",
-    "heroImage": "/img/healing_foods/lemon-balm.png",
+    "heroImage": "/foods/images/lemon_balm.png",
     "colors": {
       "deep": "#1a3018",
       "primary": "#2a6030",
@@ -869,7 +869,7 @@
     "subtitle": "The Alkalizer",
     "category": "Herbs & Spices",
     "titleFont": "Nunito",
-    "heroImage": "/img/healing_foods/parsley.png",
+    "heroImage": "/foods/images/parsley.png",
     "colors": {
       "deep": "#0a2a10",
       "primary": "#1a5a20",
@@ -917,7 +917,7 @@
     "subtitle": "The Anti-Inflammatory",
     "category": "Herbs & Spices",
     "titleFont": "Abril Fatface",
-    "heroImage": "/img/healing_foods/turmeric.png",
+    "heroImage": "/foods/images/turmeric.png",
     "colors": {
       "deep": "#3a2a00",
       "primary": "#7a5a00",
@@ -941,7 +941,7 @@
     "subtitle": "The Gut Soother",
     "category": "Wild Foods",
     "titleFont": "Varela Round",
-    "heroImage": "/img/healing_foods/aloe-vera.png",
+    "heroImage": "/foods/images/aloe_vera.png",
     "colors": {
       "deep": "#0a3020",
       "primary": "#1a5a40",
@@ -965,7 +965,7 @@
     "subtitle": "The Heavy Metal Detoxifier",
     "category": "Wild Foods",
     "titleFont": "Sacramento",
-    "heroImage": "",
+    "heroImage": "/foods/images/atlantic_dulse.png",
     "colors": {
       "deep": "#0a1a30",
       "primary": "#1a3860",
@@ -1013,7 +1013,7 @@
     "subtitle": "The Immune Rebuilder",
     "category": "Wild Foods",
     "titleFont": "Special Elite",
-    "heroImage": "/img/healing_foods/chaga.png",
+    "heroImage": "/foods/images/chaga.png",
     "colors": {
       "deep": "#1a1410",
       "primary": "#3a3028",
@@ -1085,7 +1085,7 @@
     "subtitle": "The Herbal Powerhouse",
     "category": "Wild Foods",
     "titleFont": "Patua One",
-    "heroImage": "/img/healing_foods/nettle-leaf.png",
+    "heroImage": "/foods/images/nettle_leaf.png",
     "colors": {
       "deep": "#0a2a10",
       "primary": "#1a5820",
@@ -1109,7 +1109,7 @@
     "subtitle": "The Divine Sweetener",
     "category": "Wild Foods",
     "titleFont": "Lobster",
-    "heroImage": "/img/healing_foods/raw-honey.png",
+    "heroImage": "/foods/images/raw_honey.png",
     "colors": {
       "deep": "#3a2800",
       "primary": "#7a5800",
@@ -1133,7 +1133,7 @@
     "subtitle": "The Blood Cleanser",
     "category": "Wild Foods",
     "titleFont": "Parisienne",
-    "heroImage": "/img/healing_foods/red-clover.png",
+    "heroImage": "/foods/images/red_clover.png",
     "colors": {
       "deep": "#3a0828",
       "primary": "#7a1850",
@@ -1157,7 +1157,7 @@
     "subtitle": "The Vitamin C Champion",
     "category": "Wild Foods",
     "titleFont": "Pinyon Script",
-    "heroImage": "/img/healing_foods/rose-hips.png",
+    "heroImage": "/foods/images/rose_hips.png",
     "colors": {
       "deep": "#3a1010",
       "primary": "#8a2030",
@@ -1181,7 +1181,7 @@
     "subtitle": "The Resurrection Food",
     "category": "Wild Foods",
     "titleFont": "Almendra",
-    "heroImage": "/img/healing_foods/wild-blueberries.png",
+    "heroImage": "/foods/images/wild_blueberries.png",
     "colors": {
       "deep": "#1a1040",
       "primary": "#2d1b69",
@@ -1194,8 +1194,8 @@
     "essence": "The world's most powerful food is hiding on low, scrubby bushes in plain sight. There is not a cancer that wild blueberries cannot prevent, nor a disease known to humankind that wild blueberries do not protect you from.",
     "description": [
       "Wild blueberries hold ancient and sacred survival information from the heavens, going back tens of thousands of years. They have adapted to every fluctuation in climate over the millennia. Their innate intelligence has prevented them from accepting a monoculture; instead, they thrive with more than 100 variable strains that look similar yet have different genetic makeups, so that these plants can never be eradicated, no matter what comes in the future.",
-      "While other food plants can only continue after a fire if their seeds survive and are replanted, wild blueberry plants can be burned to the ground, and they will come back stronger than ever. No other food on the planet has the ability to thrive in such trying conditions. It is the number-one adaptogen, period — even though it is not recognized as an adaptogenic food at all.",
-      "These tiny jewels have a plethora of undiscovered qualities. They're armed with dozens of antioxidant varieties that science does not yet know about, along with polyphenols, anthocyanins, anthocyanidins, dimethyl resveratrol, and as yet unknown cofactor adaptogenic amino acids. When you eat these berries, their innate intelligence reads your body, searches out potential disease, monitors your stress and toxicity levels, and figures out the best way to heal you — it is the only food that does that.",
+      "While other food plants can only continue after a fire if their seeds survive and are replanted, wild blueberry plants can be burned to the ground, and they will come back stronger than ever. No other food on the planet has the ability to thrive in such trying conditions. It is the number-one adaptogen, period \u2014 even though it is not recognized as an adaptogenic food at all.",
+      "These tiny jewels have a plethora of undiscovered qualities. They're armed with dozens of antioxidant varieties that science does not yet know about, along with polyphenols, anthocyanins, anthocyanidins, dimethyl resveratrol, and as yet unknown cofactor adaptogenic amino acids. When you eat these berries, their innate intelligence reads your body, searches out potential disease, monitors your stress and toxicity levels, and figures out the best way to heal you \u2014 it is the only food that does that.",
       "One of the most effective heavy metal detoxing foods, wild blueberries are fantastic at removing all other Unforgiving Four factors, too. Wild blueberries are also the most powerful brain food in existence, the most potent prebiotic there is, and a star at restoring the liver. Essentially, this fruit offers a benefit unobtainable from any other source for every part of the body.",
       "There is more information in one wild blueberry plant than there is on the entire Internet. One hundred years from now, medical science will use the wild blueberry as the key to unlock the secrets of how to heal disease. This is the food you want in your life when you've been through the unthinkable and need the support to rise up again. Wild blueberries are the sole food on the planet to contain the full power of the divine, the Holy Source, the universe, and they are revered by the angels as the key to keeping the human race alive in the coming times. Wild blueberries are, above all, the resurrection food."
     ],
@@ -1224,16 +1224,16 @@
       "If you've struggled with feeling criticized, depreciated, discredited, mistreated, or neglected, this is a holy, healing food for you."
     ],
     "spiritualLesson": [
-      "Native Americans observed early on that when wildfire occurred, the only thing that would grow in its path afterward were wild blueberry plants — in fact, they would come back stronger and healthier than ever before. And when frozen, their nutrition actually increases. The challenge of withstanding the freezing process pushes the fruit to perform at the top of its game.",
-      "On both ends of the spectrum, in fire and ice, wild blueberries don't just survive — they triumph. They take an adverse circumstance, meet it, and become better for it. When you eat this supernatural fruit, that indestructible essence becomes a part of you.",
+      "Native Americans observed early on that when wildfire occurred, the only thing that would grow in its path afterward were wild blueberry plants \u2014 in fact, they would come back stronger and healthier than ever before. And when frozen, their nutrition actually increases. The challenge of withstanding the freezing process pushes the fruit to perform at the top of its game.",
+      "On both ends of the spectrum, in fire and ice, wild blueberries don't just survive \u2014 they triumph. They take an adverse circumstance, meet it, and become better for it. When you eat this supernatural fruit, that indestructible essence becomes a part of you.",
       "This is the food you want in your life when you've been through the unthinkable and need the support to rise up again."
     ],
     "tips": [
-      "Use frozen wild blueberries — they're flash-frozen at peak ripeness and retain all their healing phytochemicals.",
+      "Use frozen wild blueberries \u2014 they're flash-frozen at peak ripeness and retain all their healing phytochemicals.",
       "Include them daily in the Heavy Metal Detox Smoothie with spirulina, cilantro, barley grass juice powder, and Atlantic dulse.",
-      "Look for 'wild blueberries' specifically — they're a different species from cultivated blueberries with far greater antioxidant density.",
+      "Look for 'wild blueberries' specifically \u2014 they're a different species from cultivated blueberries with far greater antioxidant density.",
       "Eat them with celery juice or on their own first thing in the morning to maximize their detoxifying effect on the liver.",
-      "Keep a bag of frozen wild blueberries in your freezer at all times — they blend beautifully into smoothies straight from frozen."
+      "Keep a bag of frozen wild blueberries in your freezer at all times \u2014 they blend beautifully into smoothies straight from frozen."
     ]
   }
 ]

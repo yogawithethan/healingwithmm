@@ -390,7 +390,7 @@ body::after {
 .nav-back {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-sm);
+  border-radius: 50%;
   border: none;
   background: rgba(28, 25, 23, 0.04);
   cursor: pointer;

@@ -312,8 +312,9 @@
     }
     grid.innerHTML = filtered.map(function(f, idx) {
       var heroBg = 'background:linear-gradient(135deg,' + f.colors.secondary + ',' + f.colors.deep + ')';
+      var imgPath = f.heroImage ? (f.heroImage.charAt(0) === '/' ? '..' + f.heroImage : f.heroImage) : '';
       var heroContent = f.heroImage
-        ? '<div class="food-card__hero-img" style="background-image:url(\''+f.heroImage+'\')"></div>'
+        ? '<div class="food-card__hero-img" style="background-image:url(\''+imgPath+'\')"></div>'
         : '<div class="food-card__hero-emoji">&#9672;</div>';
       return '<a class="food-card" href="./'+f.slug+'.html" style="--i:'+idx+'">'
         + '<div class="food-card__hero" style="'+heroBg+'">'+heroContent+'</div>'

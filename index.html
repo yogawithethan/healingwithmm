@@ -534,8 +534,9 @@ fetch('data/foods.json')
     var featured = foods.filter(function(f) { return f.heroImage; }).slice(0, 8);
     if (!featured.length) featured = foods.slice(0, 8);
     var html = featured.map(function(f) {
+      var imgPath = f.heroImage.charAt(0) === '/' ? '.' + f.heroImage : f.heroImage;
       var bg = f.heroImage
-        ? 'background-image:url(\'' + f.heroImage + '\')'
+        ? 'background-image:url(\'' + imgPath + '\')'
         : 'background:linear-gradient(135deg,' + f.colors.secondary + ',' + f.colors.deep + ')';
       return '<a class="featured-food" href="foods/' + f.slug + '.html">'
         + '<div class="featured-food__hero" style="' + bg + '"></div>'
