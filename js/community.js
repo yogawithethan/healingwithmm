@@ -86,22 +86,26 @@
 
   auth.onAuthStateChanged(function (user) {
     currentUser = user;
-    var loginBtn = document.getElementById('authLoginBtn');
-    var userBar = document.getElementById('authUserBar');
     var fab = document.getElementById('communityFab');
 
-    if (user) {
-      loginBtn.style.display = 'none';
-      userBar.style.display = 'flex';
+    /* Update the nav profile icon to reflect auth state */
+    var navProfile = document.querySelector('.nav-profile');
+    if (navProfile && user) {
       var name = user.displayName || user.email || 'User';
-      document.getElementById('authName').textContent = name;
-      var avatarEl = document.getElementById('authAvatarEl');
-      avatarEl.textContent = name.charAt(0).toUpperCase();
+      var initial = name.charAt(0).toUpperCase();
+      navProfile.innerHTML = '<span style="font-family:Outfit,sans-serif;font-size:13px;font-weight:600;color:var(--accent)">' + initial + '</span>';
+      navProfile.onclick = function (e) { e.preventDefault(); communitySignOut(); };
+      navProfile.title = 'Signed in as ' + name + ' (click to sign out)';
+    } else if (navProfile) {
+      navProfile.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+      navProfile.onclick = function (e) { e.preventDefault(); openAuthModal(); };
+      navProfile.title = 'Sign in';
+    }
+
+    if (user) {
       fab.classList.remove('hidden');
       closeAuthModal();
     } else {
-      loginBtn.style.display = 'block';
-      userBar.style.display = 'none';
       fab.classList.add('hidden');
       userVotes = {};
     }
@@ -237,26 +241,39 @@
     var el = document.createElement('div');
     el.className = 'community-post';
     el.onclick = function (e) {
-      if (e.target.closest('.community-vote__btn')) return;
+      if (e.target.closest('.community-action')) return;
       openPost(p.id);
     };
     var topicObj = TOPICS.find(function (t) { return t.id === p.topicId; });
     var topicLabel = topicObj ? topicObj.emoji + ' ' + topicObj.name : p.topicName || '';
+    var initial = (p.authorName || 'A').charAt(0).toUpperCase();
+    var avatarInner = p.authorPhoto
+      ? '<img src="' + esc(p.authorPhoto) + '" alt="">'
+      : initial;
 
-    el.innerHTML = '<div class="community-vote">'
-      + '<button class="community-vote__btn' + (userVotes[p.id] ? ' voted' : '') + '" data-post-id="' + p.id + '" onclick="event.stopPropagation();toggleVote(\'' + p.id + '\',this)">'
-      + '<svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg></button>'
-      + '<span class="community-vote__count" id="vc-' + p.id + '">' + (p.voteCount || 0) + '</span>'
+    el.innerHTML =
+      /* Header: avatar + username + time */
+      '<div class="community-post__header">'
+      + '<div class="community-post__avatar">' + avatarInner + '</div>'
+      + '<span class="community-post__author">' + esc(p.authorName || 'Anonymous') + '</span>'
+      + '<span class="community-post__dot">&middot;</span>'
+      + '<span class="community-post__time">' + timeAgo(p.createdAt) + '</span>'
       + '</div>'
-      + '<div class="community-post__content">'
+      /* Topic badge */
       + '<div class="community-post__topic">' + esc(topicLabel) + '</div>'
+      /* Title */
       + '<div class="community-post__title">' + esc(p.title) + '</div>'
+      /* Body preview */
       + (p.body ? '<div class="community-post__preview">' + esc(p.body) + '</div>' : '')
-      + '<div class="community-post__meta">'
-      + '<span class="community-post__meta-item">' + esc(p.authorName || 'Anonymous') + '</span>'
-      + '<span class="community-post__meta-item">' + timeAgo(p.createdAt) + '</span>'
-      + '<span class="community-post__meta-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' + (p.commentCount || 0) + '</span>'
-      + '</div></div>';
+      /* Action bar: vote + comments + share pills */
+      + '<div class="community-post__actions">'
+      + '<button class="community-action' + (userVotes[p.id] ? ' voted' : '') + '" data-post-id="' + p.id + '" onclick="event.stopPropagation();toggleVote(\'' + p.id + '\',this)">'
+      + '<svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>'
+      + '<span id="vc-' + p.id + '">' + (p.voteCount || 0) + '</span></button>'
+      + '<button class="community-action" onclick="event.stopPropagation();openPost(\'' + p.id + '\')">'
+      + '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+      + (p.commentCount || 0) + '</button>'
+      + '</div>';
     return el;
   }
 
@@ -352,28 +369,45 @@
       var p = doc.data();
       var topicObj = TOPICS.find(function (t) { return t.id === p.topicId; });
       var topicLabel = topicObj ? topicObj.emoji + ' ' + topicObj.name : '';
+      var initial = (p.authorName || 'A').charAt(0).toUpperCase();
+      var avatarInner = p.authorPhoto
+        ? '<img src="' + esc(p.authorPhoto) + '" alt="">'
+        : initial;
 
       var h = '<button class="community-detail__back" onclick="closePost()">'
         + '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back</button>'
+        /* Post header: avatar + author + time */
+        + '<div class="community-detail__post-header">'
+        + '<div class="community-post__avatar">' + avatarInner + '</div>'
+        + '<span class="community-post__author">' + esc(p.authorName || 'Anonymous') + '</span>'
+        + '<span class="community-post__dot">&middot;</span>'
+        + '<span class="community-post__time">' + timeAgo(p.createdAt) + '</span>'
+        + '</div>'
         + '<div class="community-detail__topic">' + esc(topicLabel) + '</div>'
         + '<div class="community-detail__title">' + esc(p.title) + '</div>'
-        + '<div class="community-detail__meta">' + esc(p.authorName || 'Anonymous') + ' &middot; ' + timeAgo(p.createdAt) + '</div>'
-        + '<div class="community-detail__votes">'
-        + '<button class="community-vote__btn' + (userVotes[postId] ? ' voted' : '') + '" data-post-id="' + postId + '" onclick="toggleVote(\'' + postId + '\',this)">'
-        + '<svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg></button>'
-        + '<span class="community-vote__count" id="vc-' + postId + '">' + (p.voteCount || 0) + '</span>'
-        + '<span style="color:var(--text-muted);font-size:12px">upvotes</span></div>'
         + '<div class="community-detail__body">' + esc(p.body || '') + '</div>'
+        /* Action bar */
+        + '<div class="community-detail__actions">'
+        + '<button class="community-action' + (userVotes[postId] ? ' voted' : '') + '" data-post-id="' + postId + '" onclick="toggleVote(\'' + postId + '\',this)">'
+        + '<svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>'
+        + '<span id="vc-' + postId + '">' + (p.voteCount || 0) + '</span></button>'
+        + '<span class="community-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+        + (p.commentCount || 0) + '</span>'
+        + '</div>'
+        /* Comment input at top (like Reddit "Join the conversation") */
+        + '<div class="community-comment-join">'
+        + '<input class="community-comment-join__input" placeholder="Join the conversation..." readonly'
+        + ' onclick="' + (currentUser ? "this.style.display=\'none\';document.getElementById(\'commentInputWrap\').style.display=\'flex\';document.getElementById(\'commentInput\').focus()" : "openAuthModal()") + '">'
+        + '</div>'
         + '<div class="community-comments__header" id="commentHeader">Comments</div>'
-        + '<div id="commentsList"></div>';
+        + '<div id="commentsList"></div>'
+        /* Actual comment input */
+        + '<div class="community-comment-input" id="commentInputWrap" style="' + (currentUser ? '' : 'display:none') + '">'
+        + '<textarea class="community-comment-input__field" id="commentInput" placeholder="Write a comment..." rows="1"'
+        + ' oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>'
+        + '<button class="community-comment-input__send" onclick="submitComment()">'
+        + '<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>';
 
-      if (currentUser) {
-        h += '<div class="community-comment-input">'
-          + '<textarea class="community-comment-input__field" id="commentInput" placeholder="Write a comment..." rows="1"'
-          + ' oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>'
-          + '<button class="community-comment-input__send" onclick="submitComment()">'
-          + '<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>';
-      }
       detail.innerHTML = h;
       loadComments(postId);
       if (currentUser) checkVote(postId);
@@ -403,11 +437,22 @@
         list.innerHTML = '';
         snap.forEach(function (doc) {
           var c = doc.data();
+          var initial = (c.authorName || 'A').charAt(0).toUpperCase();
+          var avatarInner = c.authorPhoto
+            ? '<img src="' + esc(c.authorPhoto) + '" alt="">'
+            : initial;
           var el = document.createElement('div');
           el.className = 'community-comment';
-          el.innerHTML = '<div><span class="community-comment__author">' + esc(c.authorName || 'Anonymous') + '</span>'
-            + '<span class="community-comment__time">' + timeAgo(c.createdAt) + '</span></div>'
-            + '<div class="community-comment__body">' + esc(c.body) + '</div>';
+          el.innerHTML = '<div class="community-comment__header">'
+            + '<div class="community-comment__avatar">' + avatarInner + '</div>'
+            + '<span class="community-comment__author">' + esc(c.authorName || 'Anonymous') + '</span>'
+            + '<span class="community-comment__time">&middot; ' + timeAgo(c.createdAt) + '</span>'
+            + '</div>'
+            + '<div class="community-comment__body">' + esc(c.body) + '</div>'
+            + '<div class="community-comment__actions">'
+            + '<button class="community-comment__action"><svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg></button>'
+            + '<button class="community-comment__action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Reply</button>'
+            + '</div>';
           list.appendChild(el);
         });
       });

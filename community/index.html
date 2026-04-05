@@ -75,17 +75,7 @@
 
 <!-- ── Header with inline login button ── -->
 <div class="community-header">
-  <div class="community-header__top">
-    <div class="community-header__eyebrow">Community</div>
-    <!-- Logged out -->
-    <button class="community-header__login-btn" id="authLoginBtn" onclick="openAuthModal()" style="display:none">Sign in</button>
-    <!-- Logged in -->
-    <div class="community-header__user" id="authUserBar" style="display:none">
-      <div class="community-header__user-avatar" id="authAvatarEl"></div>
-      <span class="community-header__user-name" id="authName"></span>
-      <button class="community-header__signout" onclick="communitySignOut()">Sign out</button>
-    </div>
-  </div>
+  <div class="community-header__eyebrow">Community</div>
   <h1>Healing together</h1>
   <p>Share your journey, ask questions, and support each other</p>
 </div>
@@ -93,11 +83,11 @@
 <!-- ── Topics ── -->
 <div class="community-topics">
   <button class="community-topic active" onclick="setTopic('all',this)">All</button>
-  <button class="community-topic" onclick="setTopic('369-cleanse',this)">&#x1F9C3; 3:6:9 Cleanse</button>
-  <button class="community-topic" onclick="setTopic('symptoms',this)">&#x1FA7A; Symptoms</button>
-  <button class="community-topic" onclick="setTopic('success',this)">&#x2B50; Success Stories</button>
-  <button class="community-topic" onclick="setTopic('recipes',this)">&#x1F957; Recipes &amp; Tips</button>
-  <button class="community-topic" onclick="setTopic('general',this)">&#x1F4AC; General</button>
+  <button class="community-topic" onclick="setTopic('general',this)">General</button>
+  <button class="community-topic" onclick="setTopic('369-cleanse',this)">3:6:9 Cleanse</button>
+  <button class="community-topic" onclick="setTopic('symptoms',this)">Symptoms</button>
+  <button class="community-topic" onclick="setTopic('success',this)">Success Stories</button>
+  <button class="community-topic" onclick="setTopic('recipes',this)">Recipes &amp; Tips</button>
 </div>
 
 <!-- ── Sort ── -->
