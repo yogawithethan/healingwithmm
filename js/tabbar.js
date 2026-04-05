@@ -90,4 +90,18 @@
   var topEl = document.createElement('div');
   topEl.innerHTML = topHtml;
   document.body.appendChild(topEl.firstElementChild);
+
+  /* ── Desktop nav: fade in frosted background on scroll ── */
+  var topBar = document.getElementById('topBar');
+  if (topBar) {
+    var onScroll = function () {
+      if (window.scrollY > 30) {
+        topBar.classList.add('scrolled');
+      } else {
+        topBar.classList.remove('scrolled');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 })();

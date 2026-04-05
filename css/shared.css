@@ -314,13 +314,27 @@ body::after {
   .hero { padding-top: calc(env(safe-area-inset-top) + 20px); }
 }
 
-/* ===== DESKTOP TOP NAV — floating frosted glass capsule ===== */
+/* ===== DESKTOP TOP NAV — frosted bar that fades in on scroll ===== */
 .top-bar {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
   pointer-events: none;
+  background: rgba(250, 247, 242, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s var(--ease-out),
+              backdrop-filter 0.4s var(--ease-out),
+              -webkit-backdrop-filter 0.4s var(--ease-out),
+              border-color 0.4s var(--ease-out);
+}
+.top-bar.scrolled {
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom-color: var(--divider);
 }
 
 .top-bar-inner {
